@@ -49,7 +49,7 @@ Ipotizzo un andamento simile a Merge Sort: $\Theta (n \log n)$. Dimostro:
 	\item $T(n) = \Omega (n \log n)$
 \end{enumerate}
 
-\subparagraph{1.} $T(n) = \Omega (n \log n)$
+\subparagraph{1.} $T(n) = O(n \log n)$
 $$\exists d > 0 : \forall n > n_0 \Rightarrow T(n) \leq dn \log n$$
 Ometto il caso base. L'ipotesi induttiva è la seguente:
 \[ 
@@ -58,8 +58,8 @@ Ometto il caso base. L'ipotesi induttiva è la seguente:
 Procedo con i calcoli \dots
 \begin{align*}
 	T(n) & \leq T\Big(\frac{n}{3} \Big) + T\Big(\frac{2n}{3} \Big) + cn \\
-	& \leq d \frac{n}{3} \log \frac{n}{3} + \frac{2n}{3} \log \frac{2n}{3} = \\
-	& = \frac{dn}{3} \Big(\log n - \log 3 \Big) + d \frac{2n}{3} \Big(\log n - \log \frac{2}{3} \Big) + cn = \\
+	& \leq d \frac{n}{3} \log \frac{n}{3} + d \frac{2n}{3} \log \frac{2n}{3} + cn = \\
+	& = d \frac{n}{3} \Big(\log n - \log 3 \Big) + d \frac{2n}{3} \Big(\log n - \log \frac{2}{3} \Big) + cn = \\
 	& = dn \log n - \frac{dn}{3} \Big( \log 3 - 2 \log \frac{2}{3} \Big) + cn = \\
 	& = dn \log n - \frac{dn}{3} \Big( \log 3 - \log \frac{4}{9} \Big) + cn = \\
 	& = dn \log n - n \Big( \frac{d}{3} \log \frac{27}{4} - c \Big) \leq dn \log n\\
@@ -76,7 +76,7 @@ L'ipotesi induttiva è la seguente:
 Calcoli \dots
 \begin{align*}
 	T(n) & \geq T\Big(\frac{n}{3} \Big) + T\Big(\frac{2n}{3} \Big) + cn \\
-	& \geq \delta \frac{n}{3} \log \frac{n}{3} + \frac{2n}{3} \log \frac{2n}{3} = \\
+	& \geq \delta \frac{n}{3} \log \frac{n}{3} + \delta \frac{2n}{3} \log \frac{2n}{3} + cn = \\
 	& = \delta \frac{n}{3} \Big(\log n - \log 3 \Big) + \delta \frac{2n}{3} \Big(\log n - \log \frac{2}{3} \Big) + cn = \\
 	& = \delta n \log n + \frac{\delta n}{3} \Big( - \log 3 + 2 \log \frac{2}{3} \Big) + cn = \\
 	& = \delta n \log n + \frac{\delta n}{3} \Big( - \log 3 + \log \frac{4}{9} \Big) + cn = \\

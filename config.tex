@@ -88,6 +88,12 @@
 \renewcommand{\labelitemiii}{$\diamond$}
 \renewcommand{\labelitemiv}{$\ast$}
 
+% add spacing after exists and forall
+\let\existstemp\exists
+\let\foralltemp\forall
+\renewcommand{\exists}{\existstemp~}
+\renewcommand{\forall}{\foralltemp~}
+
 \author{\authorName}
 \date{\today}
 \title{Appunti di Algoritmi}

@@ -1,0 +1,168 @@
+\section{Lezione 7}
+
+\subsection{Master Theorem} \label{mastertheorem}
+Dato un problema con \texttt{size} $n$, vogliamo dividerlo in $a$ sottoproblemi 
+con \mbox {\texttt{size} $\frac{n}{b}$}. Otteniamo la seguente ricorrenza (ricordiamo che
+il caso base è omesso per semplicità):
+\[
+    T(n) = a \cdot T\Big(\frac{n}{b}\Big) + f(n)
+\]
+con $a \geq 1, \ b > 1$, allora possiamo confrontare
+\begin{itemize}
+    \item $f(n)$;
+    \item $n^{\log_b a}$.
+\end{itemize}
+Tre possibili casi:
+\begin{enumerate}
+    \item Se $f(n) = O(n^{\log_b a - \varepsilon})$ per qualche $\varepsilon > 0$,
+    allora $$T(n) = \Theta \big( n^{\log_b a} \big)$$
+    
+    \item Se $f(n) = \Theta (n^{\log_b a})$ allora 
+    $$T(n) = \Theta \big( n^{\log_b a} \cdot \log n \big)$$
+    
+    \item Se $f(n) = \Omega (n^{\log_b a + \varepsilon})$ per qualche $\varepsilon > 0$,
+    e vale la \emph{regolarità}
+    $$ \exists 0 < k < 1 \text{ tale che } a \cdot f(\frac{n}{b}) \leq k \cdot f(n)$$
+    allora
+    $$ T(n) = \Theta \big( f(n) \big) $$ 
+\end{enumerate}
+
+\paragraph{Breve ``dimostrazione'' sul perchè $\boldsymbol{n^{\log_b a}}$} 
+\begin{gather*}
+    T(n) = f(n) + af\Big(\frac{n}{b}\Big) + a^2f\Big(\frac{n}{b^2}\Big) + \dots + a^{\log_b n}f\Big(\frac{n}{b^{\log_b n}}\Big) + c \cdot a^{\log_b n} \\
+    a^{\log_b n} = \big(b^{\log_b a}\big)^{\log_b n} = \big(b^{\log_b n}\big)^{\log_b a} = n^{\log_b a} \\
+    \text{Nota bene: } af\Big(\frac{n}{b}\Big) \leq k \cdot f(n) \text{ con } k < 1
+\end{gather*}
+
+Vediamo ora i casi in cui sarà possibile finire, e le conclusioni legate ad essi.
+\begin{enumerate}[label=\Alph*)]
+    \item $$\lim_{n \to \infty} \frac{f(n)}{n^{\log_b a}} = l (> 0) \neq \infty$$
+    $$\text{\emph{Caso 2}} \Rightarrow T(n) = \Theta \big( n^{\log_b a} \cdot \log n \big)$$
+
+    \item $$\lim_{n \to \infty} \frac{f(n)}{n^{\log_b a}} = 0 $$
+    \begin{align*}
+        \text{Potrei essere nel \emph{Caso 1}} & \Rightarrow \text{se } \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a - \varepsilon}} = l \neq \infty \ (\varepsilon > 0) \\
+        & \Rightarrow T(n) = \Theta \big( n^{\log_b a} \big)
+    \end{align*}
+    \item 
+    \begin{align*}
+    \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a}} = \infty \quad & \& \ \exists \varepsilon > 0 : 
+    \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a + \varepsilon}} = l \neq 0 \\
+    & \& \ \text{\emph{Regolarità}} \Rightarrow \emph{Caso 3:} \quad T(n) = \Theta (f(n))
+    \end{align*}
+
+\end{enumerate}
+
+\subsubsection{Esercizi (Master Theorem)}
+\begin{itemize}[label=$\bullet$]
+    \item $T^{MS} = 2T\big(\frac{n}{2}\big) + a'n + b'$ \par
+    Abbiamo (rispetto alla forma $T(n) = a \cdot T\big(\frac{n}{b}\big) + f(n)$)
+    \begin{gather*}
+        a = 2, \ b = 2 \\
+        f(n) = a'n + b' \qquad n^{\log_2 2} = n
+    \end{gather*}
+    È chiaro che le due funzioni hanno lo stesso andamento (di ordine $\Theta(n)$):
+    \begin{gather*}
+        a'n + b' = \Theta (n) \\
+        \text{\emph{Caso 2}} \Rightarrow T(n) = \Theta \Big(n^{\log_2 2} \log n \Big) = \Theta (n \log n)
+    \end{gather*}
+
+    \item $T(n) = 5T\big( \frac{n}{2} \big) + 2n^2 + n \log n$ \par
+    Abbiamo (rispetto alla forma $T(n) = a \cdot T\big(\frac{n}{b}\big) + f(n)$)
+    \begin{gather*}
+        a = 5, \ b = 2 \\
+        f(n) = n^2 + n \log n \qquad n^{\log_2 5} \quad (\log_2 5 > 2) \\
+        0 < \varepsilon < \log_2 5 - 2 \Rightarrow 
+            \lim_{n \to \infty} \frac{2n^2 + n \log n}{n^{\log_2 5 - \varepsilon}} = 0 
+            \Rightarrow f(n) = O(n^{\log_2 5}) \\
+        \text{\emph{Caso 1}} \Rightarrow T(n) = \Theta \big( n^{\log_2 5} \big)
+    \end{gather*}
+
+    \item $T(n) = 5T(\frac{n}{2}) + n^3$ per esercizio.
+
+    \item $T(n) = 5T(\frac{n}{2}) + n^3 \log n$ \par
+    Abbiamo 
+    \begin{gather*}
+        a = 5, \ b = 2 \\
+        f(n) = n^3 \log n \qquad n^{\log_2 5} \quad (\log_2 5 < 3) \\
+        0 < \varepsilon < 3 - \log_2 5 \Rightarrow
+            \lim_{n \to \infty} \frac{n^3 \log n}{n^{\log_2 5 + \varepsilon}} = \infty
+    \end{gather*}
+    Possibile \emph{caso 3}. \emph{Regolarità}?
+    \begin{gather*}
+        af\Big(\frac{n}{b}\Big) \leq kf(n) \quad \text{per } 0 < k < 1 \text{ opportuno} \\
+        5 \Big(\frac{n}{2}\Big)^3 \log \frac{n}{2} = \frac{5}{8}n^3 \log \frac{n}{2} 
+            \leq \frac{5}{8} n^3 \log n \leq kn^3 \log n \quad \text{ per } 0 < k \leq \frac{5}{8} < 1 \\
+            \Downarrow \\
+            \text{\emph{Caso 3}: } T(n) = \Theta \big(f(n)\big) = \Theta(n^3 \log n)
+    \end{gather*}
+
+    \item $T(n) = 27T(\frac{n}{3}) + n^3 \log n$ 
+    \begin{gather*}
+        f(n) = n^3 \log n \qquad n^{\log_3 27} \quad (\log_3 27 = 3) \\
+        \lim_{n \to \infty} \frac{n^3 \log n}{n^{3 + \varepsilon}} = +\infty \quad \forall \varepsilon > 0 
+            \text{, non possiamo dimostrare 3}\\
+        \Rightarrow \text{Non siamo in \emph{nessun} caso del Master Theorem.}
+    \end{gather*}
+    Anche valutando la \emph{regolarità}, ricadiamo in un assurdo. Dobbiamo dimostrare che
+    $af \big( \frac{n}{b} \big) < kf(n) \text{ per qualche } k > 0$
+    \begin{gather*}
+        27 \Big( \frac{n}{3} \Big)^3 \log \frac{n}{3} = n^3(\log n - \log 3) \ \cancel{<} \ k n^3 \log n \; \text{ per nessun } k > 0\\
+        \text{Infatti } \frac{(\log n - \log 3)n^3}{n^3 \log n} \rightarrow 1
+    \end{gather*}
+
+    (Posso usare il Metodo di Sostituzione)
+    $$T(n) =  27T\Big(\frac{n}{3}\Big) + n^3 \log n$$
+    Costruiamo l'albero delle ricorrenze:
+    \begin{itemize}
+        \item \emph{radice}: costo $n^3 \log n$;
+        \item ogni nodo ha 27 figli.
+        \begin{itemize}
+            \item i 27 figli del primo livello hanno costo $(\frac{n}{3})^3 \log \frac{n}{3}$;
+            \item i $27^2$ figli del secondo livello hanno costo $(\frac{n}{9})^3 \log \frac{n}{9}$;
+            \item \dots
+            \item le $27^n$ foglie terminali hanno costo $O(1)$.
+        \end{itemize}
+    \end{itemize}
+
+    \begin{align*}
+        T(n) & = \displaystyle\sum_{j=0}^{\log_3 n} n^3 \log \frac{n}{3^j} = 
+            n^3 \displaystyle\sum_{j=0}^{\log_3 n}(\log n - j \log 3) + cn = \\
+        & = n^3(\log n)^2 - n^3 \log 3 \displaystyle\sum_{j=0}^{\log_3 n}j + cn 
+            \qquad \Big(\displaystyle\sum_{j=0}^{\log_3 n}j \cong (\log_3 n)^2 \Big) \\
+        T(n) & = 27T\Big(\frac{n}{3}\Big) + n^3 \log n \\
+        T(n) & = \Theta \big(n^3 (\log n)^2\big) \qquad \text{ipotesi ricavata}
+    \end{align*}
+    
+    Devo dimostrare che valgano le seguenti condizioni:\par 
+	\begin{enumerate}
+		\item $T(n) = O \big(n^3 (\log n)^2\big)$
+		\item $T(n) = \Omega \big(n^3 (\log n)^2\big)$
+	\end{enumerate}
+    \begin{enumerate}
+        \item $T(n) = O \big(n^3 (\log n)^2\big)$
+        \begin{align*}
+            T(n) & \leq c \cdot n^3 \big(n^3 (\log n)^2\big) \qquad c > 0 \\
+            T(n) & = 27T\Big(\frac{n}{3}\Big) + n^3 \log n \qquad \\
+            & \Big(\text{ipotesi induttiva } T\Big(\frac{n}{3} \Big) 
+                \leq c \cdot \Big(\frac{n}{3} \Big)^3 \Big(\log \frac{n}{3} \Big)^2 \ \Big)\\
+            & \leq 27 c \Big(\frac{n}{3} \Big)^3 \Big(\log \frac{n}{3} \Big)^2 + n^3 \log n = \\
+            & = \frac{\cancel{27} cn^3}{\cancel{27}} (\log n - \log 3)^2 + n^3 \log n = \\
+            & = cn^3 \Big((\log n)^2 - 2\log 3 \log n + (\log 3)^2 \Big) + n^3 \log n = \\
+            & = cn^3 (\log n)^2 - n^3 \Big(\log n (2c \log 3 - 1) - c (\log 3)^2 \Big) \\
+            & \leq cn^3(\log n)^2
+        \end{align*}
+        Per un $n$ abbastanza grande, vale la disuguaglianza con un opportuno valore di $c$:
+        $$c > \frac{1}{2 \log 3}$$
+
+        \item $T(n) = \Omega \big(n^3 (\log n)^2\big)$
+        \begin{align*}
+            & \exists d > 0 : T(n) \geq dn^3(\log n)^2 \\
+            & \geq 27\Big(\frac{n}{3} \Big)^3 \Big(\log \frac{n}{3} \Big)^2 + n^3 \log n \\
+            & = \dots = dn^3 (\log n)^2 - n^3 \Big(\log n (2d \log 3 - 1) - d (\log 3)^2 \Big) \\
+            & \geq dn^3 (\log n)^2 
+        \end{align*}
+        Per un $n$ abbastanza grande, vale la disuguaglianza con un opportuno valore di $d$:
+        $$2d\log 3 -1 < 0 \qquad \text{ok per } 0 < d < \frac{1}{2\log 3}$$
+    \end{enumerate}
+\end{itemize}

@@ -1,24 +1,169 @@
-\section{Lezione 14}
+\section{Alberi di Ricerca}
 
-\subsection{Max Heap con coda dinamica}
-Implementiamo un \texttt{Max Heap}, solo che è implementato con una
-coda dinamica invece che con un normale array.
-
-Ogni \emph{nodo} $x$ ha 3 campi dato:
-\begin{itemize}[noitemsep]
-    \item \texttt{x.left};
-    \item \texttt{x.right};
-    \item \texttt{x.p}.
+\subsection{Alberi Binari di Ricerca (ABR)}
+\paragraph{Definizione induttiva}
+\begin{itemize}
+	\item $\varnothing$ è un albero;
+	\item Se $r$ è un nodo, $T_1$ e $T_2$ alberi $\Rightarrow r(T_1, T_2)$ è un albero.
+\begin{center}
+\begin{tikzpicture}
+\Tree
+[.r     
+	[.$T_1$ ]
+	[.$T_2$ ]		
+]
+\end{tikzpicture}
+\end{center}
 \end{itemize}
 
-$H$ è lo \emph{heap} ($\const{nil}$ se vuoto):
+Ogni nodo $x$ ha i seguenti campi:
 \begin{itemize}[noitemsep]
-    \item \texttt{H.root};
-    \item \texttt{H.size}.
+	\item $x.p$
+	\item $x.key$
+	\item $x.left$
+	\item $x.right$
 \end{itemize}
 
-Abbiamo \texttt{MaxHeapify} e \texttt{MaxHeapifyUp} invariate.
+\paragraph{Proprietà}
+$\forall r$
+\begin{itemize}[label=$\rightarrow$]
+	\item Per ogni nodo $y$ in $T_1 \quad y.key \leq x.key$;
+	\item Per ogni nodo $y$ in $T_2 \quad y.key \geq x.key$. 
+\end{itemize}
 
-\input{pseudocodes/heap-dinamico/insert} 
+\subparagraph{Esempio} Ecco un \emph{albero binario di ricerca} d'esempio:
+\begin{center}
+	\begin{tikzpicture}
+	\Tree
+	[.7     
+		[.3 
+			[.1 ]
+			[.6
+				[.4 ] 
+				\edge[blank]; \node[blank]{};
+			]
+		]
+		[.9 
+			[.8 ]		
+			\edge[blank]; \node[blank]{};
+		]
+	]
+	\end{tikzpicture}
+\end{center}
 
-Raccolta esercizi della lezione: \ref{exs:6-4-2018}.
+\subsubsection{Visita simmetrica} La visita simmetrica (ordine infisso) visita i nodi in ordine
+crescente.
+
+\input{pseudocodes/abr/in-order}
+
+\paragraph{Costo?} 
+\[ T(n) =
+\begin{cases}
+	c & n = 0 \\
+	T(k) + T(n - k - 1) + d & n > 0, \ k < n
+\end{cases}
+\]
+
+Stima di complessità: $T(n) = (c+d)n + c$. \par
+Vediamo la dimostrazione (per induzione).
+
+\begin{description}
+	\item[$(n = 0)$] $T(n) = c = (c + d) \cdot 0 + c$
+	\item[$(n \rightarrow n+1)$] $T(n) = T(k) + T(n-k) + d$. Non basta l'induzione ordinaria, usiamo 
+	l'\emph{induzione completa}.
+	\item[$(n > 0)$] Proprietà vera per $n' < n$
+	\begin{align*}
+		T(n) & = T(k) + T(n - k - 1) + d \\
+		& \qquad \text{con } T(k) = (c+d)k + c \text{ e } T(n-k-1) = (c+d)(c-k-1)+c \\
+		& = (c+d)(\cancel{k} + n - \cancel{k} - 1) + 2c + d \\
+		& = n(c+d) - c - d + 2c + d \\
+		& = n(c+d) + c - \cancel{d} + \cancel{d} \\
+		& \cong \Theta(n)
+	\end{align*}
+\end{description}
+
+\subsubsection{Ricerca} 
+Ricerca di una chiave $k$ in un albero radicato nel nodo $x$.
+
+\begin{itemize}
+	\item Se $x$ è $\const{nil} \Rightarrow \text{restituisce } \const{nil}$;
+	\item Altrimenti se $x.key = k \Rightarrow \text{restituisce } x$;
+	\item Altrimenti, ricorre sul prossimo nodo.
+\end{itemize}
+
+\input{pseudocodes/abr/search}
+
+\paragraph{Costo?} Nel caso peggiore, il costo è l'altezza dell'albero $h$ ($O(h)$).
+
+\bigskip
+Vediamo una versione iterativa di \texttt{Search}.
+\input{pseudocodes/abr/search-it}
+
+Procedura che restituisce il \emph{minimo} di un albero:
+\input{pseudocodes/abr/min}
+
+Procedura che restituisce il \emph{massimo} di un albero.
+\input{pseudocodes/abr/max}
+
+\subparagraph{Costo?} $O(h)$
+
+\subsubsection{Successore di un nodo}
+Si intende il nodo elencato dopo un nodo $x$ passato come parametro in una visita simmetrica.
+
+Se le chiavi fossero tutte distinte, allora il \emph{successore} di $x$ 
+è il minimo tra i ``nodi più grandi di $x$''.
+\begin{itemize}
+	\item Se $x$ ha un figlio destro, il \emph{successore} è $\proc{Min}(x)$;
+	\item Altrimenti, il successore è l'antenato più vicino di cui $x$ è nel 
+	sottoalbero sinistro.
+\end{itemize}
+\input{pseudocodes/abr/successor}
+
+\paragraph{Costo?} $O(h)$
+
+%27/04/2018
+
+\subsubsection{Inserimento}
+
+\input{pseudocodes/abr/insert}
+
+\paragraph{Costo?} $O(h)$
+
+\subsubsection{Eliminazione di un nodo}
+Distingueremo 2 casi nell'algoritmo:
+\begin{enumerate}[label=($\arabic*$)]
+	\item $z$ ha al più un figlio;
+	\item $z$ ha due figli.
+\end{enumerate}
+Per fare ciò, usiamo una funzione ausiliaria \texttt{Transplant}, con 
+costo $O(1)$.
+
+\input{pseudocodes/abr/transplant} 
+
+\begin{codebox}
+	\Procname{\proc{Delete}$(T,z)$}
+	\li \If $\attrib{z}{left} = \const{nil}$
+	\li \Then
+			$\proc{Transplant}(T,z,\attrib{z}{right})$
+	\li \Else \If $\attrib{z}{right} = \const{nil}$
+	\li     $\proc{Transplant}(T,z,\attrib{z}{left})$
+	\li \Else
+	\li     $y \gets \proc{Min}(\attrib{z}{right})$
+	\li     \If $\attrib{y}{p} \neq z$
+	\li     \Then
+				$\proc{Transplant}(T, y, \attrib{y}{right})$
+	\li         $\attrib{y}{right} \gets \attrib{z}{right}$
+	\li         $\attrib{\attrib{y}{right}}{p} \gets y$
+	\li         $\attrib{y}{left} \gets \attrib{z}{left}$
+	\li         $\attrib{\attrib{y}{left}}{p} \gets y$
+	\li         $\proc{Transplant}(T,z,y)$
+	\li     \Else
+	\li         $\attrib{y}{left} \gets \attrib{z}{left}$
+	\li         $\attrib{\attrib{y}{left}}{p} \gets y$
+	\li         $\proc{Transplant}(T,z,y)$
+			\End
+		\End
+\end{codebox}
+È possibile scrivere \texttt{Delete} in modo più compatto.
+
+\input{pseudocodes/abr/delete}

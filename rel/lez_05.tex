@@ -1,6 +1,4 @@
-\section{Lezione 5}
-
-\subsection{Complessità di un problema}
+\subsection{Complessità di un Problema}
 Dato un problema\footnote{Relazione/funzione INPUT $\rightarrow$ OUTPUT} P ci sono
 (possono esserci) algoritmi che risolvono P. La \textbf{complessità} di P è la 
 complessità dell'algoritmo di complessità più bassa che lo risolve.
@@ -20,7 +18,7 @@ P è $\Omega \big( f(n) \big)$
 
 $\implies$ se P è $O \big( f(n) \big)$ e $\Omega \big( f(n) \big) \Rightarrow$ P è $\Theta \big( f(n) \big)$ 
 
-\subsection{Esempio: limite inferiore per l'ordinamento basato su scambi}
+\subsubsection{Esempio: limite inferiore per l'ordinamento basato su scambi}
 
 \paragraph{Def (inversione)} Dato \texttt{A[1$\twodots$n]}, una \emph{inversione} è una coppia $(i,j)$
 con $i,j \in [1,n]$ con $i < j$ e \texttt{A[i]} $>$ \texttt{A[j]}.\par \medskip
@@ -65,7 +63,7 @@ riduce $\# inv(A)$ al massimo di 1.
 \end{displaymath}
 \texttt{Insertion Sort} è ``quasi'' basato su scambi $\Rightarrow \text{è } O(n^2) \Rightarrow \text{è } \Theta (n^2)$
 
-\subsection{Soluzione di ricorrenze}
+\subsection{Soluzione di Ricorrenze}
 Abbiamo visto per \texttt{Merge Sort} la complessità nel modo seguente:
 
 \begin{codebox}
@@ -94,7 +92,7 @@ i problemi di ricorrenza:
 	\item \emph{Master Theorem} (\ref{mastertheorem}).
 \end{itemize}
 
-\subsubsection{Metodo di sostituzione} \label{ricorrenze:sostituzione}
+\subsubsection{Metodo di Sostituzione} \label{ricorrenze:sostituzione}
 Dato una ricorrenza, si può provare a ``indovinare'' la soluzione, oppure si può sviluppare l'\emph{albero %
 delle ricorrenze}:
 \begin{itemize}

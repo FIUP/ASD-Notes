@@ -1,9 +1,5 @@
-\section{Lezione 3}
-
-\subsection{Approfondimento sull'induzione}
-
-\subsubsection{Induzione ordinaria} 
-
+\subsubsection{Approfondimento sull'Induzione}
+\paragraph{Induzione ordinaria} 
 Proprietà $P(n)$, e.g.  $P(n) = $ ``Se $n$ è pari, $n+1$ è dispari'' oppure 
 ``tutti i grafi con $n$ nodi \dots ''.\par
 Per dimostrare che $P(n)$ vale per ogni $n$
@@ -13,13 +9,13 @@ Per dimostrare che $P(n)$ vale per ogni $n$
 	è vera per ogni $n$.
 \end{itemize}
 
-\subsubsection{Induzione completa}
+\paragraph{Induzione completa}
 \begin{itemize}
 	\item $\big[ P(0) \big]$ (non necessaria, è un'istanza del passo successivo);
 	\item dimostro $P(m) \ \forall m<n \rightarrow $ vale $P(n) \ \forall n$.  
 \end{itemize}
 
-\subsection{Complessità di Merge Sort}
+\subsubsection{Complessità di Merge Sort}
 
 $n = \#$elementi da ordinare\footnote{Il simbolo \# verrà usato per indicare la cardinalità di un insieme.}
 
@@ -111,7 +107,7 @@ Poniamo $n=2^h$. Abbiamo
 	T^{MS}(n) = an \log_2n + b''n + c'' \approx n \log_2n
 \end{displaymath}
 
-\subsection{Confronto tra IS e MS}
+\subsection{Confronto tra Insertion Sort e Merge Sort}
 
 \begin{gather*}
 	T^{IS}(n) = a'n^2 + b'n + c' \\

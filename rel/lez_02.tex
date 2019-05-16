@@ -1,6 +1,4 @@
-\section{Lezione 2}
-
-\subsection{Modello dei costi}
+\subsubsection{Complessità di Insertion Sort} \label{is:complessita}
 \paragraph{Assunzione} Tutte le istruzioni richiedono un tempo \underline{costante}.
 
 Rivediamo l'algoritmo:
@@ -22,8 +20,7 @@ Vediamo il \emph{costo} di ogni istruzione:
     \item[] $\boldsymbol{c_6}, \boldsymbol{c_7} \rightarrow \displaystyle\sum_{j=2}^{n} t_j$
     \item[] $\boldsymbol{c_8} \rightarrow (n-1)$
 \end{itemize}
-
-\subsection{Complessità di IS} \label{is:complessita}
+ 
 \begin{displaymath}
     T^{IS}(n) = c_0 + c_1 + c_2n + (c_3+c_4+c_8)(n-1)
     + c_5\displaystyle\sum_{j=2}^{n}(t_j+1) + (c_6+c_7)\displaystyle\sum_{j=2}^{n}t_j
@@ -43,7 +40,7 @@ Andiamo ad analizzare i 3 possibili casi:
     \item Caso medio (\ref{is:casomedio})
 \end{enumerate}
 
-\subsubsection{Caso migliore} \label{is:casomigliore}
+\paragraph{Caso migliore} \label{is:casomigliore}
 
 $\rightarrow A$ ordinato $\Rightarrow t_j = 0 $ $\forall j$
 
@@ -57,7 +54,7 @@ La \textbf{complessità} diventa:
 Ossia, si comporta come $n$. Il \emph{caso migliore} \textbf{non}
 è interessante, visto che è improbabile si presenti.
 
-\subsubsection{Caso peggiore} \label{is:casopeggiore}
+\paragraph{Caso peggiore} \label{is:casopeggiore}
 
 $\rightarrow A$ ordinato in senso inverso $\Rightarrow \forall j$ $t_j = j-1$ \par
 \bigskip
@@ -92,7 +89,7 @@ Per finire, ricalcoliamo $T^{IS}_{max}(n)$
     T^{IS}_{max}(n) = a'n^2+b'n+c' \approx n^2
 \end{displaymath}
 
-\subsubsection{Caso medio} \label{is:casomedio}
+\paragraph{Caso medio} \label{is:casomedio}
 Il caso medio è \emph{difficile da calcolare}, e in una considerevole parte dei casi,
 coincide con il caso peggiore.\par
 Comunque, l'idea è la seguente:
@@ -251,7 +248,7 @@ Valuto \texttt{L[i]} e \texttt{R[j]}. \par
 
 \input{pseudocodes/merge.tex}
 
-\subsubsection{Invarianti e correttezza}
+\paragraph{Invarianti e Correttezza}
 
 \textbf{L} e \textbf{R} contengono rispettivamente 
 \texttt{A[p$\twodots$q]} e \texttt{A[q+1$\twodots$r]}. 

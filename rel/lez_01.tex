@@ -1,4 +1,4 @@
-\section{Lezione 1}
+\section{Introduzione}
 
 \subsection{Problem Solving}
 \begin{enumerate}
@@ -40,7 +40,7 @@ Avviene in tempo $O(1)$ ammortizzato: questo perchè ogni N inserimenti, è
 necessario un resize del vector e una copia di tutti gli elementi nel nuovo vettore
 (questa procedura è nascosta al programmatore).
 
-\subsection{Cosa analizzeremo nel corso}
+\subsection{Analisi}
 
 \begin{itemize}
 	\item[$\bullet$] Tempo di esecuzione;
@@ -50,7 +50,7 @@ necessario un resize del vector e una copia di tutti gli elementi nel nuovo vett
 	\item Manutenibilità.
 \end{itemize}
 
-\subsubsection{Approfondimento sul tempo di esecuzione T(n)}
+\paragraph{Approfondimento sul tempo di esecuzione T(n)}
 
 \begin{itemize}
 	\item \textit{P Problems}: complessità polinomiale. L'algoritmo è trattabile
@@ -63,8 +63,12 @@ necessario un resize del vector e una copia di tutti gli elementi nel nuovo vett
 	\includegraphics[height=6cm]{img/algorithm-complexity.png}
 	\caption{Complessità T(n).}	
 \end{figure}
+
+\newpage
 	
-\subsection{Problema dell'ordinamento (sorting)}
+\section{Algoritmi di Ordinamento}
+
+\subsection{Problema dell'Ordinamento (Sorting)}
 \texttt{Input}: sequenza di numeri 
 \begin{center}
 	$a_0 a_1 \dots a_n$;\par
@@ -192,7 +196,7 @@ Quando il \texttt{while} termina, ci sono due casi:
 	\item[$\circ$] \texttt{(i > 0) and (A[i] $\leq$ key)}: \texttt{A[i+1] = key}.
 \end{itemize}
 
-\subsubsection{Invarianti e correttezza}
+\subsubsection{Invarianti e Correttezza}
 
 \paragraph{for} \texttt{A[1$\twodots$j-1]} è ordinato e contiene gli 
 elementi in \texttt{(1,j-1)} iniziali.

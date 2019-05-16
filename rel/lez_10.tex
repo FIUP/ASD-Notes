@@ -1,6 +1,4 @@
-\section{Lezione 10}
-
-\subsection{Quicksort a tre partizioni}
+\subsection{Quicksort a Tre Partizioni}
 \texttt{Quicksort} con \texttt{RandomizedPartition} funziona bene ed 
 evita, quasi in ogni circostanza, di imbattersi nel caso pessimo, ad 
 eccezione di un caso particolare: se in \emph{input} viene dato un 
@@ -32,7 +30,7 @@ Durante l'algoritmo, la disposizione sarà questa:
 
 \input{pseudocodes/quicksort-2}
 
-\subsection{Limite inferiore}
+\subsection{Limite Inferiore}
 
 \begin{itemize}[label=]
     \item \texttt{Input}: $a_1 \dots a_n$
@@ -50,7 +48,7 @@ Osservazioni:
     l'operatore di confronto $==$ restituisce sempre $\const{False}$.
 \end{itemize}
 
-\subsubsection{Albero di Decisioni}
+\subsection{Albero di Decisione}
 
 È una rappresentazione ``astratta'' delle possibili esecuzioni di un 
 algoritmo di ordinamento su un input di dimensione fissata $A[1 \dots n]$.
@@ -64,13 +62,13 @@ algoritmo di ordinamento su un input di dimensione fissata $A[1 \dots n]$.
 Rivediamo una versione di \texttt{Insertion Sort} basato su scambi.
 \input{pseudocodes/insertion-sort-swaps}
 \clearpage
-Ecco un esempio di \emph{Albero delle Decisioni} per l'array $A[a_1,a_2,a_3]$ 
+Ecco un esempio di \emph{Albero di Decisione} per l'array $A[a_1,a_2,a_3]$ 
 con 
 $$a_1 = 1, \; a_2 = 2, \; a_3 = 3$$
 \begin{figure}[!hb] 
     \centering
     \includegraphics[width=\textwidth]{img/decision-tree.png}
-    \caption{Albero delle decisioni per l'array $A[1,2,3]$}
+    \caption{Albero di decisione per l'array $A[1,2,3]$}
 \end{figure}
 
 \paragraph{Osservazione} 
@@ -91,11 +89,10 @@ $$\# foglie \geq n! \qquad (\# foglie \leq 2^h)$$
         = \frac{n}{2} (\log_2 n - 1) = \Theta (n \log n)
 \end{align*}
 
-\subsection{Ordinamento in tempo lineare}
+\subsection{Counting Sort}
 Esistono degli algoritmi di ordinamento che, in certe condizioni e per certi input, permettono
 di ordinare in tempo lineare $\Omega (n)$
 
-\subsubsection{Counting Sort}
 Assumo
 \begin{itemize}[label=$-$]
     \item interi;

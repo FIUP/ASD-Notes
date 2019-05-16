@@ -1,6 +1,6 @@
-\section{Lezione 4}
+\section{Limiti Asintotici e Ricorrenze}
 
-\subsection{Notazione asintotica}
+\subsection{Notazione Asintotica}
 Il \textbf{tempo di esecuzione} è difficile da calcolare, come visto nella sezione \ref{is:complessita}. 
 Il modo in cui è stato calcolato è pieno di dettagli ``inutili''.\par
 Rivediamo le complessità di Insertion Sort e Merge Sort:
@@ -35,7 +35,7 @@ f, g: \mathbb{R}^+ \rightarrow \mathbb{R}^+
 	limite superiore o inferiore per ogni punto di $f(n)$.
 \end{itemize}
 \newpage
-\subsubsection{Limite asintotico superiore}
+\subsubsection{Limite Asintotico Superiore}
 Data $g(n)$, indichiamo con $O \big(g(n) \big)$ il \emph{limite asintotico superiore}, definito come segue:
 \begin{displaymath}
 	O \big(g(n) \big) = \{ f(n) \ \vert \ \exists c > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \Rightarrow (0 \leq) f(n) \leq c \cdot g(n) \}
@@ -82,7 +82,7 @@ Data $g(n)$, indichiamo con $O \big(g(n) \big)$ il \emph{limite asintotico super
 \end{itemize}
 
 \newpage
-\subsubsection{Limite asintotico inferiore}
+\subsubsection{Limite Asintotico Inferiore}
 Data $g(n)$, indichiamo con $\Omega \big(g(n) \big)$ il \emph{limite asintotico inferiore}, definito come segue:
 \begin{displaymath}
 	\Omega \big(g(n) \big) = \{ f(n) \ \vert \ \exists c > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \Rightarrow c \cdot g(n) \leq f(n) \}
@@ -109,7 +109,7 @@ Data $g(n)$, indichiamo con $\Omega \big(g(n) \big)$ il \emph{limite asintotico 
 	\end{displaymath}
 \end{itemize}
 
-\subsubsection{Limite asintotico stretto}
+\subsubsection{Limite Asintotico Stretto}
 Data $g(n)$, indichiamo con $\Theta \big( g(n) \big)$ il \emph{limite asintotico stretto}, definito come segue:
 \begin{multline*}
 	\Theta \big( g(n) \big) = \{ f(n) \ \vert \ \exists c_1, c_2 > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \\ 
@@ -131,7 +131,7 @@ Data $g(n)$, indichiamo con $\Theta \big( g(n) \big)$ il \emph{limite asintotico
 	& && \frac{f_1(n)}{n_3} \rightarrow 0
 \end{align*}
 \newpage
-\subsection{Metodo del limite}
+\subsection{Metodo del Limite}
 $f(n),g(n) > 0 \quad \forall n$ \par \medskip
 Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)}$ esiste, allora:
 
@@ -153,7 +153,7 @@ Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)}$ esiste, allora:
 	$f(n) \neq O \big( g(n) \big)$.
 \end{enumerate}
 
-\subsection{Alcune proprietà generali}
+\subsection{Proprietà Generali}
 \begin{itemize}
 	\item $f(n) = a_kn^k + a_{k-1}n^{k-1} + \dots + a_1n + a_0 = \Theta (n^k)$
 	\item $h \neq k \quad \Theta (n^h) \neq \Theta (n^k)$

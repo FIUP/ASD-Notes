@@ -1,93 +1,130 @@
-\section{Lezione 16}
+\subsection{Arricchimento di Strutture Dati}
 
-\subsection{Red-Black Trees}
-
-I \emph{Red-Black Trees} sono ABR i cui nodi hanno un campo \emph{colore} $x.col$, che può essere:
+Vedremo due esempi, uno per gli RB-trees, e un altro per gli ABR.
 \begin{itemize}[noitemsep]
-    \item \textbf{R} per il rosso;
-    \item \textbf{B} per il nero.
+    \item \emph{Statistiche d'ordine} (\ref{statistichedordine})
+    \item \emph{Interval Trees} (\ref{intervaltrees})
 \end{itemize}
 
-\paragraph{Accorgimento} $\const{nil}$ sarà in realtà un nodo,
-$T.nil$, con $T.nil.col = B$.
-
-\paragraph{Caratteristiche} \emph{RB-tree} è in realtà un ABR tale che:
-\begin{enumerate}[label=($\arabic*$)]
-    \item Ogni nodo $x$ ha $x.col \in \{R,B\}$; \label{rbtree:1}
-    \item La radice $root$ ha $root.col = B$; \label{rbtree:2}
-    \item Le foglie ($T.nil$) sono $B$; \label{rbtree:3}
-    \item Se $x$ è $R$, i figli sono $B$; \label{rbtree:4}
-    \item Per ogni nodo $x$, ogni cammino da $x$ a una qualsiasi delle foglie
-    ha lo stesso numero di nodi $B$ (calcolato con $bh(x)$). \label{rbtree:5}
-\end{enumerate} 
-
-\begin{figure}[hbt]
-    \centering
-    \includegraphics[width=\textwidth]{img/rb-tree-ex.png}
-    \caption{Esempio di un RB-tree.}
-\end{figure}
-\pagebreak
-
-È possibile notare che: 
+\subsubsection{Statistiche d'ordine} \label{statistichedordine}
+Struttura che parte da un RB-tree. Aggiungo:
 \begin{itemize}
-    \item In caso non ci fossero nodi rossi, avremo un albero
-    perfettamente bilanciato;
-    \item In ogni cammino, il \verb|#| di nodi \textbf{B} è almeno la
-    metà del \verb|#| dei nodi \textbf{R}
+    \item \texttt{Select(T,i)} $\equiv$ nodo $x$ che occuperebbe la posizione $i$
+        nei nodi ordinati per chiave (in una \emph{visita simmetrica});
+    \item \texttt{Rank(T,x)} $\equiv$ posizione $i$ (in una \emph{visita simmetrica}) 
+        che occupa il nodo $x$. 
 \end{itemize}
 
-\paragraph{Osservazione} Se $T$ è un \emph{RB-tree} con $n$ nodi interni ($\neq \const{nil}$)
-e $h$ altezza, allora vale
-$$h \leq 2 \log (n + 1)$$
+Per implementare queste due procedure, ho bisogno di un nuovo campo dati. 
+Aggiungo il campo 
+$$x.size = \# \text{nodi radicati nel sottoalbero } T_x$$ 
+Valgono
+\begin{itemize}[label=,noitemsep]
+    \item $T.nil.size = 0$
+    \item $x.size = x.left.size + x.right.size + 1$
+\end{itemize}
 
-\subparagraph{Dimostrazione} Consideriamo 
-$$n_x \geq 2^{bh(x)} - 1$$
-La dimostrazione è per induzione su $h_x$ (altezza del sotto-albero radicato in $x$).
+\paragraph{Esempio} In ogni nodo, tra le parentesi
+è riportato la $size$ di quel nodo. Ricordiamo che i nodi $nil$ ($T.nil$)
+hanno $size = 0$.
 
-\begin{description}
-    \item[$(h_x = 1)$] Allora ho solo 
-    $T.nil \Rightarrow n_x = 0 = 2^0 - 1 \qquad (2^0 \text{ con } 0 = bh(x))$
-    \item[$(h_x > 1)$] Consideriamo $x$ radice. $x$ ha due figli, $x_1$ e $x_2$.\par
-    Sicuramente vale $h_1,h_2 < h$. Per ipotesi induttiva, valgono:
-    $$n_{x_1} \geq 2^{bh(x_1)} - 1$$
-    $$n_{x_2} \geq 2^{bh(x_2)} - 1$$
-    \begin{align*}
-        n_x & = n_{x_1} + n_{x_2} + 1 \\
-        & \geq 2^{bh(x_1)} + 2^{bh(x_2)} - 1 \\
-        & \geq 2 \cdot 2^{bh(x)-1} - 1 = 2^{bh(x)} - 1 \\
-        & \qquad (\text{valgono } bh(x_1) \geq bh(x)-1, \ bh(x_2) \geq bh(x)-1) \\
-        \text{Comples}&\text{sivamente}\\
-        n & = n_{root} \geq 2^{bh(root)} - 1
-    \end{align*}
-    Essendo $bh(root) \geq \frac{h}{2}$, posso ottenere
-    \begin{align*}
-        n_{root} & \geq 2^{bh(root)} - 1 \\
-        & 2^{\frac{h}{2}} - 1 \\
-        \Rightarrow \ & 2^{\frac{h}{2}} \leq n + 1 \\
-        & \frac{h}{2} \leq \log_2(n+1) \Rightarrow h \leq 2 \log_2(n+1) 
-    \end{align*}
-\end{description}
+\begin{center}
+    \begin{tikzpicture}
+    \Tree
+    [.$\boldsymbol{26}(7)$
+        [.$\boldsymbol{17}(1)$
+            [.$\boldsymbol{nil}$ ]
+            [.$\boldsymbol{nil}$ ]
+        ]
+        [.$\boldsymbol{\color{red} 41}(5)$
+            [.$\boldsymbol{30}(2)$ 
+                [.$\boldsymbol{nil}$ ]
+                [.$\boldsymbol{\color{red} 38}(1)$ 
+                    [.$\boldsymbol{nil}$ ]
+                    [.$\boldsymbol{nil}$ ]
+                ]
+            ]
+            [.$\boldsymbol{47}(2)$ 
+                [.$\boldsymbol{nil}$ ]
+                [.$\boldsymbol{\color{red} 50}(1)$ 
+                    [.$\boldsymbol{nil}$ ]
+                    [.$\boldsymbol{nil}$ ]
+                ]
+            ] 
+        ]
+    ]
+    \end{tikzpicture}
+\end{center}
 
-\subsubsection{Complessità algoritmi RB-Trees}
-\texttt{Search, Succ, Min, Pred, Max} hanno un costo di $O(h) = O(\log n)$
+Vediamo un'implementazione non efficiente della procedura \texttt{Size}.
 
-%2/5/2018
+\input{pseudocodes/abr/stats/size} 
 
-\subsubsection{RB-Insert e RB-Delete}
-A differenza di quelle citate precedentemente, che risultano semplici
-sia come complessità asintotica che come implementazione, Bisogna porre 
-particolare attenzione a queste due procedure: \texttt{RB-Insert} e \texttt{RB-Delete}.
+\subparagraph{Costo} Il costo è $O(n)$, che come preannunciato, non è efficiente.
+Questo perchè le procedure \texttt{Insert/Delete} di un RB-tree sono nel peggiore dei casi $O(h)$.
 
-Per ovviare a ciò, posso utilizzare le \emph{rotazioni}. Consideriamo il seguente albero,
-in cui $x$ e $y$ sono nodi normali, mentre $\alpha, \ \beta$ e $\gamma$ sono sotto-alberi
-(il colore dei nodi non ha importanza ai fini della procedura che andremo a 
-vedere)\footnote{Di conseguenza, applicandola a un \emph{RB-tree}, gli assiomi di validità potrebbero venire violati.}:
+\bigskip Questa procedura, \texttt{Select}, restituisce il nodo di posizione $i$
+in $T_x$.
+
+\input{pseudocodes/abr/stats/select} 
+
+\subparagraph{Costo di Select} $O(h) = O(\log n)$
+
+\texttt{Rank} restituisce la posizione $i$ che occupa il nodo $x$.
+
+\input{pseudocodes/abr/stats/rank}
+
+\subparagraph{Costo di Rank} $O(h) = O(\log n)$
+
+\bigskip Vediamo ora la variante di \texttt{RB-Insert} 
+
+\input{pseudocodes/abr/stats/rb-insert}
+
+E la versione aggiornata di \texttt{Left}
+
+\input{pseudocodes/abr/stats/left}
+
+\subsubsection{Teorema dell'aumento degli RB-Trees}
+
+\paragraph{Def.} Sia $x.field$ un campo che si calcola in $O(1)$
+usando $x, x.left, x.right$ ($x.field = F(x, x.left, x.right)$).
+Allora è possibile modificare \texttt{RB-Insert} e \texttt{RB-Delete}
+in modo che mantengano aggiornato il campo $x.field$ con complessità
+asintotica $O(\log n)$.
+
+\subsubsection{Interval Trees} \label{intervaltrees}
+Gli \emph{Interval Trees} sono alberi binari di ricerca con un campo $x.int$, che a sua 
+volta presenta due campi:
+\begin{itemize}[noitemsep]
+    \item $int.low$, che è anche la chiave;
+    \item $int.high$.
+\end{itemize}
+E anche di un campo $x.max = \text{max estremo di intervallo per i nodi in } T_x$, ossia
+$$x.max = max 
+\begin{cases}
+    x.left.max \\
+    x.right.max \\
+    x.int.high
+\end{cases}$$
+L'idea è quella in cui ogni nodo rappresenti un intervallo. \par
+Vogliamo implementare le seguenti procedure:
+\begin{itemize}
+    \item \texttt{Insert(T,x)}
+    \item \texttt{Delete(T,x)}
+    \item \texttt{ISearch(T,i)} con $i = [low, high]$:
+    \begin{itemize}
+        \item $x$ tale che $x.int \cap i \neq \varnothing$;
+        \item $T.nil$ se un tale $x$ non c'è.
+    \end{itemize}
+\end{itemize} 
+
+\paragraph{Rotazioni} Prendiamo il seguente albero di esempio.
+
 \begin{center}
 	\begin{tikzpicture}
 	\Tree
 	[.$x$     
-		[.$\alpha$
-		]
+		[.$\alpha$ ]
 		[.$y$ 
             [.$\beta$ 
                 \edge[blank]; \node[blank]{};
@@ -99,176 +136,45 @@ vedere)\footnote{Di conseguenza, applicandola a un \emph{RB-tree}, gli assiomi d
             ]
 		]
 	]
-	\end{tikzpicture}
+    \end{tikzpicture}
 \end{center}
-Applichiamo la procedura \texttt{Left(T,x)}, ottenendo:
+Applico \texttt{Left(T,x)}, ottenendo
 \begin{center}
-	\begin{tikzpicture}
-	\Tree
-	[.$y$
-        [.$x$
-            [.$\alpha$ 
+    \begin{tikzpicture}
+        \Tree
+        [.$y$     
+            [.$x$ 
+                [.$\alpha$ ]
                 \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
+                [.$\beta$ ]
             ]
-            [.$\beta$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
-		]
-		[.$\gamma$ ]
-	]
-	\end{tikzpicture}
+            [.$\gamma$ ]
+        ]
+    \end{tikzpicture}
 \end{center}
 
-\paragraph{Osservazione} La \emph{visita simmetrica} è identica per i due alberi:
-$$\alpha \rightarrow x \rightarrow \beta \rightarrow y \rightarrow \gamma$$
-
-\input{pseudocodes/abr/left}
-
-\paragraph{RB-Insert(T, z)} Voglio inserire $z$ nell'albero $T$.
-L'idea è quella di porre $z.col = \const{red}$ poichè meno insidioso\footnote{Andando a modificare il numero di nodi neri, cambia l'altezza nera, e la cosa è difficile da sistemare.}.
-\begin{itemize}
-    \item Se violo \ref{rbtree:2} $\Rightarrow z.col = \const{black}$;
-    \item Se violo \ref{rbtree:4}:
-    \begin{itemize}
-        \item Risolvo localmente;
-        \item Sposto verso l'alto il problema.
-    \end{itemize}
+Sistemo i massimi. \texttt{Left} costa ancora $O(1)$
+\begin{itemize}[noitemsep]
+    \item $y.max = x.max$
+    \item $x.max = max \{ x.int.high, x.left.max, x.right.max \}$
 \end{itemize}
 
-Abbiamo due \emph{macrocasi}. $z.p$ è figlio sinistro, oppure destro. Noi analizzeremo solo il primo: \textbf{z.p figlio sinistro}.
-\begin{center}
-	\begin{tikzpicture}
-	\Tree
-	[.$\boldsymbol{z.p.p}$
-        [.$\boldsymbol{\color{red} z.p}$
-            [.$\boldsymbol{\color{red} z}$
-            ]
-		]
-		[.$y$ 
-        \edge[blank]; \node[blank]{};
-        \edge[blank]; \node[blank]{};
-        ]
-    ]
-	\end{tikzpicture}
-\end{center}
-\clearpage
-Abbiamo due possibilità per $y$\footnote{I nodi con testo in rosso sono $\const{red}$, %
-quelli in grassetto sono $\const{black}$, e quelli normali possono essere sia rossi che neri.}:
-\begin{enumerate}
-    \item $y.col = \const{red}$. Ci è sufficiente invertire il colore di $z.p.p$ con quello dei figli.
-    \begin{center}
-        \begin{tikzpicture}
-        \Tree
-        [.$\boldsymbol{\color{red} z.p.p}$
-            [.$\boldsymbol{z.p}$
-                [.$\boldsymbol{\color{red} z}$
-                ]
-            ]
-            [.$\boldsymbol{y}$ 
-            \edge[blank]; \node[blank]{};
-            \edge[blank]; \node[blank]{};
-            ]
-        ]
-        \end{tikzpicture}
-    \end{center}
-    In questo modo, risolviamo localmente e rimandiamo il problema in alto.
-    \item $y.col = \const{black}$. Possiamo distinguere due sottocasi.
-    \begin{enumerate}[label=($2.\arabic*$)]
-        \item $z$ figlio destro. \label{rbinsert:2.1}
-        \begin{center}
-            \begin{tikzpicture}
-            \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z.p}$
-                    \edge[blank]; \node[blank]{};
-                    [.$\boldsymbol{\color{red} z}$
-                    ]
-                ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
-            ]
-            \end{tikzpicture}
-        \end{center}
-        Voglio finire nel caso \ref{rbinsert:2.2}. Applico \texttt{Left(T,z.p)}, ottenendo:
-        \begin{center}
-            \begin{tikzpicture}
-            \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z}$
-                    [.$\boldsymbol{\color{red} z.p}$ ]
-                    \edge[blank]; \node[blank]{};
-                ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
-            ]
-            \end{tikzpicture}
-        \end{center}
+Vediamo \texttt{ISearch}.
+\input{pseudocodes/abr/intervaltree/isearch} 
 
-        \item $z$ figlio sinistro. \label{rbinsert:2.2}
-        \begin{center}
-            \begin{tikzpicture}
-            \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z.p}$
-                    [.$\boldsymbol{\color{red} z}$ ]
-                    \edge[blank]; \node[blank]{};
-                ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
-            ]
-            \end{tikzpicture}
-        \end{center}
-        Scambio i colori di $z.p.p$ con $z.p$, ottenendo:
-        \begin{center}
-            \begin{tikzpicture}
-            \Tree
-            [.$\boldsymbol{\color{red} z.p.p}$
-                [.$\boldsymbol{z.p}$
-                    [.$\boldsymbol{\color{red} z}$ ]
-                    \edge[blank]; \node[blank]{};
-                ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
-            ]
-            \end{tikzpicture}
-        \end{center}
-        Applico \texttt{Right(T,z.p.p)}\footnote{Analoga di \texttt{Left}.}:
-        \begin{center}
-            \begin{tikzpicture}
-            \Tree
-            [.$\boldsymbol{z.p}$
-                [.$\boldsymbol{\color{red} z}$ 
-                    \edge[blank]; \node[blank]{};
-                    \edge[blank]; \node[blank]{};
-                ]
-                [.$\boldsymbol{\color{red} z.p.p}$ 
-                    \edge[blank]; \node[blank]{};
-                    [.$\boldsymbol{y}$ ]
-                ]
-            ]
-            \end{tikzpicture}
-        \end{center}
+\subparagraph{Correttezza} 
+\begin{itemize}
+    \item \textbf{Else if}. Consideriamo in $x.left$ un intervallo $i'$.
+    Abbiamo 2 possibilità.
+    \begin{enumerate}[label=($\arabic*$)]
+        \item $i \cap i' \neq \varnothing$
+        \item $i \cap i' = \varnothing$, ovvero vale $i.high < i'.low$. 
+        Questo varrà per ogni nodo dei sotto-alberi, quindi è inutile ispezionare
+        gli antenati di quel sotto-albero.
     \end{enumerate}
-\end{enumerate}
+    \item \textbf{Else}. $\forall i'$ in $x.left \Rightarrow i' \cap i \neq \varnothing$.
+\end{itemize}
 
-\input{pseudocodes/abr/rb-insert}
-\input{pseudocodes/abr/rb-insertfix}
+\subparagraph{Costo} $O(h) = O(\log n)$
 
-\subparagraph{Costo}
-$$\frac{h}{2} \cong \frac{\log n}{2} \approx \log n \text{ iterazioni senza rotazioni}
-    + \proc{Max} \text{ 2 rotazioni.}$$
-
-\paragraph{RB-Delete(T, z)}
-La \texttt{Delete} è ancora più problematica\footnote{Ho deciso di ometterla per non saper come rappresentarla in modo adeguato.%
-Darò solo una breve osservazione}. Se $z$ è rosso, non ho nessun problema, poichè l'altezza nera non viene toccata.
-Altrimenti, i problemi possono essere diversi (radice rossa, due nodi rossi adiacenti, altezza nera inconsistente, ecc\dots).
+\paragraph{Esercizio} Vai a \ref{exs:3-5-2018}

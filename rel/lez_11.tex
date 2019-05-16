@@ -1,5 +1,3 @@
-\section{Lezione 11}
-
 \subsection{Radix Sort}
 Il \href{https://en.wikipedia.org/wiki/Radix_sort}{Radix Sort} è un algoritmo di ordinamento in tempo
 lineare $O(n)$, come \texttt{Counting Sort}, che risolve i problemi di memoria di quest'ultimo.
@@ -23,10 +21,10 @@ non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa ch
 
 \input{pseudocodes/radix-sort}
 
-\subsubsection{Correttezza di RadixSort(A, d)}
-\begin{description}
-	\item[Inizializzazione] ok;
-	\item[Mantenimento] Se $A^{j-1}$ è ordinato e ordino rispetto alla $j$-esima cifra con
+\paragraph{Correttezza di RadixSort(A, d)}
+\begin{itemize}
+	\item \textbf{Inizializzazione}: ok;
+	\item \textbf{Mantenimento}: se $A^{j-1}$ è ordinato e ordino rispetto alla $j$-esima cifra con
 	un algoritmo stabile, allora $A^j$ è ordinato.
 	$$i < i' \Rightarrow A^j[i] \leq A^j[i']$$
 	\begin{align*}
@@ -46,7 +44,7 @@ non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa ch
 			& \leq A^j[i'] = a'_j A^{j-1}[i']
 		\end{align*}
 	\end{enumerate}
-\end{description}
+\end{itemize}
 
 \paragraph{Costo?} 
 \begin{gather*}
@@ -54,19 +52,7 @@ non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa ch
 	\text{con } d = \Theta(1), \text{ base } b = \Theta(n) 
 \end{gather*}
 
-\subsection{Strutture dati elementari}
-\begin{itemize}[noitemsep]
-	\item \emph{Tabelle hash}
-	\item \emph{Alberi di ricerca}
-\end{itemize}
-Entrambe le strutture dati sono \emph{insiemi dinamici}: per un dato $x$, abbiamo:
-\begin{itemize}[noitemsep]
-	\item $x.key$;
-	\item $Insert(x)$;
-	\item $Delete(x)$;
-	\item $Search(x)$.
-\end{itemize}
-\subsubsection{Tabelle Hash}
+\section{Tabelle Hash}
 \begin{gather*}
 	U \text{ universo delle chiavi} \\
 	U = \{ 0, 1, \dots, \abs{U} - 1 \} \\

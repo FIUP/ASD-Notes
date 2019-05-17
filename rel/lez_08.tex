@@ -44,7 +44,7 @@ Seguono alcune definizioni.
 	\item[Altezza:] è la distanza dalla radice alla foglia più distante;
 	\item[Albero completo:] è un albero di altezza $h$ con $\displaystyle\sum_{i=0}^h 2^i - 1$ nodi;
 	\item[Albero quasi completo:] è un albero completo a tutti i livelli eccetto l'ultimo, in cui 
-	possono mancare delle foglie.
+	possono mancare delle foglie e le foglie presenti sono addossate a sinistra.
 \end{description}
 
 Gli heap verranno rappresentati in array monodimensionali, nel modo descritto di seguito:
@@ -73,6 +73,13 @@ Vediamo alcune funzioni di utilità che verranno usate.
 	\Downarrow \\
 	A[i] \geq A[\text{\emph{Left(i)}}], \ A[\text{\emph{Right(i)}}]
 \end{gather*}
+Equivalentemente
+\begin{gather*}
+	\forall \text{ nodo } A[i], \\
+	A[i] \leq \text{antenati} \\
+	\Downarrow \\
+	A[i] \leq A[\text{\emph{Parent(i)}}]
+\end{gather*}
 \paragraph{Osservazioni}
 \begin{itemize}[label=$\bullet$]
 	\item Uno heap con un solo elemento è un \emph{Max Heap}.
@@ -86,15 +93,24 @@ Ecco ora una procedura che, dato un nodo $i$, trasforma in un Max Heap il sotto-
 
 \paragraph{Correttezza di MaxHeapify} 
 \begin{itemize}
-	\item \textbf{Caso base}: $max = i, \ A[i] \geq A[l], A[r]$;
-	\item \textbf{Induzione}: $max \neq i$, distinguo 2 casi:
+	\item \textbf{Casi base}: $max = i$, distunguo due casi:
+	\begin{itemize}
+		\item $i$ è foglia $(l, r > A.heapsize)$;
+		\item $A[i] \geq A[l], A[r]$;
+	\end{itemize}
+	\item \textbf{Induzione}: $max \neq i$, distinguo due casi:
 	\begin{itemize}
 		\item $max = l, \ A[l] \geq A[i], A[r]$;
 		\item $max = r, \ A[r] \geq A[i], A[l]$.
 	\end{itemize}
 \end{itemize}
-\paragraph{Costo?} L'algoritmo ha un costo di $O(h)$, con $h$ altezza del sotto-albero radicato in $i$, con 
-$$O(h) \cong O(\log n) \qquad \text{(omessa la dimostrazione)}$$
+\paragraph{Complessità} $O(h)$, con $h$ altezza del sotto-albero radicato in $i$
+\begin{align*}
+	n & \geq (2^{(h - 1) + 1}) + 1 = 2^h \\
+	h & \leq \log_2 n \\
+	& \Rightarrow O(h) \cong O(\log n)
+\end{align*}
+
 Ora vogliamo scrivere una procedura che costruisce un \emph{Max Heap} da un array qualunque. \par
 Quali sono i nodi foglia?
 \begin{itemize}

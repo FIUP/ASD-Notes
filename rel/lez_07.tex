@@ -25,7 +25,7 @@ Tre possibili casi:
     $$ T(n) = \Theta \big( f(n) \big) $$ 
 \end{enumerate}
 
-\paragraph{Breve ``dimostrazione'' sul perchè $\boldsymbol{n^{\log_b a}}$} 
+\paragraph{Intuizione sul perchè $\boldsymbol{n^{\log_b a}}$} 
 \begin{gather*}
     T(n) = f(n) + af\Big(\frac{n}{b}\Big) + a^2f\Big(\frac{n}{b^2}\Big) + \dots + a^{\log_b n}f\Big(\frac{n}{b^{\log_b n}}\Big) + c \cdot a^{\log_b n} \\
     a^{\log_b n} = \big(b^{\log_b a}\big)^{\log_b n} = \big(b^{\log_b n}\big)^{\log_b a} = n^{\log_b a} \\
@@ -39,13 +39,13 @@ Vediamo ora i casi in cui sarà possibile finire, e le conclusioni legate ad ess
 
     \item $$\lim_{n \to \infty} \frac{f(n)}{n^{\log_b a}} = 0 $$
     \begin{align*}
-        \text{Potrei essere nel \emph{Caso 1}} & \Rightarrow \text{se } \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a - \varepsilon}} = l \neq \infty \ (\varepsilon > 0) \\
+        \text{Potrei essere nel \emph{Caso 1}} & \Rightarrow \text{se } \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a - \varepsilon}} = l (\geq 0) \neq \infty \ (\varepsilon > 0) \\
         & \Rightarrow T(n) = \Theta \big( n^{\log_b a} \big)
     \end{align*}
     \item 
     \begin{align*}
     \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a}} = \infty \quad & \& \ \exists \varepsilon > 0 : 
-    \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a + \varepsilon}} = l \neq 0 \\
+    \lim_{n \to \infty} \frac{f(n)}{n^{\log_b a + \varepsilon}} = \infty \\
     & \& \ \text{\emph{Regolarità}} \Rightarrow \emph{Caso 3:} \quad T(n) = \Theta (f(n))
     \end{align*}
 

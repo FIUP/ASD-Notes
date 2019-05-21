@@ -24,7 +24,7 @@ In particolare, abbiamo concluso che:
 	\end{align*}
 \end{itemize}
 
-\subsection{Heapsort} \label{heapsort} 
+\subsection{Heap Sort} \label{heapsort} 
 L'\href{https://en.wikipedia.org/wiki/Heapsort}{Heapsort}\footnote{Anche qui, si consiglia di dare %
 un occhio ad altre fonti. In classe, sono stati viste molte rappresentazioni grafiche degli heap, %
 e, come già detto, in \LaTeX $\ $non è per me facile rappresentarli.} è un algoritmo di ordinamento 
@@ -61,9 +61,9 @@ Inoltre, ogni array \texttt{A} sarà dinamico, e avrà:
 \end{itemize}
 
 Vediamo alcune funzioni di utilità che verranno usate.
-\input{pseudocodes/heapsort/left.tex}
-\input{pseudocodes/heapsort/right.tex}
-\input{pseudocodes/heapsort/parent.tex}
+\input{pseudocodes/heap-sort/left.tex}
+\input{pseudocodes/heap-sort/right.tex}
+\input{pseudocodes/heap-sort/parent.tex}
 
 \subsubsection{Max Heap}
 \emph{Max Heap} è uno heap che soddisfa la seguente proprietà:
@@ -89,7 +89,7 @@ Equivalentemente
 
 Ecco ora una procedura che, dato un nodo $i$, trasforma in un Max Heap il sotto-albero eradicato in esso (con radice $i$).
 
-\input{pseudocodes/heapsort/max-heapify}
+\input{pseudocodes/heap-sort/max-heapify}
 
 \paragraph{Correttezza di MaxHeapify} 
 \begin{itemize}
@@ -126,9 +126,9 @@ Quali sono i nodi foglia?
 	\end{align*}
 \end{itemize}
 
-\input{pseudocodes/heapsort/build-max-heap.tex}
-L'algoritmo esegue $\frac{n}{2}$ volte \texttt{MaxHeapify} (che ha costo $O(\log n)$),
-ottenendo un costo totale di $O(n \log n)$, 
+\input{pseudocodes/heap-sort/build-max-heap.tex}
+L'algoritmo esegue $\frac{n}{2}$ volte \texttt{MaxHeapify} (che ha complessità $O(\log n)$),
+ottenendo una complessità finale $O(n \log n)$, 
 tuttavia questa stima è molto pessimistica.\par
 Definiamo: 
 \begin{itemize}[noitemsep]
@@ -166,11 +166,11 @@ consiste nel mettere la radice in ultima posizione.
 Poi chiama \texttt{MaxHeapify} sul resto dell'array per renderlo un \emph{Max Heap}, e itera il procedimento 
 sul nuovo array.
 
-\input{pseudocodes/heapsort/heapsort.tex}
+\input{pseudocodes/heap-sort/heap-sort.tex}
 
-\paragraph{Costo?} Il costo complessivo è di $O(n \log n)$.
+\paragraph{Complessità} $O(n \log n)$.
 
-\subsubsection{Code con priorità} \label{codeconpriorita}
+\subsubsection{Code con Priorità} \label{codeconpriorita}
 $S$ insieme dinamico di oggetti. \par
 $x$ è l'indice, $\attrib{x}{key}$ è il corrispondente valore relativo a quell'indice.
 Voglio poter eseguire le seguenti operazioni:
@@ -178,8 +178,8 @@ Voglio poter eseguire le seguenti operazioni:
 	\item \texttt{Insert(S, x)}
 	\item \texttt{Max(S)}
 	\item \texttt{ExtractMax(S)}
-	\item \texttt{IncreaseKey(S, x, $\Delta$)}
-	\item \texttt{ChangeKey(S, x, $\Delta$)}
+	\item \texttt{IncreaseKey(S, x, $\delta$)}
+	\item \texttt{ChangeKey(S, x, $\delta$)}
 	\item \texttt{Delete(S, x)}
 \end{itemize}
 \paragraph{Idea} Uso un \emph{Max Heap} (A).
@@ -215,15 +215,15 @@ usiamo la procedura \texttt{MaxHeapifyUp}.
 	cella \texttt{A[i]} mantengono la proprietà di \emph{Max Heap}.
 \end{itemize}
 
-\paragraph{Costo?} $O(\log i)$, nel caso peggiore $O(\log n)$.
+\paragraph{Complessità} $O(\log i)$, nel caso peggiore $O(\log n)$.
 \bigskip
 
 Ecco ora lo pseudocodice della funzione \texttt{Insert}.
 \input{pseudocodes/code/insert}
-\texttt{Insert} ha costo $O(\log n)$, lo stesso di \texttt{MaxHeapifyUp}.
+\texttt{Insert} ha complessità $O(\log n)$, la stesso di \texttt{MaxHeapifyUp}.
 
 \input{pseudocodes/code/increase-key}
-\texttt{IncreaseKey} ha costo $O(\log n)$.
+\texttt{IncreaseKey} ha complessità $O(\log n)$.
 
 \input{pseudocodes/code/change-key} 
 \texttt{ChangeKey} è come \texttt{IncreaseKey}, ma può utilizzare valori di $\delta$ qualsiasi, ed è
@@ -234,4 +234,4 @@ corretto per la seguente proprietà:
 \end{gather*}
 
 \input{pseudocodes/code/delete-key}
-\texttt{DeleteKey} ha costo $O(\log n)$.
+\texttt{DeleteKey} ha complessità $O(\log n)$.

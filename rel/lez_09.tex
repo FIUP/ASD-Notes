@@ -1,4 +1,4 @@
-\subsection{Quicksort}
+\subsection{Quick Sort}
 Il \href{https://en.wikipedia.org/wiki/Quicksort}{Quicksort} è probabilmente l'algoritmo di ordinamento
 più utilizzato e nella pratica efficiente, nonostante abbia un caso pessimo di $O(n^2)$.
 \begin{itemize}
@@ -20,10 +20,10 @@ Si basa sul paradigma del \textit{divide et impera}:
 \end{itemize}
 
 \paragraph{Pseudocodice} Segue lo pseudocodice del \texttt{Quicksort}.
-\input{pseudocodes/quicksort}
+\input{pseudocodes/quick-sort}
 \input{pseudocodes/partition}
 
-\subsubsection{Correttezza di Quicksort(A, p, r)}
+\subsubsection{Correttezza di QuickSort(A, p, r)}
 \begin{description}
 	\item[Caso base] array già ordinato, 0 o 1 elemento.
 	\item[Induzione] Abbiamo, dopo \texttt{Partition}
@@ -34,13 +34,13 @@ Si basa sul paradigma del \textit{divide et impera}:
 			\hline 
 		\end{tabular}
 	\end{center}
-	\texttt{Quicksort(A, p, q)} 
+	\texttt{QuickSort(A, p, q)} 
 	\begin{tabular}{|l|l|l|}
 		\hline
 		$\leq$ \texttt{A[q]}, ord & \texttt{A[q]} & $>$ \texttt{A[q]} \\
 		\hline
 	\end{tabular} \par
-	\texttt{Quicksort(A, q+1, r)} 
+	\texttt{QuickSort(A, q+1, r)} 
 	\begin{tabular}{|l|l|l|}
 		\hline
 		$\leq$ \texttt{A[q]}, ord & \texttt{A[q]} & $>$ \texttt{A[q]}, ord \\
@@ -128,7 +128,7 @@ I primi due ($i+1$) elementi sono ordinati:
 	\end{tabular}
 \end{center}
 
-Chiamo ricorsivamente \texttt{Quicksort} con $q = i + 1$.
+Chiamo ricorsivamente \texttt{QuickSort} con $q = i + 1$.
 
 \begin{center}
 	\begin{tabular}{|l|l|l|l|}
@@ -202,7 +202,7 @@ I primi due ($i+1$) elementi sono ordinati:
 	\end{tabular}
 \end{center}
 
-Chiamo ricorsivamente \texttt{Quicksort} con $q = i + 1$.
+Chiamo ricorsivamente \texttt{QuickSort} con $q = i + 1$.
 
 \begin{center}
 	\begin{tabular}{|l|l|}
@@ -246,7 +246,7 @@ Guardando l'array completo ottengo il risultato atteso:
 	\end{tabular}
 \end{center}
 
-\subsubsection{Complessità di Quicksort}
+\subsubsection{Complessità di QuickSort}
 
 \texttt{Partition} costa $\Theta (n)$
 \begin{align*}

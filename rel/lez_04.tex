@@ -38,7 +38,7 @@ f, g: \mathbb{R}^+ \rightarrow \mathbb{R}^+
 \subsubsection{Limite Asintotico Superiore}
 Data $g(n)$, indichiamo con $O \big(g(n) \big)$ il \emph{limite asintotico superiore}, definito come segue:
 \begin{displaymath}
-	O \big(g(n) \big) = \{ f(n) \ \vert \ \exists c > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \Rightarrow (0 \leq) f(n) \leq c \cdot g(n) \}
+	O \big(g(n) \big) = \{ f(n) : \exists c > 0 \quad \exists n_0 \in \mathbb{N} : \forall n \geq n_0 \quad (0 \leq) f(n) \leq c \cdot g(n) \}
 \end{displaymath}
 
 \begin{figure}[!htb]
@@ -76,7 +76,7 @@ Data $g(n)$, indichiamo con $O \big(g(n) \big)$ il \emph{limite asintotico super
 	$1 \leq f_2(n) \leq 3$ \par
 	Vale la seguente
 	\begin{gather*}
-		\exists c > 0 \quad \exists n_0 : n \geq n_0 \Rightarrow f_2(n) \leq c \cdot 1 \\
+		\exists c > 0 \quad \exists n_0 : \forall n \geq n_0 \quad f_2(n) \leq c \cdot 1 \\
 		\text{ok per } c = 3, \ n_0 = 0
 	\end{gather*}
 \end{itemize}
@@ -85,7 +85,7 @@ Data $g(n)$, indichiamo con $O \big(g(n) \big)$ il \emph{limite asintotico super
 \subsubsection{Limite Asintotico Inferiore}
 Data $g(n)$, indichiamo con $\Omega \big(g(n) \big)$ il \emph{limite asintotico inferiore}, definito come segue:
 \begin{displaymath}
-	\Omega \big(g(n) \big) = \{ f(n) \ \vert \ \exists c > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \Rightarrow c \cdot g(n) \leq f(n) \}
+	\Omega \big(g(n) \big) = \{ f(n) : \exists c > 0 \quad \exists n_0 \in \mathbb{N} : \forall n \geq n_0 \quad c \cdot g(n) \leq f(n) \}
 \end{displaymath}
 
 \begin{figure}[!htb]
@@ -99,7 +99,7 @@ Data $g(n)$, indichiamo con $\Omega \big(g(n) \big)$ il \emph{limite asintotico 
 	\item $f_1(n) = 2n^2 + 5n + 3 = \Omega \big(g(n^2) \big)$ ? Sì.\par
 	Deve valere: \par
 	\begin{displaymath}
-		\exists c > 0 \quad \exists n_0 : \forall n \geq n_0 \Rightarrow cn^2 \leq 2n + 5n + 3
+		\exists c > 0 \quad \exists n_0 : \forall n \geq n_0 \quad cn^2 \leq 2n + 5n + 3
 	\end{displaymath}
 	Basta porre $c = 1$, $n_0 = 0$.
 	
@@ -112,8 +112,8 @@ Data $g(n)$, indichiamo con $\Omega \big(g(n) \big)$ il \emph{limite asintotico 
 \subsubsection{Limite Asintotico Stretto}
 Data $g(n)$, indichiamo con $\Theta \big( g(n) \big)$ il \emph{limite asintotico stretto}, definito come segue:
 \begin{multline*}
-	\Theta \big( g(n) \big) = \{ f(n) \ \vert \ \exists c_1, c_2 > 0 \quad \exists n_0 (\in \mathbb{N}) \ \vert \ \forall n \geq n_0 \\ 
-	\Rightarrow c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \}
+	\Theta \big( g(n) \big) = \{ f(n) : \exists c_1, c_2 > 0 \quad \exists n_0 \in \mathbb{N} : \forall n \geq n_0 \\ 
+	c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \}
 \end{multline*}
 
 \begin{figure}[!htb]
@@ -132,25 +132,45 @@ Data $g(n)$, indichiamo con $\Theta \big( g(n) \big)$ il \emph{limite asintotico
 \end{align*}
 \newpage
 \subsection{Metodo del Limite}
-$f(n),g(n) > 0 \quad \forall n$ \par \medskip
-Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)}$ esiste, allora:
+Siano $f(n),\ g(n) > 0 \quad \forall n$ \par \medskip
+Se $\exists \lim_{n \to +\infty} \frac{f(n)}{g(n)}$, allora:
 
 \begin{enumerate}
-	\item Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = k > 0$ allora $f(n) = \Theta \big( g(n) \big)$.\par
-	\begin{align*}
-		\text{Infatti } \forall \varepsilon > 0 \ \exists n_0 : \forall n \geq n_0 & \Rightarrow \abs{\frac{f(n)}{g(n)} - k} \leq \varepsilon \\
-		& \Rightarrow - \varepsilon \leq \frac{f(n)}{g(n)} - k \leq \varepsilon 
-	\end{align*}
-	\begin{gather*}
-		k - \varepsilon \leq \frac{f(n)}{g(n)} \leq k + \varepsilon \\
-		(k - \varepsilon)g(n) \leq f(n) \leq (k + \varepsilon)g(n) \qquad \text{per } 0 < \varepsilon < k
-	\end{gather*}
+	\item Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = k > 0$ allora $f(n) = \Theta \big( g(n) \big)$.
 	
 	\item Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = 0$ allora $f(n) = O \big( g(n) \big)$ e 
 	$f(n) \neq \Omega \big( g(n) \big)$.
 	
 	\item Se $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = \infty$ allora $f(n) = \Omega \big( g(n) \big)$ e 
 	$f(n) \neq O \big( g(n) \big)$.
+\end{enumerate}
+
+\paragraph{Dimostrazione}
+\begin{enumerate}
+	\item Sia $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = k > 0$
+	\begin{align*}
+	& \Rightarrow \forall \varepsilon > 0 \quad \exists n_0 : \forall n \geq n_0 \quad \abs{\frac{f(n)}{g(n)} - k} \leq \varepsilon \\
+	& \Rightarrow - \varepsilon \leq \frac{f(n)}{g(n)} - k \leq \varepsilon \\
+	& \Rightarrow k - \varepsilon \leq \frac{f(n)}{g(n)} \leq k + \varepsilon \\
+	& \Rightarrow (k - \varepsilon)g(n) \leq f(n) \leq (k + \varepsilon)g(n) \qquad \text{per } 0 < \varepsilon < k \\
+	& \Rightarrow f(n) = \Theta \big( g(n)\big)
+	\end{align*}
+	
+	\item Sia $\lim_{n \to +\infty} \frac{f(n)}{g(n)} = 0$ 
+	\begin{align*}
+	& \Rightarrow \forall \varepsilon > 0 \quad \exists n_0 : \forall n \geq n_0 \quad \frac{f(n)}{g(n)} \leq \varepsilon \\
+	& \Rightarrow f(n) \leq  \varepsilon g(n) \\
+	& \Rightarrow f(n) = O \big( g(n) \big)
+	\end{align*}
+	Sia $f(n) = \Omega \big( g(n) \big)$
+	\begin{align*}
+	& \Rightarrow \exists c > 0 \quad \exists n_0 \in \mathbb{N} : \forall n \geq n_0 \quad c g(n) \leq f(n) \\
+	& \Rightarrow \text{Impossibile, infatti sia } \varepsilon = \frac{c}{2} > 0 \\
+	& \Rightarrow \exists n_1 \in \mathbb{N} : \forall n \geq n_1 \quad f(n) \leq \frac{c}{2} g(n) < c g(n) \\
+	& \Rightarrow \text{Contraddizione!}
+	\end{align*}
+	
+	\item Si dimostra similmente al punto (2)
 \end{enumerate}
 
 \subsection{Proprietà Generali}
@@ -165,12 +185,3 @@ In generale
 \begin{gather*}
 	O(1) \subseteq O(\log n) \subseteq O(n) \subseteq O(n \log n) \subseteq O(n^2) \subseteq \dots
 \end{gather*}
-Rivediamo \texttt{Insertion Sort} con le notazioni asintotiche:
-\begin{displaymath}
-	T^{IS}(n) = O(n^2) \qquad T^{IS}_{max}(n) = \Theta (n^2)
-\end{displaymath}
-Vale anche la proprietà seguente:
-\begin{align*}
-	2n^k + \Theta (n^{k-1}) = O(n^k) (&\subseteq \Theta (n^k)) \\
-	& = \Theta (n^k) \quad \forall k > 0
-\end{align*}

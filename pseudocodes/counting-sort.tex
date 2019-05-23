@@ -11,7 +11,7 @@
         \Comment $C[x] = \# elem$ in $A$ con valore $\leq x$
 \li            $C[i] \gets C[i-1] + C[i]$ 
         \End
-\li \For $j \gets \attrib{A}{length}$ \To $1$
+\li \For $j \gets \attrib{A}{length}$ \kw{down} \To $1$
 \li     \Then
             $B[C[A[j]]] \gets A[j]$
 \li         $C[A[j]] \gets C[A[j]] - 1$

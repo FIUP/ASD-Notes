@@ -7,16 +7,16 @@ premesse:
 \end{itemize}
 In particolare, abbiamo concluso che:
 \begin{itemize}
-	\item \texttt{Insertion Sort}: $O(n^2)$, basato su scambi;
-	\item \texttt{Merge Sort}: $\Theta(n \log n)$, ma con un costo in termini di \emph{memoria}.
+	\item \texttt{InsertionSort}: $O(n^2)$, basato su scambi;
+	\item \texttt{MergeSort}: $\Theta(n \log n)$, ma con un costo in termini di \emph{memoria}.
 \end{itemize}
 
 \paragraph{Memoria} 
 \begin{itemize}
-	\item \texttt{Insertion Sort}: 
+	\item \texttt{InsertionSort}: 
 	$$input \ + \ 1 \text{ variabile} \Rightarrow 
 		\text{spazio \emph{costante} } \Theta (1) \text{ (detto ``in loco'')}$$
-	\item \texttt{Merge Sort}: spazio con costo lineare.
+	\item \texttt{MergeSort}: spazio con costo lineare.
 	\begin{align*}
 		S_{MS}(n) & = max\Big{\{} S\Big( \Big{\lfloor}{\frac{n}{2}}\Big{\rfloor} \Big), 
 		\ S\Big( \Big{\lceil}{\frac{n}{2}}\Big{\rceil} \Big), \ \Theta (n) \Big{\}} \\
@@ -25,12 +25,12 @@ In particolare, abbiamo concluso che:
 \end{itemize}
 
 \subsection{Heap Sort} \label{heapsort} 
-L'\href{https://en.wikipedia.org/wiki/Heapsort}{Heapsort}\footnote{Anche qui, si consiglia di dare %
+L'\href{https://en.wikipedia.org/wiki/Heapsort}{Heap Sort}\footnote{Anche qui, si consiglia di dare %
 un occhio ad altre fonti. In classe, sono stati viste molte rappresentazioni grafiche degli heap, %
 e, come già detto, in \LaTeX $\ $non è per me facile rappresentarli.} è un algoritmo di ordinamento 
 basato su 
 una struttura chiamata \href{https://en.wikipedia.org/wiki/Heap_(data_structure)}{heap}, che prende le caratteristiche positive di 
-\texttt{Insertion Sort} e \texttt{Merge Sort}:
+\texttt{InsertionSort} e \texttt{MergeSort}:
 \begin{itemize}[noitemsep]
 	\item in ``loco'' (spazio $\Theta (1)$);
 	\item complessità $\Theta(n \log n)$.
@@ -154,8 +154,8 @@ Definiamo:
 
 %22/03/2018%
 
-Passiamo ora all'algoritmo di ordinamento \texttt{Heapsort}. La radice di un 
-\emph{Max Heap} contiene il valore massimo. Quindi, la prima operazione, e quella su cui si basa \texttt{Heapsort}, 
+Passiamo ora all'algoritmo di ordinamento \texttt{HeapSort}. La radice di un 
+\emph{Max Heap} contiene il valore massimo. Quindi, la prima operazione, e quella su cui si basa \texttt{HeapSort}, 
 consiste nel mettere la radice in ultima posizione.
 \begin{align*}
 \text{Es. \texttt{A}: }& \text{9 8 7 5 7 4 0 4 3 6 1 2 \hspace{1cm}} \text{è un max heap.} \\
@@ -220,7 +220,7 @@ usiamo la procedura \texttt{MaxHeapifyUp}.
 
 Ecco ora lo pseudocodice della funzione \texttt{Insert}.
 \input{pseudocodes/code/insert}
-\texttt{Insert} ha complessità $O(\log n)$, la stesso di \texttt{MaxHeapifyUp}.
+\texttt{Insert} ha complessità $O(\log n)$, la stessa di \texttt{MaxHeapifyUp}.
 
 \input{pseudocodes/code/increase-key}
 \texttt{IncreaseKey} ha complessità $O(\log n)$.

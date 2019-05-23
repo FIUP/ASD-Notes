@@ -57,15 +57,15 @@ riduce $\# inv(A)$ al massimo di 1.
 \end{displaymath}
 
 \subsection{Soluzione di Ricorrenze}
-Abbiamo visto per \texttt{Merge Sort} la complessità nel modo seguente:
+Abbiamo visto per \texttt{MergeSort} la complessità nel modo seguente:
 
 \begin{codebox}
-	\Procname{$\proc{Merge-Sort}(A,p,r)$}
+	\Procname{$\proc{MergeSort}(A,p,r)$}
 	\li \If $p < r$
 	\li     \Then
 	$q \gets \floor{\frac{(p + r)}{2}}$ 
-	\li         $\proc{Merge-Sort}(A,p,q)$
-	\li         $\proc{Merge-Sort}(A,q+1,r)$
+	\li         $\proc{MergeSort}(A,p,q)$
+	\li         $\proc{MergeSort}(A,q+1,r)$
 	\li         $\proc{Merge}(A,p,q,r)$
 	\Comment complessità $an + b$
 	\End

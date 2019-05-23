@@ -1,9 +1,9 @@
 \subsection{Quick Sort a Tre Partizioni}
-\texttt{Quicksort} con \texttt{RandomizedPartition} funziona bene ed 
+\texttt{QuickSort} con \texttt{RandomizedPartition} funziona bene ed 
 evita, quasi in ogni circostanza, di imbattersi nel caso pessimo, ad 
 eccezione di un caso particolare: se in \emph{input} viene dato un 
 array con tutti gli elementi uguali, si ottiene il temuto caso pessimo $O(n^2)$.\par
-Per ovviare al problema, è sufficiente partizionare Quicksort in tre
+Per ovviare al problema, è sufficiente partizionare \texttt{QuickSort} in tre
 partizioni invece di due. Dato un \emph{pivot} $x$, partizioniamo $A$ nel
 seguente modo:
 
@@ -59,7 +59,7 @@ algoritmo di ordinamento su un input di dimensione fissata $A[1 \dots n]$.
     \item \emph{foglie} (ogni foglia è una possibile permutazione)
 \end{itemize}
 
-Rivediamo una versione di \texttt{Insertion Sort} basato su scambi.
+Rivediamo una versione di \texttt{InsertionSort} basato su scambi.
 \input{pseudocodes/insertion-sort-swaps}
 \clearpage
 Ecco un esempio di \emph{Albero di Decisione} per l'array $A[a_1,a_2,a_3]$ 
@@ -71,27 +71,37 @@ $$a_1 = 1, \; a_2 = 2, \; a_3 = 3$$
     \caption{Albero di decisione per l'array $A[1,2,3]$}
 \end{figure}
 
-\paragraph{Osservazione} 
-$$ \text{Altezza dell'albero di decisione} = \text{limite inferiore per caso pessimo}$$
-\begin{align*}
-    \text{per }& \text{IS} \ \quad n^2 \\
-    \text{per }& \text{MS} \quad n \log n
-\end{align*}
+\paragraph{Osservazioni}
+\begin{itemize}
+	\item $ \text{Altezza dell'albero di decisione} = \text{limite inferiore per caso pessimo}$
+	\begin{align*}
+	    \text{per }& \text{IS} \ \quad n^2 \\
+	    \text{per }& \text{MS} \quad n \log n
+	\end{align*}
+	\item Ogni foglia ha una sola permutazione. Ogni permutazione compare (almeno) in una foglia.
+\end{itemize}
 
 \emph{In generale}, le foglie contengono \underline{tutte} le permutazioni.
-$$\# foglie \geq n! \qquad (\# foglie \leq 2^h)$$
+$$ \text{\# foglie} \geq \text{\# permutazioni} = n! \qquad ( \text{\# foglie} \leq 2^h)$$
 \begin{align*}
     h & \geq \log_2 n! \\
     & \geq \log_2 \left( n(n-1)(n-2) \dots \frac{n}{2}\right) \\
-    & \geq \log_2 \left( \frac{n}{2}\left(\frac{n}{2}-1\right)\left(\frac{n}{2}-2\right) \dots \frac{n}{2}\right) = \\
-    & = \log_2 \left( \frac{n}{2} \right)^{(\frac{n}{2})} 
+    & \geq \log_2 \left( \frac{n}{2}\left(\frac{n}{2}-1\right)\left(\frac{n}{2}-2\right) \dots \frac{n}{2}\right) \\
+    & \geq \log_2 \left( \frac{n}{2} \right)^{(\frac{n}{2})} 
         = \frac{n}{2} \left( \log_2 n - \log_22\right)
         = \frac{n}{2} (\log_2 n - 1) = \Theta (n \log n)
 \end{align*}
+Inoltre,
+\begin{itemize}
+	\item $ \text{\# operazioni} \geq h = \Omega (n \log n)$
+	\item $ \texttt{HeapSort, MergeSort } O(n \log n))$ 
+\end{itemize}
+$\Rightarrow \text{ordinamento (bastato su confronti) } \Theta (n \log n)$
 
 \subsection{Counting Sort}
 Esistono degli algoritmi di ordinamento che, in certe condizioni e per certi input, permettono
 di ordinare in tempo lineare $\Omega (n)$
+\bigskip
 
 Assumo
 \begin{itemize}[label=$-$]
@@ -100,14 +110,14 @@ Assumo
 \end{itemize}
 
 \begin{itemize}[label=]
-    \item \texttt{Input}: $A[1\twodots n]$ con $A[j] \in [0,k] \forall j$;
+    \item \texttt{Input}: $A[1\twodots n]$ con $A[j] \in [0,k] \quad \forall 1 \leq j \leq n$;
     \item \texttt{Output}: $B[1\twodots n]$ permutazione ordinata di $A$;
     \item \texttt{Supporto}: $C[0\twodots k]$.
 \end{itemize}
 
 \input{pseudocodes/counting-sort} 
 
-\paragraph{Costo?} 
+\paragraph{Complessità} 
 \begin{align*}
     C[0,k] \leftarrow 0 && \Theta(k) \\
     \text{\texttt{for j=1}} \dots && \Theta(n) \\
@@ -116,7 +126,7 @@ Assumo
 \end{align*}
 $$\text{Somma } \Theta(n+k) \text{ con } k = \Theta(1) \Rightarrow \Theta(n)$$
 
-\paragraph{Problema di memoria} Il problema di \texttt{Counting Sort} è la memoria. 
+\paragraph{Problema di memoria} Il problema di \texttt{CountingSort} è la memoria. 
 Infatti, al crescere di $k$, la memoria richiesta per allocare \texttt{C} cresce esponenzialmente.
 \begin{center}
     \begin{tabular}{|l|l|}
@@ -129,3 +139,21 @@ Infatti, al crescere di $k$, la memoria richiesta per allocare \texttt{C} cresce
         \hline
     \end{tabular}
 \end{center}
+
+\subsubsection{Proprietà di Stabilità}
+Dato $A[1 \twodots n]$ in input, se $A[i] \leq A[j]$ con $i \leq j$, allora nell'output $A[i]$ e $A[j]$ sono nello stesso ordine relativo.
+\bigskip
+
+Algoritmi stabili:
+\begin{itemize}
+	\item \texttt{MergeSort}
+	\item \texttt{InsertionSort}
+\end{itemize}
+\bigskip
+
+Algoritmi non stabili:
+\begin{itemize}
+	\item \texttt{CountingSort}
+	\item \texttt{QuickSort}
+	\item \texttt{HeapSort}
+\end{itemize}

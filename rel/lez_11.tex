@@ -3,8 +3,7 @@ Il \href{https://en.wikipedia.org/wiki/Radix_sort}{Radix Sort} è un algoritmo d
 lineare $O(n)$, come \texttt{CountingSort}, che risolve i problemi di memoria di quest'ultimo.
 
 L'idea è quella di ordinare cifra per cifra, dalla cifra meno significativa alla più significativa con un 
-algoritmo \emph{stabile}\footnote{Un algoritmo di ordinamento stabile è un algoritmo che ordina e
-non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa chiave).}.
+algoritmo \emph{stabile}.
 \begin{align*}
 	\text{(iniziale)} && \text{(terza cifra)} && \text{(seconda cifra)} && \text{(prima cifra)} \\
 	329 && 720 && 720 && 329 \\
@@ -46,11 +45,18 @@ non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa ch
 	\end{enumerate}
 \end{itemize}
 
-\paragraph{Costo?} 
+\paragraph{Complessità} 
 \begin{gather*}
 	d \text{ volte \texttt{CountingSort} } \; \Theta(n+b) \Rightarrow \Theta\big(d(n+b)\big) = \Theta(n) \\
-	\text{con } d = \Theta(1), \text{ base } b = \Theta(n) 
+	\text{con } d \text{ cifre } = \Theta(1), \text{ base } b = \Theta(n) 
 \end{gather*}
+\begin{align*}
+	m \text{ bit, } r \text{ bit per cifra, } \frac{m}{r} \text{ cifre, base } 2^r \\
+	\Theta( \frac{m}{r} (m + 2^r)) & = && r = \log_2 n \\
+	& = \Theta( \frac{m}{ \log n} (n + 2^{ \log n} )) \\
+	& = \Theta( \frac{m}{ \log n} n) && m = O( \log n) \\
+	& 	= \Theta(n)
+\end{align*}
 
 \section{Tabelle Hash}
 \begin{gather*}
@@ -61,7 +67,7 @@ non scambia mai due chiavi se non è necessario (e.g. due celle con la stessa ch
 \[ T[k] \text{ contiene} \quad
 	\begin{cases}
 		\text{elemento } x \text{ con } x.key = k & \text{se c'è} \\
-		\bot & \text{altrimenti}
+		\const{nil} & \text{altrimenti}
 	\end{cases}
 \]
 
@@ -83,10 +89,11 @@ un carattere). Risulta molto costosa in termini di memoria la tabella hash.
 \end{gather*}
 La ``traduzione'' per ottenere $x.key$ da $x$ cosa comporta?
 \begin{gather*}
-	h : U \rightarrow \{ 0, 1, \dots , m-1 \} \text{ funzione di \emph{hashing}}\\
-	n = \# elem \text{ memorizzati nella tabella } T
+	h : U \rightarrow \{ 0, 1, \dots , m-1 \} \text{ funzione di \emph{hashing}} \\
+	n = \# elem \text{ memorizzati nella tabella } T \\
+	m = \# celle
 \end{gather*}
-Se $n > m$, esisteranno $x_1, x_2 : h(x_1.key) = h(x_2.key)$.\par
+Se $n > m$, esisteranno $x_1, x_2 : h(x_1.key) = h(x_2.key) \Rightarrow$ conflitto \par
 \bigskip 
 Abbiamo \emph{due soluzioni}:
 \begin{enumerate}

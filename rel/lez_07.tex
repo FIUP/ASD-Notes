@@ -32,40 +32,6 @@ Tre possibili casi:
     \text{Nota bene: } af\Big(\frac{n}{b}\Big) \leq k \cdot f(n) \text{ con } k < 1
 \end{gather*}
 
-%\begin{center}
-%	\begin{tikzpicture}
-%	\tikzset{every tree node/.style={align=center,anchor=north}}
-%	\tikzset{level 1/.style={level distance=50pt}}
-%	\tikzset{level 2/.style={level distance=70pt}}
-%	\tikzset{level 3/.style={level distance=70pt}}
-%	\tikzset{level 4/.style={level distance=30pt}}
-%	\Tree
-%	[.$T(n)$\\$f(n)$
-%		[.$T(\dfrac{n}{b})$\\$f(\dfrac{n}{b})$
-%			[.$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$
-%				[.{\dots} \edge[dashed]; c ]
-%				[.{\dots} \edge[dashed]; c ]
-%			]
-%			[.$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$
-%				[.{\dots} \edge[dashed]; c ]
-%				[.{\dots} \edge[dashed]; c ]
-%			]
-%		]
-%		[.{\dots} ]
-%		[.$T(\dfrac{n}{b})$\\$f(\dfrac{n}{b})$
-%			[.$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$
-%				[.{\dots} \edge[dashed]; c ]
-%				[.{\dots} \edge[dashed]; c ]
-%			]
-%			[.$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$
-%				[.{\dots} \edge[dashed]; c ]
-%				[.{\dots} \edge[dashed]; c ]
-%			]
-%		]
-%	]
-%	\end{tikzpicture}
-%\end{center}
-
 \begin{center}
 	\begin{tikzpicture}[
 		every node/.style={align=center},
@@ -75,14 +41,12 @@ Tre possibili casi:
 				edge from parent/.style={draw=none}}},
 		level 3/.style={level distance=20mm},
 		level 4/.style={level distance=5mm},
-		level/.style={level distance=25mm, sibling distance=40mm/#1},
-		>=latex,
-		font=\sffamily
+		level/.style={level distance=25mm, sibling distance=40mm/#1}
 	]
 	
 	\node (a) {$T(n)$\\$f(n)$}
 	child {node (b) {$T(\dfrac{n}{b})$\\$f(\dfrac{n}{b})$}
-		child {node  (d) {$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$}
+		child {node (d) {$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$}
 			child {node (d1) {$\vdots$}[no edge from this parent]
 				child {node (d11) {$c$}}
 			}
@@ -100,7 +64,7 @@ Tre possibili casi:
 		}
 	}
 	child {node (c) {$T(\dfrac{n}{b})$\\$f(\dfrac{n}{b})$}
-		child {node  (f) {$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$}
+		child {node (f) {$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$}
 			child {node (f1) {$\vdots$}[no edge from this parent]
 				child {node (f11) {$c$}}
 			}

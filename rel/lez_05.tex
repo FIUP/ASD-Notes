@@ -114,38 +114,77 @@ caso otterremmo:
 
 Costruendo l'albero delle ricorrenze si intuisce già la soluzione:
 \begin{center}
-	\begin{tikzpicture}
-	\tikzset{every tree node/.style={align=center,anchor=north}}
-	\tikzset{level 1/.style={level distance=40pt}}
-	\tikzset{level 2/.style={level distance=70pt}}
-	\tikzset{level 3/.style={level distance=70pt}}
-	\tikzset{level 4/.style={level distance=30pt}}
-	\Tree
-	[.$T(n)$\\$6n$
-		[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
-			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-				[.{\dots} \edge[dashed]; 4 ]
-				[.{\dots} \edge[dashed]; 4 ]
-			]
-			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-				[.{\dots} \edge[dashed]; 4 ]
-				[.{\dots} \edge[dashed]; 4 ]
-			]
-		]
-		[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
-			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-				[.{\dots} \edge[dashed]; 4 ]
-				[.{\dots} \edge[dashed]; 4 ]
-			]
-			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-				[.{\dots} \edge[dashed]; 4 ]
-				[.{\dots} \edge[dashed]; 4 ]
-			]
-		]
+	\begin{tikzpicture}[
+		every node/.style={align=center},
+		edge from parent/.style={draw},
+		no edge from this parent/.style={
+			every child/.append style={
+				edge from parent/.style={draw=none}}},
+		level 3/.style={level distance=20mm},
+		level 4/.style={level distance=5mm},
+		level/.style={level distance=25mm, sibling distance=40mm/#1}
 	]
+	
+	\node (a) {$T(n)$\\$6n$}
+	child {node (b) {$T(\dfrac{n}{2})$\\$6 \dfrac{n}{2}$}
+		child {node (d) {$T(\dfrac{n}{4})$\\$6 \dfrac{n}{4}$}
+			child {node (d1) {$\vdots$}[no edge from this parent]
+				child {node (d11) {$4$}}
+			}
+			child {node (d2) {$\vdots$}[no edge from this parent]
+				child {node (d12) {$4$}}
+			}
+		}
+		child {node (e) {$T(\dfrac{n}{4})$\\$6 \dfrac{n}{4}$}
+			child {node (e1) {$\vdots$}[no edge from this parent]
+				child {node (e11) {$4$}}
+			}
+			child {node (e2) {$\vdots$}[no edge from this parent]
+				child {node (e12) {$4$}}
+			}
+		}
+	}
+	child {node (c) {$T(\dfrac{n}{2})$\\$6 \dfrac{n}{2}$}
+		child {node (f) {$T(\dfrac{n}{4})$\\$6 \dfrac{n}{4}$}
+			child {node (f1) {$\vdots$}[no edge from this parent]
+				child {node (f11) {$4$}}
+			}
+			child {node (f2) {$\vdots$}[no edge from this parent]
+				child {node (f12) {$4$}}
+			}
+		}
+		child {node (g) {$T(\dfrac{n}{4})$\\$6 \dfrac{n}{4}$}
+			child {node (g1) {$\vdots$}[no edge from this parent]
+				child {node (g11) {$4$}}
+			}
+			child {node (g2) {$\vdots$}[no edge from this parent]
+				child {node (g12) {$4$}
+				}
+			}
+		}
+	};
+	
+	\node[left=5 of a]  (ln1) {$6n$}[no edge from this parent]
+	child {node (ln2) {$6n$}[no edge from this parent]
+		child {node (ln3) {$6n$}[no edge from this parent]
+			child {node (ln4) {}[no edge from this parent]
+				child {node (ln5) {$4n$}}}}};
+	
+	\coordinate (h) at ($(g12)+(1,0)$);
+	
+	\draw[<->] 
+	(h) -- (h|-a.east) node [midway, fill=white] {$\log_2 n$};
+	
+	\draw[dashed]    
+	($(a.west)+(-1em,0)$) -- (ln1);
+	\draw[dashed]    
+	($(b.west)+(-1em,0)$) -- (ln2.east);
+	\draw[dashed]    
+	($(d.west)+(-1em,0)$) -- (ln3);
+	\draw[dashed]    
+	($(d11.west)+(-1em,0)$) -- (ln5);
 	\end{tikzpicture}
 \end{center}
-Tutte le foglie insieme costano $4n$. Ogni altro livello dell'albero costa $6n$, ma siccome l'altezza è circa $\log_2 n$, in totale costano $6n \log_2 n$. \\ 
 
 Per essere sicuri della soluzione, facciamo il procedimento per intero.
 Proviamo a ``indovinare'' la soluzione. Assomiglia a \texttt{Merge Sort},

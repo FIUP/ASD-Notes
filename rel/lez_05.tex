@@ -122,26 +122,26 @@ Costruendo l'albero delle ricorrenze si intuisce già la soluzione:
 	\tikzset{level 4/.style={level distance=30pt}}
 	\Tree
 	[.$T(n)$\\$6n$
-	[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
-	[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-	[.{\dots} \edge[dashed]; 4 ]
-	[.{\dots} \edge[dashed]; 4 ]
-	]
-	[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-	[.{\dots} \edge[dashed]; 4 ]
-	[.{\dots} \edge[dashed]; 4 ]
-	]
-	]
-	[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
-	[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-	[.{\dots} \edge[dashed]; 4 ]
-	[.{\dots} \edge[dashed]; 4 ]
-	]
-	[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
-	[.{\dots} \edge[dashed]; 4 ]
-	[.{\dots} \edge[dashed]; 4 ]
-	]
-	]
+		[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
+			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
+				[.{\dots} \edge[dashed]; 4 ]
+				[.{\dots} \edge[dashed]; 4 ]
+			]
+			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
+				[.{\dots} \edge[dashed]; 4 ]
+				[.{\dots} \edge[dashed]; 4 ]
+			]
+		]
+		[.$T(\dfrac{n}{2})$\\$6\dfrac{n}{2}$
+			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
+				[.{\dots} \edge[dashed]; 4 ]
+				[.{\dots} \edge[dashed]; 4 ]
+			]
+			[.$T(\dfrac{n}{4})$\\$6\dfrac{n}{4}$
+				[.{\dots} \edge[dashed]; 4 ]
+				[.{\dots} \edge[dashed]; 4 ]
+			]
+		]
 	]
 	\end{tikzpicture}
 \end{center}

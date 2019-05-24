@@ -50,7 +50,7 @@ $$E[n_j] = \displaystyle\sum_{i = 1}^{n} \frac{1}{m} \cdot 1 = \frac{n}{m} = \al
 			& \frac{1}{n} \displaystyle\sum_{i=1}^n \left( 1 + \frac{n-i}{m} \right) \\
 			& = \frac{1}{n} \left( n + \displaystyle\sum_{i=1}^n \frac{n-i}{m} \right) 
 				= \frac{1}{n} \left( n + \frac{1}{m} \displaystyle\sum_{z=0}^{n-1} z \right) \\
-			& = 1 + \frac{1}{m \cdot n} \cdot \frac{n(n-1)}{2} = 1 + \frac{n}{2m} - \frac{1}{2m} \cdot \left(\frac{n}{n} \right) && \alpha = \frac{n}{m} \\
+			& = 1 + \frac{1}{m \cdot n} \cdot \frac{n(n-1)}{2} = 1 + \frac{n}{2m} - \frac{1}{2m} \cdot \left(\frac{n}{n} \right) && \left(\alpha = \frac{n}{m}\right) \\
 			& = 1 + \frac{\alpha}{2} - \frac{\alpha}{2n} = \Theta(1+ \frac{\alpha}{2}) = \Theta(1+ \alpha)
 		\end{align*}
 

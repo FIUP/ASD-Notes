@@ -5,9 +5,9 @@ Provo con $h(k,0)$: se capito in una cella occupata, provo con $h(k,1)$, poi $h(
 e così via, fino a che non trovo una cella libera.
 
 Per esplorare tutta la tabella:
-$$h(k,0), h(k,1), \dots, h(k,m-1)$$
+$$h(k,0), h(k,1), \dots, h(k,m-1) \quad \forall k \in U$$
 che è una permutazione di 
-$$0,1,\dots,m-1$$
+$$\{0,1,\dots,m-1\}$$
 
 \input{pseudocodes/hash/open-addressing/insert}
 \input{pseudocodes/hash/open-addressing/search}
@@ -15,7 +15,7 @@ $$0,1,\dots,m-1$$
 L'\emph{Open Addressing} risulta una soluzione inefficiente in caso
 avvengano molte cancellazioni.
 
-\subsubsection{Hashing uniforme}
+\subsubsection{Hashing Uniforme}
 
 Per ogni elemento di input, tutte ($m!$) le sequenze di ispezione
 sono equiprobabili.
@@ -24,7 +24,7 @@ sono equiprobabili.
 \begin{enumerate}
     \item \textbf{Ispezione lineare}. Sia $h'(k)$ funzione di hash ``ordinaria''. Se 
         ricado in una cella occupata, mi sposto su quella immediatamente successiva.
-        $$h(k,i) = (h'(k)+i) \mod m$$
+        $$h(k,i) = (h'(k)+i) \bmod m$$
         Caratteristiche:
         \begin{itemize}
             \item è semplice;
@@ -32,56 +32,34 @@ sono equiprobabili.
             \item causa addensamenti di celle occupate (\emph{addensamento primario}).
         \end{itemize}
     \item \textbf{Ispezione quadratica}. Fisso $h'(k)$.
-    $$h(k,i) = h'(k) + c_1i + c_2i^2 \qquad c_2 \neq 0$$
+    $$h(k,i) = (h'(k) + c_1i + c_2i^2) \bmod m, \qquad c_2 > 0$$
 
-    \begin{codebox}
-        \Procname{Inserimento di $k$}
-        \zi $j \gets h'(k)$
-        \zi $i \gets 0$
-        \zi \While $(i < m)$ \kw{and} $(T[j] \neq \const{nil}/\const{deleted})$
-        \zi \Do
-                $i \gets i + 1$
-        \zi     $j \gets (j + 1) \mod n$
-            \End
-    \end{codebox}
-
-    \begin{description}
-        \item[$(i=0) \quad$] $j = h'(k)$
-        \item[$(i=1) \quad$] $j = (h'(k)+1) /mod m$
-        \item[$\vdots$] 
-        \item[$(i=l) \quad$] 
-        \begin{align*}
-            j & = \left( h'(k) + \displaystyle\sum_{i=1}^{l}i \right) \mod m \\
-            & = \left( h'(k) + \frac{l(l+1)}{2} \right) \mod m \\
-            & = \left( h'(k) + \frac{1}{2}l + \frac{1}{2}l^2 \right) \mod m \\
-            & m = 2^p \text{ permutazione}
-        \end{align*}
-    \end{description}
     \item \textbf{Doppio Hash}. Fisso $h_1(k)$, $h_2(k)$
-    $$h(k,i) = (h_1(k) + i \cdot h_2(k)) \mod m$$
+    $$h(k,i) = (h_1(k) + i \cdot h_2(k)) \bmod m$$
     \emph{Osservazioni}:
     \begin{itemize}
         \item I salti sono di dimensione $h_2(k)$ all'incrementare di $i$; 
         \item Ci sono $m^2$ sequenze di ispezione;
         \item $h_2(k)$ e $m$ primi tra loro $ \quad (MCD = 1)$;
-        \item $i, i<m \quad h(k,i) = h(k,i') \Rightarrow i = i' \ \quad (\text{\emph{iniettività}})$
-        $$h(k, \verb|_|) : \{ 0, \_, m-1 \} \rightarrow \{ 0,\verb|_|, m-1 \}$$
+        \item $h(k,0),h(k,1),\dots,h(k,m-1)$ è permutazione di $\{0,1,\dots,m-1\}$;
+        \item $i, i'<m \quad h(k,i) = h(k,i') \Rightarrow i = i' \ \quad (\text{\emph{iniettività}})$
+        $$h(k,i) \colon \{0,\dots,m-1\} \to \{0,\dots,m-1\}$$
         $$\text{\emph{iniettiva}} \Rightarrow \text{\emph{biiettiva}}$$
         \begin{gather*}
             h(k,i) = h(k,i') \\
-            (h_1(k) + ih_2(k)) \mod m = (h_1(k) + i'h_2(k)) \mod m \\
-            ((i - i')h_2(k)) \mod m = (i h_2(k) - i'h_2(k)) \mod m = 0 \\
-            (i - i') \mod m = 0 \\
-            i \geq i' \quad i - i' < m \\ 
+            (h_1(k) + ih_2(k)) \bmod m = (h_1(k) + i'h_2(k)) \bmod m \\
+            ((i - i')h_2(k)) \bmod m = (i h_2(k) - i'h_2(k)) \bmod m = 0 \\
+            (i - i') \bmod m = 0 \\
+            i \geq i' \quad i - i' < m - 1 \\ 
             \Rightarrow i - i' = 0 \\
             \Rightarrow i = i'
         \end{gather*}
-        Scelgo $m = 2^p, \ h_2(k) = 1 + 2h_2'(k)$, $h_2'(k)$ qualunque.\par
-        \emph{es.} $h_2(k) = 1 + k \mod m' \quad$ con $m' < m$
+        Scelgo $m = 2^p, \ h_2(k) = 1 + 2h'(k)$, $h'(k)$ qualunque.\par
+        \emph{es.} $h_2(k) = 1 + h'(k \bmod m') \quad$ con $m' < m, m$ primo
     \end{itemize}
     \end{enumerate}
 
-\paragraph{Costo?}
+\paragraph{Costo}
 Il costo della \texttt{Search} con \emph{hashing uniforme} si può riassumere come segue.
 $$0 \leq \alpha = \frac{n}{m} \leq 1$$
 
@@ -104,7 +82,7 @@ $$0 \leq \alpha = \frac{n}{m} \leq 1$$
     \end{tabular}
 \end{center}
 
-Valore atteso per \#celle ispezionate
+Valore atteso per \# celle tentativi
 $$1 + \alpha + \alpha^2 + \dots + \alpha^{i-1} + \dots + \alpha^{m-1}$$
 
 \begin{enumerate}[label=(\alph*)]
@@ -118,19 +96,17 @@ $$1 + \alpha + \alpha^2 + \dots + \alpha^{i-1} + \dots + \alpha^{m-1}$$
     \item $1 + \log m \quad \alpha = 1$
 \end{enumerate}
 
-Finora, ho inserito $x_0,x_1,\dots, x_i,\dots,x_n$.
-\begin{gather*}
-    \text{costo \texttt{Search} chiave $x_i$ presente} \\
-    = \text{costo \texttt{Search} chiave $x_i$ assente} \\
-    \text{in }  x_0,\dots,x_{i-1} \quad \frac{1}{1-\alpha_i}, \ \alpha_i = \frac{i}{m}
-\end{gather*}
-
-Numero medio:
+Costo atteso per $k_i$:
 \begin{align*}
-    & \frac{1}{n} \displaystyle\sum_{i=0}^{n-1}\frac{1}{1-\alpha_i} 
-        = \frac{1}{n} \displaystyle\sum_{i=0}^{n-1} \frac{m}{m-i} 
-        = \frac{m}{n}\displaystyle\sum_{i=0}^{n-1} \frac{1}{m-i} \qquad \left(\frac{m}{n} = \frac{1}{\alpha} \right)\\
-    & = \frac{1}{\alpha} \displaystyle\sum_{l=m-n+1}^{m}\frac{1}{l} \qquad (m-i \rightarrow m-n+1) 
+	& \frac{1}{1-\alpha_{i-1}} = \frac{1}{1-\frac{i-1}{m}} && \left(\alpha_{i-1} = \frac{i-1}{m} < 1\right) \\
+	& = \frac{m}{m-i+1}
+\end{align*}
+
+Il costo atteso è la media per $i = 1,\dots,n$
+\begin{align*}
+    & = \frac{1}{n} \displaystyle\sum_{i=1}^{n} \frac{m}{m-i+1}
+		= \frac{m}{n}\displaystyle\sum_{i=1}^{n} \frac{1}{m-i+1} && \left(\frac{m}{n} = \frac{1}{\alpha}\right)\\
+    & = \frac{1}{\alpha} \displaystyle\sum_{j=m-n+1}^{m}\frac{1}{j}
 \end{align*}
 
 \begin{itemize}

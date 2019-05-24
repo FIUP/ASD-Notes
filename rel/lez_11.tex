@@ -89,9 +89,9 @@ un carattere). Risulta molto costosa in termini di memoria la tabella hash.
 \end{gather*}
 La ``traduzione'' per ottenere $x.key$ da $x$ cosa comporta?
 \begin{gather*}
-	h : U \rightarrow \{ 0, 1, \dots , m-1 \} \text{ funzione di \emph{hashing}} \\
-	n = \# elem \text{ memorizzati nella tabella } T \\
-	m = \# celle
+	h \colon U \to \{ 0, 1, \dots , m-1 \} \text{ funzione di \emph{hashing}} \\
+	n = \text{\# elementi memorizzati nella tabella } T \\
+	m = \text{\# celle}
 \end{gather*}
 Se $n > m$, esisteranno $x_1, x_2 : h(x_1.key) = h(x_2.key) \Rightarrow$ conflitto \par
 \bigskip 

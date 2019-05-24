@@ -11,7 +11,7 @@ lista.
 \input{pseudocodes/hash/chaining/search}
 \texttt{Search} ha una complessità di $O(n)$, e questo è inaccettabile.
 \begin{gather*}
-	n = \# \text{elementi inseriti} \\
+	n = \text{\# elementi inseriti} \\
 	m = \text{dimensione di } T \\
 	\alpha = \frac{n}{m} \quad \text{fattore di carico} \\
 	\alpha \text{ può essere }<, \ = \text{ oppure } > \text{ di } 1
@@ -42,7 +42,7 @@ $$E[n_j] = \displaystyle\sum_{i = 1}^{n} \frac{1}{m} \cdot 1 = \frac{n}{m} = \al
 			$$\text{Se } x_1, x_2,\dots x_n \text{ sono gli elementi inseriti}$$
 		Costo della ricerca di $x_i$:
 		\begin{align*}
-			& 1 + \# elem \quad x_j : j > 1, \ h(x_i.key) = h(x_j.key) \\
+			& 1 + \text{\# elementi} \quad x_j : j > 1, \ h(x_i.key) = h(x_j.key) \\
 			& = 1 + \displaystyle\sum_{j=i+1}^n \left(prob \ h(x_i.key) = h(x_j.key)\right) \\
 			& = 1 + \displaystyle\sum_{j=i+1}^n \frac{1}{m} = 1 + \frac{n-i}{m}
 		\end{align*}
@@ -50,17 +50,19 @@ $$E[n_j] = \displaystyle\sum_{i = 1}^{n} \frac{1}{m} \cdot 1 = \frac{n}{m} = \al
 			& \frac{1}{n} \displaystyle\sum_{i=1}^n \left( 1 + \frac{n-i}{m} \right) \\
 			& = \frac{1}{n} \left( n + \displaystyle\sum_{i=1}^n \frac{n-i}{m} \right) 
 				= \frac{1}{n} \left( n + \frac{1}{m} \displaystyle\sum_{z=0}^{n-1} z \right) \\
-			& = 1 + \frac{1}{m \cdot n} \cdot \frac{n(n-1)}{2} = 1 + \frac{n}{2m} - \frac{1}{2m} \cdot \left(\frac{n}{n} \right) \\
-			& \hspace{5cm} \left(\frac{n}{m} = \alpha\right) \\
-			& = 1 + \frac{\alpha}{2} - \frac{\alpha}{2n} = \Theta(1+\alpha)
+			& = 1 + \frac{1}{m \cdot n} \cdot \frac{n(n-1)}{2} = 1 + \frac{n}{2m} - \frac{1}{2m} \cdot \left(\frac{n}{n} \right) && \alpha = \frac{n}{m} \\
+			& = 1 + \frac{\alpha}{2} - \frac{\alpha}{2n} = \Theta(1+ \frac{\alpha}{2}) = \Theta(1+ \alpha)
 		\end{align*}
 
 		\begin{gather*}
-			\text{Se } n \leq c \cdot m \text{ per qualche costante positiva } c \text{ allora}\\ 
-			\alpha \leq c \Rightarrow \Theta(1)
+			\alpha \text{ costante} \\
+			n = O(m) \\
+			n \leq k \cdot m \\
+			\alpha = \frac{n}{m} \leq k \\
+			\Rightarrow \Theta(1 + \alpha) = \Theta(1)
 		\end{gather*}
 	\end{itemize}
-	\item $h : U \implies \{ 0,1,\dots,m-1 \} \Rightarrow h(x) = 0$
+	\item $h \colon U \to \{ 0,1,\dots,m-1 \} \Rightarrow h(x) = 0$
 \end{itemize}
 
 \subsubsection{Funzioni Hash} Una \emph{funzione hash} deve soddisfare la proprietà di
@@ -71,9 +73,9 @@ $$E[n_j] = \displaystyle\sum_{i = 1}^{n} \frac{1}{m} \cdot 1 = \frac{n}{m} = \al
 \end{quote} 
 Consideriamo:
 \begin{itemize}
-	\item $x \in [0,1)$ ($0 \leq x < 1$), $x$ chiave, estratta in modo indipendente dalla distribuzione
+	\item $k \in [0,1)$ ($0 \leq k < 1$), $k$ chiave, estratta in modo indipendente dalla distribuzione
 	uniforme (\underline{non realistica}).
-	\item Allora $h(x) = \floor{mx}$ soddisfa la proprietà di \emph{hashing uniforme}.
+	\item Allora $h(k) = \floor{mk}$ soddisfa la proprietà di \emph{hashing uniforme}.
 \end{itemize} 
 
 L'ipotesi di hash uniforme semplice dipende dalle probabilità con cui vengono estratti gli elementi da
@@ -81,8 +83,12 @@ inserire; probabilità che in genere non sono note.
 Le funzioni hash che descriveremo assumono che le chiavi siano degli interi non negativi.
 
 \paragraph{Metodo della divisione} 
-$$U = \{ 0, 1, \twodots, \abs{\cup} - 1 \}$$
-$$h(k) = k \mod n$$
+\begin{gather*}
+	U = \{ 0, 1, \dots, \abs{\cup} - 1 \} \\
+	h(k) \in \{0, 1, \dots, m - 1 \} \\
+	h(k) = k \bmod m
+\end{gather*}
+
 \begin{itemize}
 	\item $m = 2^p$ caso pessimo;
 	\item $m = 2^p - 1$ caso non buono. $2^p$ cifre base.
@@ -93,35 +99,32 @@ ancora se numeri primi.
 \paragraph{Metodo della moltiplicazione}
 $$k \in U$$
 $$0 < A < 1 \text{ fissato}$$
-$$h(k) = m(k A \mod 1) \qquad \text{Miglior } A : \frac{\sqrt{5}-1}{2}$$
+$$h(k) = m(k A \bmod 1) \qquad \text{Miglior } A : \frac{\sqrt{5}-1}{2}$$
 \begin{align*}
 	m & = 2^p \quad w = \# \text{bit parola} \\
 	A & = \frac{q}{2^w} \quad 0 < q < 2 \\
-	& m(k A \mod 1) \\
-	& = m \left( k \frac{q}{2^w} \mod 1 \right) && (\text{\emph{shift} di $w$ bit, prendo la parte decimale} \\
-	& && k a \mod 1 \text{ e la moltiplico per } m = 2^p) 
+	& m(k A \bmod 1) \\
+	& = m \left( k \frac{q}{2^w} \bmod 1 \right) && (\text{\emph{shift} di $w$ bit, prendo la parte decimale} \\
+	& && k a \bmod 1 \text{ e la moltiplico per } m = 2^p) 
 \end{align*}
 
 \subsubsection{Hashing Universale} 
 Per avere una distribuzione più uniforme delle chiavi nelle liste e non dipendente dall'input,
 possiamo usare la \emph{randomizzazione}. \par
-Insieme $H$ di funzioni di hash. Scelgo randomicamente da $H$. \par
+Insieme $H$ di funzioni di hash. Scelgo randomicamente $h \in H$. \par
 Sotto certe ipotesi ottengo per \texttt{Search}:
 $$\Theta(1 + \alpha)$$
 
-\paragraph{Def (Hashing universale)} $\forall k_1,k_2 \in U \ k_1 \neq k_2$
+\paragraph{Def (Hashing universale)} $\forall k_1,k_2 \in U, \ k_1 \neq k_2$
 \begin{gather*}
 	\left| \left\{ h \in H : h(k_1) = h(k_2) \right\} \right| \leq \frac{|H|}{m} \\
-	\frac{\left| \left\{ h \in H : h(k_1) = h(k_2) \right\} \right|}{|H|} \leq \frac{1}{m}
+	prob(h(k_1) = h(k_2)) = \frac{\left| \left\{ h \in H : h(k_1) = h(k_2) \right\} \right|}{|H|} \leq \frac{1}{m}
 \end{gather*}
 
-Con il \emph{chaining}, $H$ è universale per ogni $k \in U, \ j = h(k)$
+\paragraph{Teorema} Con il \emph{chaining}, $H$ è universale $ \forall k \in U, \ j = h(k)$
 \[ \text{Costo medio } \Theta(1+\alpha)
 	\begin{cases}
 		k \text{ non è in } T \rightarrow E[n_j] \leq \alpha \\
 		k \text{ è in } T \rightarrow E[n_j] \leq 1 + \alpha
 	\end{cases}
 \]
-
-
-% 05/04/2018

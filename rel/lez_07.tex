@@ -33,17 +33,7 @@ Tre possibili casi:
 \end{gather*}
 
 \begin{center}
-	\begin{tikzpicture}[
-		every node/.style={align=center},
-		edge from parent/.style={draw},
-		no edge from this parent/.style={
-			every child/.append style={
-				edge from parent/.style={draw=none}}},
-		level 3/.style={level distance=20mm},
-		level 4/.style={level distance=5mm},
-		level/.style={level distance=25mm, sibling distance=40mm/#1}
-	]
-	
+	\begin{tikzpicture}[rec]
 	\node (a) {$T(n)$\\$f(n)$}
 	child {node (b) {$T(\dfrac{n}{b})$\\$f(\dfrac{n}{b})$}
 		child {node (d) {$T(\dfrac{n}{b^2})$\\$f(\dfrac{n}{b^2})$}

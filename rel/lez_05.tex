@@ -114,17 +114,7 @@ caso otterremmo:
 
 Costruendo l'albero delle ricorrenze si intuisce già la soluzione:
 \begin{center}
-	\begin{tikzpicture}[
-		every node/.style={align=center},
-		edge from parent/.style={draw},
-		no edge from this parent/.style={
-			every child/.append style={
-				edge from parent/.style={draw=none}}},
-		level 3/.style={level distance=20mm},
-		level 4/.style={level distance=5mm},
-		level/.style={level distance=25mm, sibling distance=40mm/#1}
-	]
-	
+	\begin{tikzpicture}[rec]
 	\node (a) {$T(n)$\\$6n$}
 	child {node (b) {$T(\dfrac{n}{2})$\\$6 \dfrac{n}{2}$}
 		child {node (d) {$T(\dfrac{n}{4})$\\$6 \dfrac{n}{4}$}

@@ -71,10 +71,44 @@
 \RequirePackage{graphics} % needed for \scalebox command
 
 % trees
-\usepackage{tikz}
 \usepackage{tikz-qtree}
-\usetikzlibrary{trees,calc,arrows.meta,positioning,decorations.pathreplacing,bending}
-
+\usetikzlibrary{calc,positioning}
+\tikzset{
+	rec/.style={
+		every node/.style={align=center},
+		edge from parent/.style={draw},
+		no edge from this parent/.style={every child/.append style={edge from parent/.style={draw=none}}},
+		level 3/.style={level distance=20mm},
+		level 4/.style={level distance=5mm},
+		level/.style={level distance=25mm, sibling distance=40mm/##1}
+	},
+	tree/.style={
+		every tree node/.style={minimum size=10mm,black},
+		level distance=18mm,
+		edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}}
+	},
+	black/.style={draw,circle},
+	red/.style={draw,none},
+	blank/.style={draw=none},
+	% double circle macro
+	old inner xsep/.estore in=\oldinnerxsep,
+	old inner ysep/.estore in=\oldinnerysep,
+	double circle/.style 2 args={
+		circle,
+		old inner xsep=\pgfkeysvalueof{/pgf/inner xsep},
+		old inner ysep=\pgfkeysvalueof{/pgf/inner ysep},
+		/pgf/inner xsep=\oldinnerxsep+#1,
+		/pgf/inner ysep=\oldinnerysep+#1,
+		alias=sourcenode,
+		append after command={
+			let \p1=(sourcenode.center),
+			\p2=(sourcenode.east),
+			\n1={\x2-\x1-#1-0.5*\pgflinewidth}
+			in node[inner sep=0pt,draw,circle,minimum width=2*\n1,at=(\p1),#2]{}
+		}
+	},
+	double circle/.default={3pt}{black}
+}
 
 \newcommand{\authorName}{Timoty Granziero}
 

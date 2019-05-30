@@ -1,0 +1,11 @@
+\begin{codebox}
+\Procname{\proc{Delete}$(T,z)$}
+\zi \Comment Identica a quella per gli RB-Trees
+\zi \vdots
+\li $w \gets \attrib{y}{p}$
+\li \While $w \neq \const{nil}$
+\li \Do
+        $\attrib{w}{size} \gets \attrib{w}{size} - 1$
+\li		$w \gets \attrib{w}{p}$
+    \End
+\end{codebox}

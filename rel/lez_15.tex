@@ -9,7 +9,7 @@ I \emph{Red-Black Trees} sono ABR i cui nodi hanno un campo \emph{colore} $x.col
 \paragraph{Accorgimento} $\const{nil}$ sarà in realtà un nodo,
 $T.nil$, con $T.nil.color = \const{black}$.
 
-\paragraph{Caratteristiche} \emph{RB-tree} è in realtà un ABR tale che:
+\paragraph{Caratteristiche} \emph{RB-Tree} è in realtà un ABR tale che:
 \begin{enumerate}[label=($\arabic*$)]
     \item Ogni nodo $x$ ha $x.color \in \{\const{red},\const{black}\}$; \label{rbtree:1}
     \item La radice $root$ è $\const{black}$; \label{rbtree:2}
@@ -34,7 +34,7 @@ $T.nil$, con $T.nil.color = \const{black}$.
     metà del \verb|#| dei nodi $\const{red}$
 \end{itemize}
 
-\paragraph{Osservazione} Se $T$ è un \emph{RB-tree} con $n$ nodi interni ($\neq \const{nil}$)
+\paragraph{Osservazione} Se $T$ è un \emph{RB-Tree} con $n$ nodi interni ($\neq \const{nil}$)
 e $h$ altezza, allora vale
 $$h \leq 2 \log (n + 1)$$
 
@@ -77,7 +77,7 @@ particolare attenzione a queste due procedure: \texttt{RB-Insert} e \texttt{RB-D
 Per ovviare a ciò, posso utilizzare le \emph{rotazioni}. Consideriamo il seguente albero,
 in cui $x$ e $y$ sono nodi normali, mentre $\alpha, \ \beta$ e $\gamma$ sono sotto-alberi
 (il colore dei nodi non ha importanza ai fini della procedura che andremo a 
-vedere)\footnote{Di conseguenza, applicandola a un \emph{RB-tree}, gli assiomi di validità potrebbero venire violati.}:
+vedere)\footnote{Di conseguenza, applicandola a un \emph{RB-Tree}, gli assiomi di validità potrebbero venire violati.}:
 \begin{center}
 	\begin{tikzpicture}[tree]
 	\Tree

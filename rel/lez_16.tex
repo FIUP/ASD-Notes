@@ -1,13 +1,13 @@
 \subsection{Arricchimento di Strutture Dati}
 
-Vedremo due esempi, uno per gli RB-trees, e un altro per gli ABR.
+Vedremo due esempi, uno per gli RB-Trees, e un altro per gli ABR.
 \begin{itemize}[noitemsep]
     \item \emph{Statistiche d'ordine} (\ref{statistichedordine})
     \item \emph{Interval Trees} (\ref{intervaltrees})
 \end{itemize}
 
 \subsubsection{Statistiche d'ordine} \label{statistichedordine}
-Struttura che parte da un RB-tree. Aggiungo:
+Struttura che parte da un RB-Tree. Aggiungo:
 \begin{itemize}
     \item \texttt{Select(T,i)} $\equiv$ nodo $x$ che occuperebbe la posizione $i$
         nei nodi ordinati per chiave (in una \emph{visita simmetrica});
@@ -29,24 +29,24 @@ Valgono
 hanno $size = 0$.
 
 \begin{center}
-    \begin{tikzpicture}
+    \begin{tikzpicture}[tree]
     \Tree
     [.$\boldsymbol{26}(7)$
         [.$\boldsymbol{17}(1)$
             [.$\boldsymbol{nil}$ ]
             [.$\boldsymbol{nil}$ ]
         ]
-        [.$\boldsymbol{\color{red} 41}(5)$
+        [.\node[red]{$\boldsymbol{41}(5)$};
             [.$\boldsymbol{30}(2)$ 
                 [.$\boldsymbol{nil}$ ]
-                [.$\boldsymbol{\color{red} 38}(1)$ 
+                [.\node[red]{$\boldsymbol{38}(1)$};
                     [.$\boldsymbol{nil}$ ]
                     [.$\boldsymbol{nil}$ ]
                 ]
             ]
             [.$\boldsymbol{47}(2)$ 
                 [.$\boldsymbol{nil}$ ]
-                [.$\boldsymbol{\color{red} 50}(1)$ 
+                [.\node[red]{$\boldsymbol{50}(1)$}; 
                     [.$\boldsymbol{nil}$ ]
                     [.$\boldsymbol{nil}$ ]
                 ]
@@ -56,37 +56,47 @@ hanno $size = 0$.
     \end{tikzpicture}
 \end{center}
 
+\par
 Vediamo un'implementazione non efficiente della procedura \texttt{Size}.
 
 \input{pseudocodes/trees/stats/size} 
 
-\subparagraph{Costo} Il costo è $O(n)$, che come preannunciato, non è efficiente.
-Questo perchè le procedure \texttt{Insert/Delete} di un RB-tree sono nel peggiore dei casi $O(h)$.
+\paragraph{Complessità} La complessità è $O(n)$, che come preannunciato, non è efficiente.
+Questo perchè le procedure \texttt{Insert/Delete} di un RB-Tree sono nel peggiore dei casi $O(h)$.
 
 \bigskip Questa procedura, \texttt{Select}, restituisce il nodo di posizione $i$
-in $T_x$.
+in $T_x$ in una visita simmetrica.
 
 \input{pseudocodes/trees/stats/select} 
 
-\subparagraph{Costo di Select} $O(h) = O(\log n)$
+\paragraph{Complessità} $O(h) = O(\log n)$
 
 \texttt{Rank} restituisce la posizione $i$ che occupa il nodo $x$.
 
 \input{pseudocodes/trees/stats/rank}
 
-\subparagraph{Costo di Rank} $O(h) = O(\log n)$
+\paragraph{Complessità} $O(h) = O(\log n)$
 
-\bigskip Vediamo ora la variante di \texttt{RB-Insert} 
+\bigskip Versione aggiornata di \texttt{RB-Insert} :
 
 \input{pseudocodes/trees/stats/rb-insert}
 
-E la versione aggiornata di \texttt{Left}
+Versione aggiornata di \texttt{Left}:
 
 \input{pseudocodes/trees/stats/left}
 
+Versione aggiornata di \texttt{Delete}:
+
+\input{pseudocodes/trees/stats/delete}
+
+Versione aggiornata di \texttt{RB-Delete}:
+
+\input{pseudocodes/trees/stats/rb-delete}
+
+
 \subsubsection{Teorema dell'aumento degli RB-Trees}
 
-\paragraph{Def.} Sia $x.field$ un campo che si calcola in $O(1)$
+\paragraph{Def.} Sia $x.field$ un campo che si calcola in tempo costante
 usando $x, x.left, x.right$ ($x.field = F(x, x.left, x.right)$).
 Allora è possibile modificare \texttt{RB-Insert} e \texttt{RB-Delete}
 in modo che mantengano aggiornato il campo $x.field$ con complessità
@@ -101,11 +111,13 @@ volta presenta due campi:
 \end{itemize}
 E anche di un campo $x.max = \text{max estremo di intervallo per i nodi in } T_x$, ossia
 $$x.max = max 
-\begin{cases}
-    x.left.max \\
-    x.right.max \\
-    x.int.high
-\end{cases}$$
+\begin{rcases}
+	\begin{dcases}
+		x.left.max \\
+		x.right.max \\
+		x.int.high
+	\end{dcases}
+\end{rcases}$$
 L'idea è quella in cui ogni nodo rappresenti un intervallo. \par
 Vogliamo implementare le seguenti procedure:
 \begin{itemize}
@@ -119,33 +131,25 @@ Vogliamo implementare le seguenti procedure:
 \end{itemize} 
 
 \paragraph{Rotazioni} Prendiamo il seguente albero di esempio.
-
 \begin{center}
-	\begin{tikzpicture}
+	\begin{tikzpicture}[tree]
 	\Tree
 	[.$x$     
 		[.$\alpha$ ]
 		[.$y$ 
-            [.$\beta$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
-			[.$\gamma$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
+            [.$\beta$ ]
+			[.$\gamma$ ]
 		]
 	]
     \end{tikzpicture}
 \end{center}
 Applico \texttt{Left(T,x)}, ottenendo
 \begin{center}
-    \begin{tikzpicture}
+    \begin{tikzpicture}[tree]
         \Tree
         [.$y$     
             [.$x$ 
                 [.$\alpha$ ]
-                \edge[blank]; \node[blank]{};
                 [.$\beta$ ]
             ]
             [.$\gamma$ ]
@@ -156,7 +160,7 @@ Applico \texttt{Left(T,x)}, ottenendo
 Sistemo i massimi. \texttt{Left} costa ancora $O(1)$
 \begin{itemize}[noitemsep]
     \item $y.max = x.max$
-    \item $x.max = max \{ x.int.high, x.left.max, x.right.max \}$
+    \item $x.max = \max \{ x.int.high, x.left.max, x.right.max \}$
 \end{itemize}
 
 Vediamo \texttt{ISearch}.
@@ -175,6 +179,6 @@ Vediamo \texttt{ISearch}.
     \item \textbf{Else}. $\forall i'$ in $x.left \Rightarrow i' \cap i \neq \varnothing$.
 \end{itemize}
 
-\subparagraph{Costo} $O(h) = O(\log n)$
+\subparagraph{Complessità} $O(h) = O(\log n)$
 
 \paragraph{Esercizio} Vai a \ref{exs:3-5-2018}

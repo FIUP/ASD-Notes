@@ -2,11 +2,13 @@
 \Procname{\proc{RB-Insert}$(T,z)$}
 \zi \Comment (1) versione aggiornata di \texttt{Insert}
 \li $\attrib{z}{size} \gets 1$
+	\Comment modifica 1
 \li $x \gets \attrib{T}{root}$
 \li $y \gets \attrib{T}{nil}$ 
 \li \While $x \neq \attrib{T}{nil}$
 \li \Do
         $\attrib{x}{size} \gets \attrib{x}{size} + 1$
+        \Comment modifica 2
 \li     $y \gets x$
 \li     \If $\attrib{z}{key} < \attrib{x}{key}$
 \li     \Then
@@ -27,7 +29,7 @@
 \li         $\attrib{y}{right} \gets z$
         \End
     \End
-\zi \Comment (2) \texttt{RB-FixUp}
-\li $\attrib{z}{col} \gets \const{red}$
-\li $\proc{RB-FixUp}(T,z)$
+\zi \Comment (2) \texttt{RB-Insert-Fixup}
+\li $\attrib{z}{color} \gets \const{red}$
+\li $\proc{RB-Insert-Fixup}(T,z)$
 \end{codebox}

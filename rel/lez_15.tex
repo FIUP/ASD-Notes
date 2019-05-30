@@ -1,22 +1,22 @@
 \subsection{Red-Black Trees}
 
-I \emph{Red-Black Trees} sono ABR i cui nodi hanno un campo \emph{colore} $x.col$, che può essere:
+I \emph{Red-Black Trees} sono ABR i cui nodi hanno un campo \emph{colore} $x.color$, che può essere:
 \begin{itemize}[noitemsep]
-    \item \textbf{R} per il rosso;
-    \item \textbf{B} per il nero.
+    \item $\const{red}$ per il rosso;
+    \item $\const{black}$ per il nero.
 \end{itemize}
 
 \paragraph{Accorgimento} $\const{nil}$ sarà in realtà un nodo,
-$T.nil$, con $T.nil.col = B$.
+$T.nil$, con $T.nil.color = \const{black}$.
 
 \paragraph{Caratteristiche} \emph{RB-tree} è in realtà un ABR tale che:
 \begin{enumerate}[label=($\arabic*$)]
-    \item Ogni nodo $x$ ha $x.col \in \{R,B\}$; \label{rbtree:1}
-    \item La radice $root$ è $B$; \label{rbtree:2}
-    \item Le foglie ($T.nil$) sono $B$; \label{rbtree:3}
-    \item Se $x$ è $R$, i figli sono $B$; \label{rbtree:4}
+    \item Ogni nodo $x$ ha $x.color \in \{\const{red},\const{black}\}$; \label{rbtree:1}
+    \item La radice $root$ è $\const{black}$; \label{rbtree:2}
+    \item Le foglie ($T.nil$) sono $\const{black}$; \label{rbtree:3}
+    \item Se $x$ è $\const{red}$, i figli sono $\const{black}$; \label{rbtree:4}
     \item Per ogni nodo $x$, ogni cammino da $x$ a una qualsiasi delle foglie
-    ha lo stesso numero di nodi $B$ (calcolato con $bh(x)$). \label{rbtree:5}
+    ha lo stesso numero di nodi $\const{black}$ (calcolato con $bh(x)$). \label{rbtree:5}
 \end{enumerate} 
 
 \begin{figure}[hbt]
@@ -30,8 +30,8 @@ $T.nil$, con $T.nil.col = B$.
 \begin{itemize}
     \item In caso non ci fossero nodi rossi, avremo un albero
     perfettamente bilanciato;
-    \item In ogni cammino, il \verb|#| di nodi \textbf{B} è almeno la
-    metà del \verb|#| dei nodi \textbf{R}
+    \item In ogni cammino, il \verb|#| di nodi $\const{black}$ è almeno la
+    metà del \verb|#| dei nodi $\const{red}$
 \end{itemize}
 
 \paragraph{Osservazione} Se $T$ è un \emph{RB-tree} con $n$ nodi interni ($\neq \const{nil}$)
@@ -66,14 +66,12 @@ La dimostrazione è per induzione su $h_x$ (altezza del sotto-albero radicato in
     \end{align*}
 \end{description}
 
-\subsubsection{Complessità algoritmi RB-Trees}
-\texttt{Search, Succ, Min, Pred, Max} hanno un costo di $O(h) = O(\log n)$
-
-%2/5/2018
+\subsubsection{Complessità Algoritmi RB-Trees}
+\texttt{Search, Succ, Min, Pred, Max} hanno complessità $O(h) = O(\log n)$
 
 \subsubsection{RB-Insert e RB-Delete}
 A differenza di quelle citate precedentemente, che risultano semplici
-sia come complessità asintotica che come implementazione, Bisogna porre 
+sia come complessità asintotica che come implementazione, bisogna porre 
 particolare attenzione a queste due procedure: \texttt{RB-Insert} e \texttt{RB-Delete}.
 
 Per ovviare a ciò, posso utilizzare le \emph{rotazioni}. Consideriamo il seguente albero,
@@ -81,38 +79,25 @@ in cui $x$ e $y$ sono nodi normali, mentre $\alpha, \ \beta$ e $\gamma$ sono sot
 (il colore dei nodi non ha importanza ai fini della procedura che andremo a 
 vedere)\footnote{Di conseguenza, applicandola a un \emph{RB-tree}, gli assiomi di validità potrebbero venire violati.}:
 \begin{center}
-	\begin{tikzpicture}
+	\begin{tikzpicture}[tree]
 	\Tree
 	[.$x$     
-		[.$\alpha$
-		]
+		[.$\alpha$ ]
 		[.$y$ 
-            [.$\beta$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
-			[.$\gamma$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
-		]
+            [.$\beta$ ]
+			[.$\gamma$ ]
+        ]
 	]
 	\end{tikzpicture}
 \end{center}
-Applichiamo la procedura \texttt{Left(T,x)}, ottenendo:
+Applichiamo \texttt{Left(T,x)}, ottenendo:
 \begin{center}
-	\begin{tikzpicture}
+	\begin{tikzpicture}[tree]
 	\Tree
 	[.$y$
         [.$x$
-            [.$\alpha$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
-            [.$\beta$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-            ]
+            [.$\alpha$ ]
+            [.$\beta$ ]
 		]
 		[.$\gamma$ ]
 	]
@@ -122,12 +107,10 @@ Applichiamo la procedura \texttt{Left(T,x)}, ottenendo:
 \paragraph{Osservazione} La \emph{visita simmetrica} è identica per i due alberi:
 $$\alpha \rightarrow x \rightarrow \beta \rightarrow y \rightarrow \gamma$$
 
-\input{pseudocodes/abr/left}
-
 \paragraph{RB-Insert(T, z)} Voglio inserire $z$ nell'albero $T$.
-L'idea è quella di porre $z.col = \const{red}$ poichè meno insidioso\footnote{Andando a modificare il numero di nodi neri, cambia l'altezza nera, e la cosa è difficile da sistemare.}.
+L'idea è quella di porre $z.color = \const{red}$ poichè meno insidioso\footnote{Andando a modificare il numero di nodi neri, cambia l'altezza nera, e la cosa è difficile da sistemare.}.
 \begin{itemize}
-    \item Se violo \ref{rbtree:2} $\Rightarrow z.col = \const{black}$;
+    \item Se violo \ref{rbtree:2} $\Rightarrow z.color = \const{black}$;
     \item Se violo \ref{rbtree:4}:
     \begin{itemize}
         \item Risolvo localmente;
@@ -135,123 +118,100 @@ L'idea è quella di porre $z.col = \const{red}$ poichè meno insidioso\footnote{
     \end{itemize}
 \end{itemize}
 
-Abbiamo due \emph{macrocasi}. $z.p$ è figlio sinistro, oppure destro. Noi analizzeremo solo il primo: \textbf{z.p figlio sinistro}.
+Abbiamo due \emph{macrocasi}. $z.p$ è figlio sinistro, oppure destro. Noi analizzeremo solo il primo: \textbf{z.p figlio sinistro}\footnote{I nodi non cerchiati sono $\const{red}$, %
+	quelli cerchiati sono $\const{black}$, quelli tratteggiati e puntinati possono essere sia $\const{red}$ che $\const{black}$.}.
 \begin{center}
-	\begin{tikzpicture}
+	\begin{tikzpicture}[tree]
 	\Tree
-	[.$\boldsymbol{z.p.p}$
-        [.$\boldsymbol{\color{red} z.p}$
-            [.$\boldsymbol{\color{red} z}$
-            ]
+	[.$z.p.p$
+        [.\node[red]{$z.p$};
+            [.\node[red]{$z$}; ]
 		]
-		[.$y$ 
-        \edge[blank]; \node[blank]{};
-        \edge[blank]; \node[blank]{};
-        ]
+		[.\node[unknown]{$y$}; ]
     ]
 	\end{tikzpicture}
 \end{center}
-\clearpage
-Abbiamo due possibilità per $y$\footnote{I nodi con testo in rosso sono $\const{red}$, %
-quelli in grassetto sono $\const{black}$, e quelli normali possono essere sia rossi che neri.}:
+
+Abbiamo due possibilità per $y$:
 \begin{enumerate}
-    \item $y.col = \const{red}$. Ci è sufficiente invertire il colore di $z.p.p$ con quello dei figli.
+    \item $y.color = \const{red}$. Inverto il colore di $z.p.p$ con quello dei figli, ottenendo:
     \begin{center}
-        \begin{tikzpicture}
+        \begin{tikzpicture}[tree]
         \Tree
-        [.$\boldsymbol{\color{red} z.p.p}$
-            [.$\boldsymbol{z.p}$
-                [.$\boldsymbol{\color{red} z}$
-                ]
+        [.\node[red]{$z.p.p$};
+            [.$z.p$
+                [.\node[red]{$z$}; ]
             ]
-            [.$\boldsymbol{y}$ 
-            \edge[blank]; \node[blank]{};
-            \edge[blank]; \node[blank]{};
-            ]
+            [.$y$ ]
         ]
         \end{tikzpicture}
     \end{center}
     In questo modo, risolviamo localmente e rimandiamo il problema in alto.
-    \item $y.col = \const{black}$. Possiamo distinguere due sottocasi.
+    \item $y.color = \const{black}$. Possiamo distinguere due sottocasi:
     \begin{enumerate}[label=($2.\arabic*$)]
         \item $z$ figlio destro. \label{rbinsert:2.1}
         \begin{center}
-            \begin{tikzpicture}
+            \begin{tikzpicture}[tree]
             \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z.p}$
+            [.$z.p.p$
+                [.\node[red]{$z.p$};
                     \edge[blank]; \node[blank]{};
-                    [.$\boldsymbol{\color{red} z}$
-                    ]
+                    [.\node[red]{$z$}; ]
                 ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
+                [.$y$ ]
             ]
             \end{tikzpicture}
         \end{center}
-        Voglio finire nel caso \ref{rbinsert:2.2}. Applico \texttt{Left(T,z.p)}, ottenendo:
+        Applico \texttt{Left(T,z.p)}, ottenendo:
         \begin{center}
-            \begin{tikzpicture}
+            \begin{tikzpicture}[tree]
             \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z}$
-                    [.$\boldsymbol{\color{red} z.p}$ ]
+            [.$z.p.p$
+                [.\node[red]{$z$};
+                    [.\node[red]{$z.p$}; ]
                     \edge[blank]; \node[blank]{};
                 ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
+                [.$y$ ]
             ]
             \end{tikzpicture}
         \end{center}
+    	Mi riconduco al caso \ref{rbinsert:2.2}. 
 
         \item $z$ figlio sinistro. \label{rbinsert:2.2}
         \begin{center}
-            \begin{tikzpicture}
+            \begin{tikzpicture}[tree]
             \Tree
-            [.$\boldsymbol{z.p.p}$
-                [.$\boldsymbol{\color{red} z.p}$
-                    [.$\boldsymbol{\color{red} z}$ ]
+            [.$z.p.p$
+                [.\node[red]{$z.p$};
+                    [.\node[red]{$z$}; ]
                     \edge[blank]; \node[blank]{};
                 ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
+                [.$y$ ]
             ]
             \end{tikzpicture}
         \end{center}
         Scambio i colori di $z.p.p$ con $z.p$, ottenendo:
         \begin{center}
-            \begin{tikzpicture}
+            \begin{tikzpicture}[tree]
             \Tree
-            [.$\boldsymbol{\color{red} z.p.p}$
-                [.$\boldsymbol{z.p}$
-                    [.$\boldsymbol{\color{red} z}$ ]
+            [.\node[red]{$z.p.p$};
+                [.$z.p$
+                    [.\node[red]{$z$}; ]
                     \edge[blank]; \node[blank]{};
                 ]
-                [.$\boldsymbol{y}$ 
-                \edge[blank]; \node[blank]{};
-                \edge[blank]; \node[blank]{};
-                ]
+                [.$y$ ]
             ]
             \end{tikzpicture}
         \end{center}
-        Applico \texttt{Right(T,z.p.p)}\footnote{Analoga di \texttt{Left}.}:
+        Applico \texttt{Right(T,z.p.p)}\footnote{Analoga di \texttt{Left}.}, ottenendo:
         \begin{center}
-            \begin{tikzpicture}
+            \begin{tikzpicture}[tree]
             \Tree
-            [.$\boldsymbol{z.p}$
-                [.$\boldsymbol{\color{red} z}$ 
+            [.$z.p$
+                [.\node[red]{$z$}; ]
+                [.\node[red]{$z.p.p$}; 
                     \edge[blank]; \node[blank]{};
-                    \edge[blank]; \node[blank]{};
-                ]
-                [.$\boldsymbol{\color{red} z.p.p}$ 
-                    \edge[blank]; \node[blank]{};
-                    [.$\boldsymbol{y}$ ]
+                    [.$y$ ]
                 ]
             ]
             \end{tikzpicture}
@@ -259,14 +219,207 @@ quelli in grassetto sono $\const{black}$, e quelli normali possono essere sia ro
     \end{enumerate}
 \end{enumerate}
 
-\input{pseudocodes/abr/rb-insert}
-\input{pseudocodes/abr/rb-insertfix}
+\input{pseudocodes/trees/rbt/rb-insert}
+\input{pseudocodes/trees/rbt/rb-insert-fixup}
 
-\subparagraph{Costo}
-$$\frac{h}{2} \cong \frac{\log n}{2} \approx \log n \text{ iterazioni senza rotazioni}
-    + \proc{Max} \text{ 2 rotazioni.}$$
+\subparagraph{Complessità} $O(\log n) + \text{max } 2$ rotazioni
 
-\paragraph{RB-Delete(T, z)}
-La \texttt{Delete} è ancora più problematica\footnote{Ho deciso di ometterla per non saper come rappresentarla in modo adeguato.%
-Darò solo una breve osservazione}. Se $z$ è rosso, non ho nessun problema, poichè l'altezza nera non viene toccata.
-Altrimenti, i problemi possono essere diversi (radice rossa, due nodi rossi adiacenti, altezza nera inconsistente, ecc\dots).
+\paragraph{RB-Delete(T, z)} Distinguiamo 2 casi:
+\begin{enumerate}[label=($\arabic*$)]
+	\item $z$ ha un figlio;
+	\item $z$ ha due figli.
+\end{enumerate}
+Ci comportiamo allo stesso modo della \texttt{Delete(T,z)} per un ABR, facendo però un'ulteriore accorgimento:
+\begin{itemize}
+	\item se $z.color = \const{red}$ non ho problemi
+	\item se $z.color = \const{black}$ violo \ref{rbtree:5}:
+	\begin{itemize}
+		\item Risolvo localmente;
+		\item Sposto verso l'alto il problema.
+	\end{itemize}
+\end{itemize}
+Dunque, in seguito alla \texttt{Delete(T,z)}, il nodo $x$ che ha preso il posto di $z$ ne ''assorbirà'' il colore diventando doppiamente $\const{black}$. \par
+Abbiamo due \emph{macrocasi}. $x$ è figlio sinistro, oppure destro. Noi analizzeremo solo il primo: \textbf{x figlio sinistro}.
+\begin{center}
+	\begin{tikzpicture}[tree]
+	\Tree
+	[.\node[unknown]{$x.p$};
+		[.\node[double circle]{$x$}; ]
+		[.\node[unknown]{$w$}; ]
+	]
+	\end{tikzpicture}
+\end{center}
+Abbiamo due possibilità per $w$:
+\begin{enumerate}
+	\item $w.color = \const{red}$ \label{rbdelete:1}
+	\begin{center}
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.$x.p$
+			[.\node[double circle]{$x$}; ]
+			[.\node[red]{$w$};
+				[.\scriptsize $w.left$ ]
+				[.\scriptsize $w.right$ ]
+			]
+		]
+		\end{tikzpicture}
+	\end{center}
+	Scambio i colori di $w$ con $x.p$, ottenendo:
+	\begin{center}
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.\node[red]{$x.p$};
+			[.\node[double circle]{$x$}; ]
+			[.$w$
+				[.\scriptsize $w.left$ ]
+				[.\scriptsize $w.right$ ]
+			]
+		]
+		\end{tikzpicture}
+	\end{center}
+	Applico \texttt{Left(T,x.p)}, ottenendo:
+	\begin{center}
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.$w$
+			[.\node[red]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.\scriptsize $w.left$ ]
+			]
+			[.\scriptsize $w.right$ ]
+		]
+		\end{tikzpicture}
+	\end{center}
+	Mi riconduco al caso \ref{rbdelete:2}
+
+	\item $w.color = \const{black}$ \label{rbdelete:2}
+	\begin{center}
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.\node[red]{$x.p$};
+			[.\node[double circle]{$x$}; ]
+			[.$w$
+				[.\node[red]{\scriptsize $w.left$}; ]
+				[.\node[red]{\scriptsize $w.right$}; ]
+			]
+		]
+		\end{tikzpicture}
+	\end{center}
+	Possiamo distinguere tre sottocasi:
+	\begin{enumerate}[label=($2.\arabic*$)]
+		\item $w.left.color = \const{black}$ e $w.right.color = \const{black}$ \label{rbdelete:2.1}
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[unknown]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.$w$
+					[.\scriptsize $w.left$ ]
+					[.\scriptsize $w.right$ ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		$x$ cede un suo \const{black} a $x.p$ e $w$ diventa per forza $\const{red}$, ottenendo:
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[double circle={4pt}{unknown}]{$x.p$};
+				[.$x$ ]
+				[.\node[red]{$w$};
+					[.\scriptsize $w.left$ ]
+					[.\scriptsize $w.right$ ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		In questo modo, risolviamo localmente e rimandiamo il problema in alto.
+		
+		\item $w.right.color = \const{black}$ \label{rbdelete:2.2}
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[unknown]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.$w$
+					[.\node[red]{\scriptsize $w.left$}; ]
+					[.\scriptsize $w.right$ ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		Scambio i colori di $w$ con $w.left$, ottenendo:
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[unknown]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.\node[red]{$w$};
+					[.\scriptsize $w.left$ ]
+					[.\scriptsize $w.right$ ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		Applico \texttt{Right(T,w)}, ottenendo:
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[unknown]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.\scriptsize $w.left$
+					\edge[blank]; \node[blank]{};
+					[.\node[red]{$w$};
+						\edge[blank]; \node[blank]{};
+						[.\scriptsize $w.right$ ]
+					]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		Mi riconduco al caso \ref{rbdelete:2.3}
+		
+		\item $w.right.color = \const{red}$ \label{rbdelete:2.3}
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.\node[unknown]{$x.p$};
+				[.\node[double circle]{$x$}; ]
+				[.$w$
+					[.\node[unknown2]{\scriptsize $w.left$}; ]
+					[.\node[red]{\scriptsize $w.right$}; ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+		Scambio i colori di $x.p$ con $w$ e $w.right$ diventa $\const{black}$, ottenendo:
+		\begin{center}
+			\begin{tikzpicture}[tree]
+			\Tree
+			[.$x.p$
+				[.\node[double circle]{$x$}; ]
+				[.\node[unknown]{$w$};
+					[.\node[unknown2]{\scriptsize $w.left$}; ]
+					[.\scriptsize $w.right$ ]
+				]
+			]
+			\end{tikzpicture}
+		\end{center}
+	Applico \texttt{Left(T,x.p)}, ottenendo:
+	\begin{center}
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.\node[unknown]{$w$};
+			[.$x.p$
+				[.\node[double circle]{$x$}; ]
+				[.\node[unknown2]{\scriptsize $w.left$}; ]
+			]
+			[.\scriptsize $w.right$ ]
+		]
+		\end{tikzpicture}
+	\end{center}
+	Ho risolto.
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Complessità} $O(\log n) + \text{max } 3$ rotazioni

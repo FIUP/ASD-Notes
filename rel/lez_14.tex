@@ -1,16 +1,16 @@
-\section{Alberi di Ricerca}
-\subsection{Alberi Binari di Ricerca (ABR)}
+\section{Alberi}
+\subsection{Alberi Binari di Ricerca}
 \paragraph{Definizione induttiva}
 \begin{itemize}
 	\item $\varnothing$ è un albero;
 	\item Se $r$ è un nodo, $T_1$ e $T_2$ alberi $\Rightarrow r(T_1, T_2)$ è un albero.
 	\begin{center}
-		\begin{tikzpicture}[tree,sibling distance=10mm]
-			\Tree
-			[.$r$
-				[.$T_1$ ]
-				[.$T_2$ ]
-			]
+		\begin{tikzpicture}[tree]
+		\Tree
+		[.$r$
+			[.$T_1$ ]
+			[.$T_2$ ]
+		]
 		\end{tikzpicture}
 	\end{center}
 \end{itemize}
@@ -33,20 +33,20 @@ $\forall r$
 \subparagraph{Esempio} Ecco un \emph{albero binario di ricerca} d'esempio:
 \begin{center}
 	\begin{tikzpicture}[tree]
-		\Tree
-		[.7     
-			[.3 
-				[.1 ]
-				[.6
-					[.4 ] 
-					\edge[blank]; \node[blank]{};
-				]
-			]
-			[.9 
-				[.8 ]		
+	\Tree
+	[.7     
+		[.3 
+			[.1 ]
+			[.6
+				[.4 ] 
 				\edge[blank]; \node[blank]{};
 			]
 		]
+		[.9 
+			[.8 ]		
+			\edge[blank]; \node[blank]{};
+		]
+	]
 	\end{tikzpicture}
 \end{center}
 
@@ -54,7 +54,7 @@ $\forall r$
 \subsubsection{Visita simmetrica} La visita simmetrica (ordine infisso) visita i nodi in ordine
 crescente.
 
-\input{pseudocodes/abr/in-order}
+\input{pseudocodes/trees/bst/in-order}
 
 \paragraph{Complessità} 
 \[ T(n) =
@@ -91,19 +91,19 @@ Ricerca di una chiave $k$ in un albero radicato nel nodo $x$.
 	\item Altrimenti, ricorre sul prossimo nodo.
 \end{itemize}
 
-\input{pseudocodes/abr/search}
+\input{pseudocodes/trees/bst/search}
 
-\paragraph{Complessità} Nel caso peggiore, la complessità è l'altezza dell'albero $h$ ($O(h)$).
+\paragraph{Complessità} La complessità è l'altezza $h$ dell'albero, ovvero $O(h)$.
 
 \bigskip
 Vediamo una versione iterativa di \texttt{Search}.
-\input{pseudocodes/abr/search-it}
+\input{pseudocodes/trees/bst/search-it}
 
 Procedura che restituisce il \emph{minimo} di un albero:
-\input{pseudocodes/abr/min}
+\input{pseudocodes/trees/bst/min}
 
 Procedura che restituisce il \emph{massimo} di un albero.
-\input{pseudocodes/abr/max}
+\input{pseudocodes/trees/bst/max}
 
 \subparagraph{Complessità} $O(h)$
 
@@ -117,7 +117,7 @@ Se le chiavi fossero tutte distinte, allora il \emph{successore} di $x$
 	\item Altrimenti, il successore è l'antenato più vicino di cui $x$ è nel 
 	sottoalbero sinistro.
 \end{itemize}
-\input{pseudocodes/abr/successor}
+\input{pseudocodes/trees/bst/successor}
 
 \paragraph{Complessità} $O(h)$
 
@@ -125,7 +125,7 @@ Se le chiavi fossero tutte distinte, allora il \emph{successore} di $x$
 
 \subsubsection{Inserimento}
 
-\input{pseudocodes/abr/insert}
+\input{pseudocodes/trees/bst/insert}
 
 \paragraph{Complessità} $O(h)$
 
@@ -138,7 +138,7 @@ Distingueremo 2 casi nell'algoritmo:
 Per fare ciò, usiamo una funzione ausiliaria \texttt{Transplant}, con 
 complessità $O(1)$.
 
-\input{pseudocodes/abr/transplant} 
-\input{pseudocodes/abr/delete}
+\input{pseudocodes/trees/bst/transplant} 
+\input{pseudocodes/trees/bst/delete}
 
 \paragraph{Complessità} $O(h)$

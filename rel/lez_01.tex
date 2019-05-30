@@ -66,7 +66,7 @@ necessario un resize del vector e una copia di tutti gli elementi nel nuovo vett
 
 \newpage
 	
-\section{Algoritmi di Ordinamento}
+\section{Ordinamento}
 
 \subsection{Problema dell'Ordinamento (Sorting)}
 \texttt{Input}: sequenza di numeri 
@@ -185,7 +185,7 @@ che partono da 1.}\par
 
 \paragraph{Pseudocodice} Segue lo pseudocodice dell'\texttt{InsertionSort}.
 
-\input{pseudocodes/insertion-sort.tex}
+\input{pseudocodes/sorting/insertion-sort.tex}
 
 \vspace{0.5cm}
 
@@ -196,7 +196,7 @@ Quando il \texttt{while} termina, ci sono due casi:
 	\item[$\circ$] \texttt{(i > 0) and (A[i] $\leq$ key)}: \texttt{A[i+1] = key}.
 \end{itemize}
 
-\subsubsection{Invarianti e Correttezza}
+\subsubsection{Correttezza di Insertion Sort}
 
 \paragraph{for} \texttt{A[1$\twodots$j-1]} è ordinato e contiene gli 
 elementi in \texttt{(1,j-1)} iniziali.

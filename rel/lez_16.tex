@@ -58,7 +58,7 @@ hanno $size = 0$.
 
 Vediamo un'implementazione non efficiente della procedura \texttt{Size}.
 
-\input{pseudocodes/abr/stats/size} 
+\input{pseudocodes/trees/stats/size} 
 
 \subparagraph{Costo} Il costo è $O(n)$, che come preannunciato, non è efficiente.
 Questo perchè le procedure \texttt{Insert/Delete} di un RB-tree sono nel peggiore dei casi $O(h)$.
@@ -66,23 +66,23 @@ Questo perchè le procedure \texttt{Insert/Delete} di un RB-tree sono nel peggio
 \bigskip Questa procedura, \texttt{Select}, restituisce il nodo di posizione $i$
 in $T_x$.
 
-\input{pseudocodes/abr/stats/select} 
+\input{pseudocodes/trees/stats/select} 
 
 \subparagraph{Costo di Select} $O(h) = O(\log n)$
 
 \texttt{Rank} restituisce la posizione $i$ che occupa il nodo $x$.
 
-\input{pseudocodes/abr/stats/rank}
+\input{pseudocodes/trees/stats/rank}
 
 \subparagraph{Costo di Rank} $O(h) = O(\log n)$
 
 \bigskip Vediamo ora la variante di \texttt{RB-Insert} 
 
-\input{pseudocodes/abr/stats/rb-insert}
+\input{pseudocodes/trees/stats/rb-insert}
 
 E la versione aggiornata di \texttt{Left}
 
-\input{pseudocodes/abr/stats/left}
+\input{pseudocodes/trees/stats/left}
 
 \subsubsection{Teorema dell'aumento degli RB-Trees}
 
@@ -160,7 +160,7 @@ Sistemo i massimi. \texttt{Left} costa ancora $O(1)$
 \end{itemize}
 
 Vediamo \texttt{ISearch}.
-\input{pseudocodes/abr/intervaltree/isearch} 
+\input{pseudocodes/trees/intervaltree/isearch} 
 
 \subparagraph{Correttezza} 
 \begin{itemize}

@@ -20,10 +20,10 @@ Si basa sul paradigma del \textit{divide et impera}:
 \end{itemize}
 
 \paragraph{Pseudocodice} Segue lo pseudocodice del \texttt{QuickSort}.
-\input{pseudocodes/quick-sort}
-\input{pseudocodes/partition}
+\input{pseudocodes/sorting/quick-sort/quick-sort}
+\input{pseudocodes/sorting/quick-sort/partition}
 
-\subsubsection{Correttezza di QuickSort(A, p, r)}
+\subsubsection{Correttezza di Quick Sort}
 \begin{description}
 	\item[Caso base] array già ordinato, 0 o 1 elemento.
 	\item[Induzione] Abbiamo, dopo \texttt{Partition}
@@ -300,4 +300,4 @@ $$T(n) = T \left( \frac{n}{10} \right) + T \left( \frac{9n}{10} \right) + \Theta
 Solo il caso in cui una delle due partizioni è costante, si ricade nel caso pessimo. Per ovviare al
 problema, si può utilizzare una versione di \texttt{Partition} che rende impossibile il partizionamento costante.
 
-\input{pseudocodes/randomized-partition}
+\input{pseudocodes/sorting/quick-sort/randomized-partition}

@@ -26,9 +26,9 @@ Durante l'algoritmo, la disposizione sarà questa:
 \end{center}
 (La cella vuota è la regione ancora da esplorare).
 
-\input{pseudocodes/tripartition} 
+\input{pseudocodes/sorting/quick-sort-3p/tripartition} 
 
-\input{pseudocodes/quick-sort-2}
+\input{pseudocodes/sorting/quick-sort-3p/quick-sort}
 
 \subsection{Limite Inferiore}
 
@@ -59,9 +59,6 @@ algoritmo di ordinamento su un input di dimensione fissata $A[1 \dots n]$.
     \item \emph{foglie} (ogni foglia è una possibile permutazione)
 \end{itemize}
 
-Rivediamo una versione di \texttt{InsertionSort} basato su scambi.
-\input{pseudocodes/insertion-sort-swaps}
-\clearpage
 Ecco un esempio di \emph{Albero di Decisione} per l'array $A[a_1,a_2,a_3]$ 
 con 
 $$a_1 = 1, \; a_2 = 2, \; a_3 = 3$$
@@ -115,7 +112,7 @@ Assumo
     \item \texttt{Supporto}: $C[0\twodots k]$.
 \end{itemize}
 
-\input{pseudocodes/counting-sort} 
+\input{pseudocodes/sorting/counting-sort} 
 
 \paragraph{Complessità} 
 \begin{align*}

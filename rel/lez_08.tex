@@ -1,4 +1,4 @@
-\section{Algoritmi di Ordinamento (cont.)}
+\section{Ordinamento (cont.)}
 \paragraph{Ordinamento} Finora abbiamo visto due algoritmi di ordinamento, in cui avevamo le seguenti 
 premesse:
 \begin{itemize}
@@ -61,9 +61,9 @@ Inoltre, ogni array \texttt{A} sarà dinamico, e avrà:
 \end{itemize}
 
 Vediamo alcune funzioni di utilità che verranno usate.
-\input{pseudocodes/heap-sort/left.tex}
-\input{pseudocodes/heap-sort/right.tex}
-\input{pseudocodes/heap-sort/parent.tex}
+\input{pseudocodes/sorting/heap-sort/left.tex}
+\input{pseudocodes/sorting/heap-sort/right.tex}
+\input{pseudocodes/sorting/heap-sort/parent.tex}
 
 \subsubsection{Max Heap}
 \emph{Max Heap} è uno heap che soddisfa la seguente proprietà:
@@ -89,7 +89,7 @@ Equivalentemente
 
 Ecco ora una procedura che, dato un nodo $i$, trasforma in un Max Heap il sotto-albero eradicato in esso (con radice $i$).
 
-\input{pseudocodes/heap-sort/max-heapify}
+\input{pseudocodes/sorting/heap-sort/max-heapify}
 
 \paragraph{Correttezza di MaxHeapify} 
 \begin{itemize}
@@ -126,7 +126,7 @@ Quali sono i nodi foglia?
 	\end{align*}
 \end{itemize}
 
-\input{pseudocodes/heap-sort/build-max-heap.tex}
+\input{pseudocodes/sorting/heap-sort/build-max-heap.tex}
 L'algoritmo esegue $\frac{n}{2}$ volte \texttt{MaxHeapify} (che ha complessità $O(\log n)$),
 ottenendo una complessità finale $O(n \log n)$, 
 tuttavia questa stima è molto pessimistica.\par
@@ -166,7 +166,7 @@ consiste nel mettere la radice in ultima posizione.
 Poi chiama \texttt{MaxHeapify} sul resto dell'array per renderlo un \emph{Max Heap}, e itera il procedimento 
 sul nuovo array.
 
-\input{pseudocodes/heap-sort/heap-sort.tex}
+\input{pseudocodes/sorting/heap-sort/heap-sort.tex}
 
 \paragraph{Complessità} $O(n \log n)$.
 
@@ -184,10 +184,10 @@ Voglio poter eseguire le seguenti operazioni:
 \end{itemize}
 \paragraph{Idea} Uso un \emph{Max Heap} (A).
 
-\input{pseudocodes/code/max.tex}
+\input{pseudocodes/priority-queues/max.tex}
 La procedura \texttt{Max(A)} ha complessità costante $\Theta (1)$.
 
-\input{pseudocodes/code/extract-max.tex}
+\input{pseudocodes/priority-queues/extract-max.tex}
 La procedura \texttt{ExtractMax(A)} ha la stessa complessità di \texttt{MaxHeapify}: \\
 $O(\log n)$.
 \bigskip
@@ -201,7 +201,7 @@ in coda ad A: in questo modo, l'unico elemento che potrebbe compromettere la pro
 \end{gather*}
 Non possiamo dire nulla su $i$. Va ristabilita la proprietà di \emph{Max Heap}: per fare ciò 
 usiamo la procedura \texttt{MaxHeapifyUp}.
-\input{pseudocodes/code/max-heapify-up.tex}
+\input{pseudocodes/priority-queues/max-heapify-up.tex}
 
 \paragraph{Correttezza di MaxHeapifyUp}
 \subparagraph{Casi base} 
@@ -219,13 +219,13 @@ usiamo la procedura \texttt{MaxHeapifyUp}.
 \bigskip
 
 Ecco ora lo pseudocodice della funzione \texttt{Insert}.
-\input{pseudocodes/code/insert}
+\input{pseudocodes/priority-queues/insert}
 \texttt{Insert} ha complessità $O(\log n)$, la stessa di \texttt{MaxHeapifyUp}.
 
-\input{pseudocodes/code/increase-key}
+\input{pseudocodes/priority-queues/increase-key}
 \texttt{IncreaseKey} ha complessità $O(\log n)$.
 
-\input{pseudocodes/code/change-key} 
+\input{pseudocodes/priority-queues/change-key} 
 \texttt{ChangeKey} è come \texttt{IncreaseKey}, ma può utilizzare valori di $\delta$ qualsiasi, ed è
 corretto per la seguente proprietà:
 \begin{gather*}
@@ -233,5 +233,5 @@ corretto per la seguente proprietà:
 	\Rightarrow \text{dopo \texttt{MaxHeapify} ho un \emph{MaxHeap}}
 \end{gather*}
 
-\input{pseudocodes/code/delete-key}
+\input{pseudocodes/priority-queues/delete-key}
 \texttt{DeleteKey} ha complessità $O(\log n)$.

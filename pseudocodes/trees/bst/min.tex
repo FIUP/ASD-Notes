@@ -1,13 +1,13 @@
 \begin{codebox}
-\Procname{\proc{Max}$(T)$}
+\Procname{\proc{Min}$(T)$}
 \li $x \gets \attrib{T}{root}$
 \li \If $x = \const{nil}$
 \li \Then
 		\Return \const{nil}
 \li \Else
-\li 	\While $\attrib{x}{right} \neq nil$
+\li 	\While $\attrib{x}{left} \neq \const{nil}$
 \li 	\Do 
-			$x \gets \attrib{x}{right}$
+			$x \gets \attrib{x}{left}$
 		\End
 	\End
 \li \Return $x$

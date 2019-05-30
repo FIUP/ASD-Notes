@@ -84,11 +84,14 @@
 	},
 	tree/.style={
 		every tree node/.style={minimum size=10mm,black},
-		level distance=18mm,
-		edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}}
+		edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
+		sibling distance=8mm,
+		level distance=18mm
 	},
+	red/.style={draw=none},
 	black/.style={draw,circle},
-	red/.style={draw,none},
+	unknown/.style={dashed},
+	unknown2/.style={dotted},
 	blank/.style={draw=none},
 	% double circle macro
 	old inner xsep/.estore in=\oldinnerxsep,
@@ -107,7 +110,7 @@
 			in node[inner sep=0pt,draw,circle,minimum width=2*\n1,at=(\p1),#2]{}
 		}
 	},
-	double circle/.default={3pt}{black}
+	double circle/.default={4pt}{black}
 }
 
 \newcommand{\authorName}{Timoty Granziero}

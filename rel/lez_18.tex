@@ -1,12 +1,12 @@
 \subsection{Problemi di Ottimizzazione}
-\begin{align*}
-	& I = \text{insieme delle istanze} \\
-	& S = \text{insieme delle soluzioni} \\
-	& \Pi \subseteq I \times S \\
-	& \forall i \in I, \ S(i) = \{s \in S : (i,s) \in \Pi\} = \text{insieme delle soluzioni ammissibili} \\
-	& c \colon S \to \mathbb{R} = \text{funzione di costo} \\
-	& \text{Determinare, data } i \in I, \ s^* \in S(i) : c(s^*) = \min (\text{/}\max)\{c(s) : s \in S(i)\}
-\end{align*}
+\begin{flalign*}
+	& I = \text{insieme delle istanze} & \\
+	& S = \text{insieme delle soluzioni} & \\
+	& \Pi \subseteq I \times S & \\
+	& \forall i \in I, \ S(i) = \{s \in S : (i,s) \in \Pi\} = \text{insieme delle soluzioni ammissibili} & \\
+	& c \colon S \to \mathbb{R} = \text{funzione di costo} & \\
+	& \text{Determinare, data } i \in I, \ s^* \in S(i) : c(s^*) = \min (\text{/}\max)\{c(s) : s \in S(i)\} &
+\end{flalign*}
 
 \paragraph{Problema della raggiungibilità su un grafo orientato}
 \begin{align*}
@@ -65,9 +65,9 @@ Per convenzione $X_{i \dots j} = \varepsilon \quad$ se $i > j$
 \noindent \verb|#| possibili sottostringhe di una stringa con $m$ caratteri:
 \begin{gather*}
 	\begin{array}{cccccl}
-		\dbinom{m}{2} & + & m & + & 1 & = \dfrac{m(m+1)}{2} = \Theta(m^2) \\
-		\uparrow & & \uparrow & & \uparrow & \\
-		i \neq j & & i = j & & \varepsilon &
+	\dbinom{m}{2} & + & m & + & 1 & = \dfrac{m(m+1)}{2} = \Theta(m^2) \\
+	\uparrow & & \uparrow & & \uparrow & \\
+	i \neq j & & i = j & & \varepsilon &
 	\end{array}
 \end{gather*}
 Lo spazio delle sottostringhe ''non è troppo grande''.
@@ -80,22 +80,19 @@ $$Z = \langle z_1,z_2,\dots,z_k\rangle \in \Sigma^*$$
 si dice che $Z$ è \emph{sottosequenza} di $X$ se $\exists$ una successione crescente di indici
 $$1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq m \ : \ z_j = x_{ij} \quad \forall 1 \leq j \leq k$$
 \paragraph{Esempio}
-\begin{align*}
-	& X = \langle a,b,c,b,b,d \rangle \\
-	& Z_1 = \langle a,b,c \rangle = X_{1 \dots 3} \\
-	& Z_2 = \langle a,c,b \rangle \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5 \\
-	& Z_3 = \langle b,b \rangle = X_{4 \dots 5} \qquad i_1 = 2, \quad i_2 = 5
-\end{align*}
+\begin{flalign*}
+	& X = \langle a,b,c,b,b,d \rangle & \\
+	& Z_1 = \langle a,b,c \rangle = X_{1 \dots 3} & \\
+	& Z_2 = \langle a,c,b \rangle \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5 & \\
+	& Z_3 = \langle b,b \rangle = X_{4 \dots 5} \qquad i_1 = 2, \quad i_2 = 5 &
+\end{flalign*}
 \verb|#| possibili sottosequenze di una stringa con $m$ caratteri:
 \begin{gather*}
 	\begin{array}{lcl}
-		\displaystyle\sum_{k=0}^{m} & \dbinom{m}{k} & = 2^m \\
-		& \uparrow & \\
-		& \text{\scriptsize stringhe lunghe } \scriptstyle k & \\[-5pt]
-		& \text{\scriptsize prese da un insieme} & \\[-5pt]
-		& \text{\scriptsize di } \scriptstyle m \ \text{\scriptsize elementi} &
+	\displaystyle\sum_{k=0}^{m} & \dbinom{m}{k} & = 2^m \\
+	& \uparrow & \\
+	& \text{\scriptsize stringhe lunghe } \scriptstyle k & \\[-5pt]
+	& \text{\scriptsize prese da un insieme} & \\[-5pt]
+	& \text{\scriptsize di } \scriptstyle m \ \text{\scriptsize elementi} &
 	\end{array}
 \end{gather*}
-
-
-

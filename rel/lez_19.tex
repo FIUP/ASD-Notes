@@ -1,0 +1,106 @@
+\subsection{Problema della Longest Common Subsequence (LCS)}
+Date due stringhe $X$, $Y$ determina $Z$ tale che:
+\begin{enumerate}[label={\arabic*)}]
+	\item $Z$ è sottosequenza di $X$ e $Y$;
+	\item $Z$ è la più lunga tra tutte le sottosequenze comuni.
+\end{enumerate}
+
+\paragraph{Esempio}
+\begin{flalign*}
+	& X = \langle a,b,c,b,b,d \rangle & \\
+	& Y = \langle a,d,c,c,b,d \rangle & \\
+	& Z = \langle a,c,b,d \rangle \text{ è una LCS (in questo caso è l'unica)} & \\
+	& \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5, \quad i_4 = 6 & \\
+	& \qquad j_1 = 1, \quad j_2 = 3 \text{ o } 4, \quad j_3 = 5, \quad j_4 = 6 &
+\end{flalign*}
+
+Risolvo il problema:
+\begin{flalign*}
+	& \abs X = m  & \\
+	& \abs Y = n &
+\end{flalign*}
+L'approccio "brute force" ha complessità $\Omega(2^m \cdot 2^n)$.
+\par Devo cercare di individuare una proprietà di sottostruttura, cioè la LCS deve ''nascondere'' al suo interno LCS di qualche stringa più piccola di $X$ e $Y$.
+\begin{flalign*}
+	& X = \langle b,c,f,a \rangle & \\
+	& Y = \langle c,f,d,a \rangle & \\
+	& Z = LCS(X,Y) = \langle Z',a \rangle \qquad \text{con } Z' = LCS(X_3,Y_3) &
+\end{flalign*}
+\begin{flalign*}
+	& X = \langle X',a \rangle & \\
+	& Y = \langle Y',b, \rangle & \\
+	& Z \text{ o non termina con } a \text{, o non termina con } b & \\
+	& Z = LCS(X',Y) \text{ o } LCS(X,Y') & \\
+	&
+	\arraycolsep=0pt
+	\begin{array}{lclcl}
+	S = \{LCS(X_i,Y_j) : 0 \leq i \leq m, \ 0 \leq j \leq n\}, \quad \abs S = (m + & 1 & )(n + & 1 &) \\
+	& \uparrow & & \uparrow & \\
+	& \varepsilon & & \varepsilon &
+	\end{array} &
+\end{flalign*}
+
+\subsubsection{Proprietà di Sottostruttura Ottima per il Sottoproblema $\boldsymbol{LCS(X_i,Y_j)}$}
+Dati i prefissi
+\begin{flalign*}
+	& X_i = \langle x_1,x_2,\dots,x_i \rangle & \\
+	& Y_i = \langle y_1,y_2,\dots,y_j \rangle & \\
+	& \text{Sia } Z = \langle z_1,z_2,\dots,z_k \rangle = LCS(X_i,Yj) &
+\end{flalign*}
+\begin{enumerate}\setcounter{enumi}{-1}
+	\item \label{lcs:0}(caso base) \\
+	o $i = 0$ o $j = 0 \Rightarrow Z = \varepsilon$
+	\item \label{lcs:1} $i,k > 0$ \\
+	se $x_i = y_j$ allora
+	\begin{enumerate}
+		\item \label{lcs:1.a} $z_k = x_i (=y_j)$
+		\item \label{lcs:1.b} $Z_{k-1} = LCS(X_{i-1},Y_{j-1})$
+	\end{enumerate}
+	\item \label{lcs:2} $i,j > 0$ \\
+	se $x_i \neq y_j$ allora \\
+	$Z$ è la stringa di lunghezza massima tra $LCS(X_i,Y_{j-1})$ e $LCS(X_{i-1},Y_j)$
+\end{enumerate}
+
+\paragraph{Dimostrazione}
+\begin{enumerate}
+	\item[\ref{lcs:0}.] banale
+	\item[\ref{lcs:1}.] $x_i = y_j$
+	\begin{flalign*}
+	 & Z = LCS(X_i,Y_j) = \langle z_1,z_2,\dots,z_k \rangle = \langle x_{i_1},x_{i_2},\dots,x_{i_k} \rangle = \langle y_{j_1},y_{j_2},\dots,y_{j_k} \rangle & \\
+	 & 1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq i, \qquad 1 \leq j_1 \leq j_2 \leq \dots \leq j_k \leq j &
+	\end{flalign*}
+	\begin{enumerate}
+		\item[{\hyperref[lcs:1.a]{(a)}}] Ragioniamo per assurdo
+		\begin{flalign*}
+			& z_k = x_{i_k} = y_{j_k} & \\
+			& z_k \neq (x_i = y_j) \\
+			& \Rightarrow i_k < i, \quad j_k < j & \\
+			& Z' = \langle Z,x_i \rangle & \\
+			& 1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq i_{k+1} = i, \qquad 1 \leq j_1 \leq j_2 \leq \dots \leq j_k \leq j_{k+1} = j &
+		\end{flalign*}
+		\item[{\hyperref[lcs:1.b]{(b)}}] Devo dimostrare che
+		\begin{flalign*}
+			& Z_{k-1} = LCS(X_{i-1},Y_{j-1}) & \\
+			& Z_{k-1} = \langle x_{i_1},x_{i_2},\dots,x_{i_{k-1}} \rangle = \langle y_{j_1},y_{j_2},\dots,y_{j_{k.1}} \rangle & \\
+			& i_{k-1} \leq i-1 < i & \\
+			& Z_{k-1} = CS(X_{i-1},Y_{j-1}) &
+		\end{flalign*}
+		Ora dimostro che
+		\begin{flalign*}
+			& Z_{k-1} = LCS(X_{i-1},Y_{j-1}) &
+		\end{flalign*}
+		Supponiamo per assurdo che
+		\begin{flalign*}
+			& Z_{k-1} \neq LCS(X_{i-1},Y_{j-1}) & \\
+			& \Rightarrow \exists Z' \text{ con } \abs{Z'} \geq k & \\
+			&
+			\arraycolsep=0pt
+			\begin{array}{lcccl}
+			\Rightarrow \text{creo } Z'' = \langle & Z'& , \ & x_i & (=y_j) \rangle \\
+			& \uparrow & & \uparrow & \\
+			& \geq k & & 1 & \Rightarrow \ \geq k+1
+			\end{array} &
+		\end{flalign*}
+	\end{enumerate}
+	\item[\ref{lcs:2}.] (come esercizio)
+\end{enumerate}

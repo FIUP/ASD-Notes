@@ -19,12 +19,14 @@ Il processo di soluzione non ha memoria, quindi le soluzioni di sottoistanze van
 
 \paragraph{Esempio}
 Vediamo uno "spreco usando D\&C: la sequenza di Fibonacci.
-\[ F(n) =
-\begin{cases}
-1 & \text{se } n = 0,1 \\
-F(n-1) + F(n-2) & \text{se } n \geq 2
-\end{cases}
-\]
+\begin{flalign*}
+	& F(n) =
+	\begin{cases}
+	1 & \text{se } n = 0,1 \\
+	F(n-1) + F(n-2) & \text{se } n \geq 2
+	\end{cases} &
+\end{flalign*}
+
 \input{pseudocodes/dp/fib/rec-fib}
 
 Ad esempio, con $n = 5$
@@ -57,13 +59,14 @@ Ad esempio, con $n = 5$
 \end{center}
 Vengono ricalcolate $F(3)$ e $F(2)$.
 
-\subparagraph{Complessità}
-\[ T(n) =
-\begin{cases}
-0 & \text{se } n = 0,1 \qquad \text{(il ''return'' costa 0)} \\
-T(n-1) + T(n-2) + 1 & \text{se } n \geq 2 \qquad \quad \text{(il ''+'' costa 1)}
-\end{cases}
-\]
+\paragraph{Complessità}
+\begin{flalign*}
+	T(n) =
+	\begin{cases}
+	0 & \text{se } n = 0,1 \qquad \text{(il ''return'' costa 0)} \\
+	T(n-1) + T(n-2) + 1 & \text{se } n \geq 2 \qquad \quad \text{(il ''+'' costa 1)}
+	\end{cases}
+\end{flalign*}
 \begin{align*}
 	T(n) & \geq T(n-1) + T(n-2) + 1 \\
 	& \geq 2T(n-2) + 1 \\
@@ -90,7 +93,7 @@ $$T(n) = \Theta \left(\left(\frac{1+\sqrt{5}}{2}\right)^n \right)$$
 \par La programmazione dinamica salta la fase top-down.
 
 \subsection{Memoizzazione}
-\`E un ibrido tra il D\&C e la programmazione dinamica che vuole mantenere la fase top-down pur cercando di ricordare le soluzioni ai sottoproblemi
+È un ibrido tra il D\&C e la programmazione dinamica che vuole mantenere la fase top-down pur cercando di ricordare le soluzioni ai sottoproblemi
 
 \paragraph{Def} Un algoritmo \emph{memoizzato} è costituito da due subroutine distinte:
 \begin{enumerate}[label={\arabic*)}]

@@ -1,0 +1,176 @@
+Il D\&C ''non funziona'' perchè ci sono molti sottoproblemi ripetuti.
+\paragraph{Esempio}
+\begin{flalign*}
+	& X = \langle a,b,c,d,e \rangle & \\
+	& Y = \langle b,c,a,b,e \rangle &
+\end{flalign*}
+Trova $LCS(X,Y)$
+\bigskip
+
+Albero delle chiamate:
+\begin{center}
+	\begin{tikzpicture}
+	[level/.style={level distance=20mm, sibling distance=40mm/(#1-0.99)}]
+	\node (a) {$(5,5)$}
+	child {node (b) {$(4,4)$}
+		child {node (c) {$(3,4)$}
+			child {node (e) {$(2,4)$}}
+			child {node (f) {$(3,3)$}}
+		}
+		child {node (d) {$(4,3)$}
+			child {node (g) {$(3,3)$}}
+			child {node (h) {$(4,2)$}}
+		}
+	};
+	\path (a.south) -- (b.north) node [midway,right] {$e = e$};
+	\node [below=5mm of b] {$b \neq d$};
+	\node [below=5mm of c] {$c \neq b$};
+	\node [below=5mm of d] {$d \neq a$};
+	\end{tikzpicture}
+\end{center}
+L'istanza $(3,3)$ è ripetuta.
+
+\paragraph{Complessità Strategia Ricorsiva}
+(Modello di costo: confronto tra caratteri)
+\begin{flalign*}
+	& T(n,m) =
+	\begin{cases}
+		0 & \text{se } n = 0 \text{ o } m = 0 \\
+		T(n-1,m) + T(n,m-1) + 1 & \text{se } n,m > 0 
+	\end{cases} &
+\end{flalign*}
+Si dimostra che
+\begin{gather*}
+	T(n,m) = \Theta \left(\binom{m}{n} \right) \\
+	\binom{m}{2} \geq \binom{m}{2}^n 
+\end{gather*}
+Caso $m = 2n$
+$$\binom{m}{2}^n = 2^n$$
+\subsubsection{Ricorrenza sui Costi}
+La scrittura della ricorrenza sui costi è il secondo passo per costruire un algoritmo di programmazione dinamica.
+\bigskip
+
+\noindent Denoto con $l(i,j) = \abs{LCS(X_i,Y_j)}$
+\begin{flalign*}
+	l(i,j) =
+	\renewcommand{\arraystretch}{1.2}
+	\left\{\begin{array}{lll}
+	0 & \text{se } i = 0 \text{ o } j = 0 & \text{(caso \ref{lcs:0})} \\
+	l(i-1,j-1) + 1 & \text{se } i,j > 0 \text{ e } x_i=x_j & \text{(caso \ref{lcs:1})} \\
+	\max\{l(i,j-1),l(i-1,j)\} & \text{se } i,j > 0 \text{ e } x_i \neq x_j & \text{(caso \ref{lcs:2})}
+	\end{array}\right. &
+\end{flalign*}
+Alla fine ci interessa calcolare $l(m,n)$. \\
+Per calcolare $(i,j)$ mi possono servire $(i-1,j-1), \ (i-1,j), \ (i,j-1)$.
+\begin{gather*}
+	L = 
+	\setlength{\arraycolsep}{0pt}
+	\left[\begin{array}{ccccc}
+	\qquad & & & & \qquad \\
+	& (i{-}1,j{-}1) & & (i{-}1,j) & \\
+	& & \nwarrow & \uparrow & \\
+	& (i,j{-}1) & \leftarrow & (i,j) & \\
+	& & & &
+	\end{array}\right]
+\end{gather*}
+Scansione ''row-major'': riempio la tabella per righe da sinistra a destra.
+\bigskip
+
+Informazione addizionale per costruire la sequenza (vera e propria): \\
+Definisco la funzione
+\begin{flalign*}
+	& b(i,j) =
+	\begin{cases}
+		\textnormal{\textquotesingle}\nwarrow\textnormal{\textquotesingle} & \text{se } x_i = y_j \\
+		\textnormal{\textquotesingle}\leftarrow\textnormal{\textquotesingle} & \text{se } x_i \neq x_j \text{ e } max = LCS(i,j-1) \\
+		\textnormal{\textquotesingle}\uparrow\textnormal{\textquotesingle} & \text{se } x_i \neq y_j \text{ e } max = LCS(i-1,j)
+	\end{cases} &
+\end{flalign*}
+\pagebreak
+\paragraph{Pseudocodice}
+\input{pseudocodes/dp/lcs/lcs}
+\paragraph{Complessità}
+\begin{flalign*}
+	& \ T(m,n) = \Theta(m \cdot n) & \\
+	\text{Caso } m = n \Rightarrow & \ T(m,n) = \Theta(n^2) &
+\end{flalign*}
+\bigskip
+
+Procedura per stampare la LCS:
+\input{pseudocodes/dp/lcs/print-lcs}
+\paragraph{Complessità} $\Theta(m) = \Theta(\abs{LCS})$
+
+\paragraph{Esercizio}
+\begin{flalign*}
+	& X = \langle b,d,c,d \rangle & \\
+	& Y = \langle a,b,c,b,d \rangle &
+\end{flalign*}
+Restituisci $LCS(X,Y)$ e $\abs{LCS(X,Y)}$
+\begin{align*}
+	& L =
+	\begin{blockarray}{ccccccc}
+	  &   & a & b & c & b & d \\
+	\begin{block}{c[cccccc]}
+	  & 0 & 0 & 0 & 0 & 0 & 0 \\
+	b & 0 & 0 & \boldsymbol{1} & 1 & 1 & 1 \\
+	d & 0 & 0 & 1 & 1 & 1 & 2 \\
+	c & 0 & 0 & 1 & \boldsymbol{2} & 2 & 2 \\
+	d & 0 & 0 & 1 & 2 & 2 & \boldsymbol{3} \\
+	\end{block}
+	\end{blockarray}
+	& B =
+	\begin{blockarray}{ccccccc}
+	&   & a & b & c & b & d \\
+	\begin{block}{c[cccccc]}
+	  & & & & & & \\
+	b & & \uparrow & \nwarrow & \leftarrow & \nwarrow & \leftarrow \\
+	d & & \uparrow & \uparrow & \uparrow & \uparrow & \nwarrow \\
+	c & & \uparrow & \uparrow & \nwarrow & \leftarrow & \uparrow \\
+	d & & \uparrow & \uparrow & \uparrow & \uparrow & \nwarrow \\
+	\end{block}
+	\end{blockarray}
+\end{align*}
+$LCS(X,Y) = \langle b,c,d \rangle \qquad \abs{LCS(X,Y)} = 3$
+
+\paragraph{Pseudocodice Memoizzato}
+\input{pseudocodes/dp/lcs/init-lcs}
+\input{pseudocodes/dp/lcs/r-lcs}
+\paragraph{Complessità} $O(m \cdot n)$
+
+\paragraph{Osservazione}
+Se $x_i = y_j$ sempre, invoco \texttt{R-LCS(X,Y,i-1,j-1)} ma non invoco mai \texttt{R-LCS(X,Y,i-1,j)} o \texttt{R-LCS(X,Y,i,j-1)}.
+\bigskip
+
+Ad esempio
+\begin{flalign*}
+	& X = \langle a,a,b,b,c \rangle & \\
+	& Y = \langle b,b,c \rangle
+\end{flalign*}
+Albero delle chiamate:
+\begin{center}
+	\begin{tikzpicture}
+	\node (a) {$(5,3)$}
+	child {node (b) {$(4,2)$}
+		child {node (c) {$(3,1)$}
+			child {node (d) {$(2,0)$}}
+		}
+	};
+	\path (a.south) -- (b.north) node [midway,right] {$c = c$};
+	\path (b.south) -- (c.north) node [midway,right] {$b = b$};
+	\path (c.south) -- (d.north) node [midway,right] {$b = b$};
+	\end{tikzpicture}
+\end{center}
+In generale, se $Y$ è suffisso di $n \leq m$ caratteri di $X$, la complessità di \texttt{R-LCS} nel caso migliore è:
+$$T_{R-LCS}(m,n) = n$$
+Inoltre,
+\begin{gather*}
+	\Omega_{LCS}(m+n) \approxeq \Omega(n) \\
+	O_{LCS,R-LCS}(m \cdot n) \approxeq O(n^2)
+\end{gather*}
+
+\paragraph{Spazio}
+$$S_{LCS}(m,n) = \Theta(m,n)$$
+Tuttavia, posso migliorarlo a
+$$\Theta(2n) = \Theta(n)$$
+poichè mi bastano due righe della tabella in memoria ad ogni istante, quindi due vettori lunghi $n$. \par
+Inoltre, se $m \ll n$, posso fare un'ulteriore ottimizzazione utilizzando la tecnica ''column-major'', cioè scansione per colonne, con due vettori lunghi $m$.

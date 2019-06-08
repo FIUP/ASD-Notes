@@ -32,16 +32,11 @@
 
 \usepackage{mathtools,stmaryrd} % math package
 \usepackage{amssymb} % N, R ... symbols
+\usepackage{blkarray} % block arrays
+
+\usepackage{textcomp} % quotes
 
 \usepackage{totpages} % Per totale pagine
-
-% per frecce in tutte le direzioni, comando \arrow{0}, \arrow{1}, etc.. 
-\makeatletter
-\newcommand{\fixed@sra}{$\vrule height 2\fontdimen22\textfont2 width 0pt\rightarrow$}
-\newcommand{\arrow}[1]{%
-  \mathrel{\text{\rotatebox[origin=c]{\numexpr#1*45}{\fixed@sra}}}
-}
-\makeatother
 
 \usepackage{cancel}
 \usepackage{appendix}
@@ -67,7 +62,16 @@
 \def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
 \makeatother
 
-\usepackage{clrscode3e} % algorithms pseudocode
+% add spacing after exists and forall
+\let\existstemp\exists
+\let\foralltemp\forall
+\renewcommand{\exists}{\existstemp~}
+\renewcommand{\forall}{\foralltemp~}
+
+% algorithms pseudocode
+\usepackage{clrscode3e}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{else if} }
+
 \RequirePackage{graphics} % needed for \scalebox command
 
 % trees
@@ -128,12 +132,6 @@
 \renewcommand{\labelitemiii}{$\diamond$}
 \renewcommand{\labelitemiv}{$\ast$}
 
-% add spacing after exists and forall
-\let\existstemp\exists
-\let\foralltemp\forall
-\renewcommand{\exists}{\existstemp~}
-\renewcommand{\forall}{\foralltemp~}
-
 \author{\authorName}
 \date{\today}
 \title{Appunti di Algoritmi}
@@ -145,10 +143,8 @@
 \fancyhf{}
 \fancyhead[R]{\small\scshape\nouppercase{\leftmark}}
 \fancyhead[L]{\small\scshape\nouppercase{\rightmark}}
-%\fancyhead[L,R]{\small\thepage}
 \lhead{\nouppercase{\rightmark}}
 \rhead{\nouppercase{\leftmark}}
 \cfoot{\thepage}
-%\lfoot{\authorName}
 
 \pagestyle{fancy}

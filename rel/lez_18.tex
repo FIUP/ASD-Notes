@@ -10,17 +10,17 @@
 
 \paragraph{Problema della raggiungibilità su un grafo orientato}
 \begin{align*}
-	& I = \{\langle G=(V,E), \ u, \ v \rangle \ : \ V \subseteq \mathbb{N}, \ V \text{ finito}, \ E \subseteq V \times V, \ u,v \in V\} \\
-	& S = \{\langle v_1,v_2,\dots,v_k \rangle \ : \ k \geq 1, \ v_i \in \mathbb{N} \quad \forall 1 \leq i \leq k\} \cup \{\varepsilon\} \qquad (\varepsilon = \text{cammino vuoto}) \\
-	& \Big(i = \langle G=(V,E), \ u, \ v \rangle, \ s \Big) \in \Pi \Longleftrightarrow
+	& I = \{\angleset{G=(V,E), \ u, \ v} \ : \ V \subseteq \mathbb{N}, \ V \text{ finito}, \ E \subseteq V \times V, \ u,v \in V\} \\
+	& S = \{\angleset{v_1,v_2,\dots,v_k} \ : \ k \geq 1, \ v_i \in \mathbb{N} \quad \forall 1 \leq i \leq k\} \cup \{\varepsilon\} \qquad (\varepsilon = \text{cammino vuoto}) \\
+	& \Big(i = \angleset{G=(V,E), \ u, \ v}, \ s \Big) \in \Pi \Longleftrightarrow
 	\begin{cases}
 	S = \varepsilon, \exists \text{un cammino tra } u \text{ e } v \text{ in } G \\
 	\begin{aligned}
-		& S = \langle v_1,v_2,\dots,v_k \rangle, \ v_1=u, \ v_k=v, \\
+		& S = \angleset{v_1,v_2,\dots,v_k}, \ v_1=u, \ v_k=v, \\
 		& \qquad (v_i,v_{i+1}) \in E \quad \forall 1 \leq i \leq k
 	\end{aligned}
 	\end{cases} \\
-	& c(\langle v_1,v_2,\dots,v_k \rangle) = k-1 \\
+	& c(\angleset{v_1,v_2,\dots,v_k}) = k-1 \\
 	& c(\varepsilon) = +\infty
 \end{align*}
 
@@ -43,7 +43,7 @@ Un problema di ottimizzazione, per essere risolto con la programmazione dinamica
 \subsection{Problemi su Stringhe}
 \paragraph{Def}
 Dato un alfabeto finito $\Sigma$, una \emph{stringa}
-$$X = \langle x_1,x_2,\dots,x_m\rangle, \quad x_i \in \Sigma \quad \forall 1 \leq i \leq m$$
+$$X = \angleset{x_1,x_2,\dots,x_m}, \quad x_i \in \Sigma \quad \forall 1 \leq i \leq m$$
 è una concetazione finita di simboli in $\Sigma$.
 \begin{align*}
 	& m = \abs X = \text{lunghezza di } X \\
@@ -51,14 +51,14 @@ $$X = \langle x_1,x_2,\dots,x_m\rangle, \quad x_i \in \Sigma \quad \forall 1 \le
 	& \varepsilon = \text{stringa vuota}
 \end{align*}
 Data una stringa $X$, il \emph{prefisso} di $X$ è
-$$X_i = \langle x_1,x_2,\dots,x_i \rangle, \quad 1 \leq i \leq m$$
+$$X_i = \angleset{x_1,x_2,\dots,x_i}, \quad 1 \leq i \leq m$$
 Data una stringa $X$, il \emph{suffisso} di $X$ è
-$$X^i = \langle x_i,x_{i+1},\dots,x_m \rangle, \quad 1 \leq i \leq m$$
+$$X^i = \angleset{x_i,x_{i+1},\dots,x_m}, \quad 1 \leq i \leq m$$
 Per convenzione $X_0 = X^{m+1} = \varepsilon$
 
 \paragraph{Def}
 Data una stringa $X$, la \emph{sottostringa} di $X$ è
-$$X_{i \dots j} = \langle x_i,x_{i+1},\dots,x_j \rangle, \quad 1 \leq i \leq j \leq m$$
+$$X_{i \dots j} = \angleset{x_i,x_{i+1},\dots,x_j}, \quad 1 \leq i \leq j \leq m$$
 Per convenzione $X_{i \dots j} = \varepsilon \quad$ se $i > j$
 \bigskip
 
@@ -74,17 +74,17 @@ Lo spazio delle sottostringhe ''non è troppo grande''.
 
 \paragraph{Def}
 Data una stringa
-$$X = \langle x_1,x_2,\dots,x_m\rangle \in \Sigma^*$$
+$$X = \angleset{x_1,x_2,\dots,x_m} \in \Sigma^*$$
 e
-$$Z = \langle z_1,z_2,\dots,z_k\rangle \in \Sigma^*$$
+$$Z = \angleset{z_1,z_2,\dots,z_k} \in \Sigma^*$$
 si dice che $Z$ è \emph{sottosequenza} di $X$ se $\exists$ una successione crescente di indici
 $$1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq m \ : \ z_j = x_{ij} \quad \forall 1 \leq j \leq k$$
 \paragraph{Esempio}
 \begin{flalign*}
-	& X = \langle a,b,c,b,b,d \rangle & \\
-	& Z_1 = \langle a,b,c \rangle = X_{1 \dots 3} & \\
-	& Z_2 = \langle a,c,b \rangle \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5 & \\
-	& Z_3 = \langle b,b \rangle = X_{4 \dots 5} \qquad i_1 = 2, \quad i_2 = 5 &
+	& X = \angleset{a,b,c,b,b,d} & \\
+	& Z_1 = \angleset{a,b,c} = X_{1 \dots 3} & \\
+	& Z_2 = \angleset{a,c,b} \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5 & \\
+	& Z_3 = \angleset{b,b} = X_{4 \dots 5} \qquad i_1 = 2, \quad i_2 = 5 &
 \end{flalign*}
 \verb|#| possibili sottosequenze di una stringa con $m$ caratteri:
 \begin{gather*}

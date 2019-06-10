@@ -1,0 +1,27 @@
+\begin{codebox}
+\Procname{$\proc{LIS}(X)$}
+\li $L[1] \gets 1$
+\li $len \gets 1$
+\li $end \gets 1$
+\li $prev[1] = 0$
+\li \For $i \gets 2 \To n$
+\li \Do
+		$L[i] \gets 1$
+\li		$prev[i] \gets 0$
+\li		\For $j \gets 1 \To i-1$
+\li		\Do \If $x_j < x_i$
+\li			\Then \If $L[i] < 1 + L[j]$
+\li				\Then
+					$L[i] \gets 1 + L[j]$
+\li					$prev[i] \gets j$
+				\End
+			\End
+		\End
+\li		\If $len < L[i]$
+\li		\Then
+			$len = L[i]$
+\li			$end = i$
+		\End
+	\End
+\li \Return $(len, prev, end)$
+\end{codebox}

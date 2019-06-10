@@ -1,8 +1,8 @@
 Il D\&C ''non funziona'' perchè ci sono molti sottoproblemi ripetuti.
 \paragraph{Esempio}
 \begin{flalign*}
-	& X = \langle a,b,c,d,e \rangle & \\
-	& Y = \langle b,c,a,b,e \rangle &
+	& X = \angleset{a,b,c,d,e} & \\
+	& Y = \angleset{b,c,a,b,e} &
 \end{flalign*}
 Trova $LCS(X,Y)$
 \bigskip
@@ -76,8 +76,7 @@ Per calcolare $(i,j)$ mi possono servire $(i-1,j-1), \ (i-1,j), \ (i,j-1)$.
 Scansione ''row-major'': riempio la tabella per righe da sinistra a destra.
 \bigskip
 
-Informazione addizionale per costruire la sequenza (vera e propria): \\
-Definisco la funzione
+Informazione addizionale per costruire la sequenza (vera e propria):
 \begin{flalign*}
 	& b(i,j) =
 	\begin{cases}
@@ -102,8 +101,8 @@ Procedura per stampare la LCS:
 
 \paragraph{Esercizio}
 \begin{flalign*}
-	& X = \langle b,d,c,d \rangle & \\
-	& Y = \langle a,b,c,b,d \rangle &
+	& X = \angleset{b,d,c,d} & \\
+	& Y = \angleset{a,b,c,b,d} &
 \end{flalign*}
 Restituisci $LCS(X,Y)$ e $\abs{LCS(X,Y)}$
 \begin{align*}
@@ -130,7 +129,7 @@ Restituisci $LCS(X,Y)$ e $\abs{LCS(X,Y)}$
 	\end{block}
 	\end{blockarray}
 \end{align*}
-$LCS(X,Y) = \langle b,c,d \rangle \qquad \abs{LCS(X,Y)} = 3$
+$LCS(X,Y) = \angleset{b,c,d} \qquad \abs{LCS(X,Y)} = 3$
 
 \paragraph{Pseudocodice Memoizzato}
 \input{pseudocodes/dp/lcs/init-lcs}
@@ -143,8 +142,8 @@ Se $x_i = y_j$ sempre, invoco \texttt{R-LCS(X,Y,i-1,j-1)} ma non invoco mai \tex
 
 Ad esempio
 \begin{flalign*}
-	& X = \langle a,a,b,b,c \rangle & \\
-	& Y = \langle b,b,c \rangle
+	& X = \angleset{a,a,b,b,c} & \\
+	& Y = \angleset{b,b,c}
 \end{flalign*}
 Albero delle chiamate:
 \begin{center}

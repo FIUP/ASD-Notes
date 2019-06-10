@@ -1,4 +1,4 @@
-\subsection[Problema della LCS]{Problema della Longest Common Subsequence (LCS)}
+\subsection{Longest Common Subsequence (LCS)}
 Date due stringhe $X$, $Y$ determina $Z$ tale che:
 \begin{enumerate}[label={\arabic*)}]
 	\item $Z$ è sottosequenza di $X$ e $Y$;
@@ -7,9 +7,9 @@ Date due stringhe $X$, $Y$ determina $Z$ tale che:
 
 \paragraph{Esempio}
 \begin{flalign*}
-	& X = \langle a,b,c,b,b,d \rangle & \\
-	& Y = \langle a,d,c,c,b,d \rangle & \\
-	& Z = \langle a,c,b,d \rangle \text{ è una LCS (in questo caso è l'unica)} & \\
+	& X = \angleset{ a,b,c,b,b,d} & \\
+	& Y = \angleset{a,d,c,c,b,d} & \\
+	& Z = \angleset{a,c,b,d} \text{ è una LCS (in questo caso è l'unica)} & \\
 	& \qquad i_1 = 1, \quad i_2 = 3, \quad i_3 = 4 \text{ o } 5, \quad i_4 = 6 & \\
 	& \qquad j_1 = 1, \quad j_2 = 3 \text{ o } 4, \quad j_3 = 5, \quad j_4 = 6 &
 \end{flalign*}
@@ -22,13 +22,13 @@ Risolvo il problema:
 L'approccio "brute force" ha complessità $\Omega(2^m \cdot 2^n)$.
 \par Devo cercare di individuare una proprietà di sottostruttura, cioè la LCS deve ''nascondere'' al suo interno LCS di qualche stringa più piccola di $X$ e $Y$.
 \begin{flalign*}
-	& X = \langle b,c,f,a \rangle & \\
-	& Y = \langle c,f,d,a \rangle & \\
-	& Z = LCS(X,Y) = \langle Z',a \rangle \qquad \text{con } Z' = LCS(X_3,Y_3) &
+	& X = \angleset{b,c,f,a} & \\
+	& Y = \angleset{c,f,d,a} & \\
+	& Z = LCS(X,Y) = \angleset{Z',a} \qquad \text{con } Z' = LCS(X_3,Y_3) &
 \end{flalign*}
 \begin{flalign*}
-	& X = \langle X',a \rangle & \\
-	& Y = \langle Y',b, \rangle & \\
+	& X = \angleset{X',a} & \\
+	& Y = \angleset{Y',b} & \\
 	& Z \text{ o non termina con } a \text{, o non termina con } b & \\
 	& Z = LCS(X',Y) \text{ o } LCS(X,Y') & \\
 	&
@@ -43,13 +43,12 @@ L'approccio "brute force" ha complessità $\Omega(2^m \cdot 2^n)$.
 \subsubsection{Proprietà di Sottostruttura Ottima}
 Dati i prefissi
 \begin{flalign*}
-	& X_i = \langle x_1,x_2,\dots,x_i \rangle & \\
-	& Y_i = \langle y_1,y_2,\dots,y_j \rangle & \\
-	& \text{Sia } Z = \langle z_1,z_2,\dots,z_k \rangle = LCS(X_i,Yj) &
+	& X_i = \angleset{x_1,x_2,\dots,x_i} & \\
+	& Y_i = \angleset{y_1,y_2,\dots,y_j} & \\
+	& \text{Sia } Z = \angleset{z_1,z_2,\dots,z_k} = LCS(X_i,Yj) &
 \end{flalign*}
 \begin{enumerate}\setcounter{enumi}{-1}
-	\item \label{lcs:0}(caso base) \\
-	o $i = 0$ o $j = 0 \Rightarrow Z = \varepsilon$
+	\item \label{lcs:0} caso base: o $i = 0$ o $j = 0 \\ \Rightarrow Z = \varepsilon$
 	\item \label{lcs:1} $i,k > 0$ \\
 	se $x_i = y_j$ allora
 	\begin{enumerate}
@@ -66,7 +65,7 @@ Dati i prefissi
 	\item[\ref{lcs:0}.] banale
 	\item[\ref{lcs:1}.] $x_i = y_j$
 	\begin{flalign*}
-	 & Z = LCS(X_i,Y_j) = \langle z_1,z_2,\dots,z_k \rangle = \langle x_{i_1},x_{i_2},\dots,x_{i_k} \rangle = \langle y_{j_1},y_{j_2},\dots,y_{j_k} \rangle & \\
+	 & Z = LCS(X_i,Y_j) = \angleset{z_1,z_2,\dots,z_k} = \angleset{x_{i_1},x_{i_2},\dots,x_{i_k}} = \angleset{y_{j_1},y_{j_2},\dots,y_{j_k}} & \\
 	 & 1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq i, \qquad 1 \leq j_1 \leq j_2 \leq \dots \leq j_k \leq j &
 	\end{flalign*}
 	\begin{enumerate}
@@ -75,13 +74,13 @@ Dati i prefissi
 			& z_k = x_{i_k} = y_{j_k} & \\
 			& z_k \neq (x_i = y_j) \\
 			& \Rightarrow i_k < i, \quad j_k < j & \\
-			& Z' = \langle Z,x_i \rangle & \\
+			& Z' = \angleset{Z,x_i} & \\
 			& 1 \leq i_1 \leq i_2 \leq \dots \leq i_k \leq i_{k+1} = i, \qquad 1 \leq j_1 \leq j_2 \leq \dots \leq j_k \leq j_{k+1} = j &
 		\end{flalign*}
 		\item[{\hyperref[lcs:1.b]{(b)}}] Devo dimostrare che
 		\begin{flalign*}
 			& Z_{k-1} = LCS(X_{i-1},Y_{j-1}) & \\
-			& Z_{k-1} = \langle x_{i_1},x_{i_2},\dots,x_{i_{k-1}} \rangle = \langle y_{j_1},y_{j_2},\dots,y_{j_{k.1}} \rangle & \\
+			& Z_{k-1} = \angleset{x_{i_1},x_{i_2},\dots,x_{i_{k-1}}} = \angleset{y_{j_1},y_{j_2},\dots,y_{j_{k.1}}} & \\
 			& i_{k-1} \leq i-1 < i & \\
 			& Z_{k-1} = CS(X_{i-1},Y_{j-1}) &
 		\end{flalign*}

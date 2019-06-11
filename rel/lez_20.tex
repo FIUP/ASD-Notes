@@ -33,8 +33,7 @@ L'istanza $(3,3)$ è ripetuta.
 \paragraph{Complessità Strategia Ricorsiva}
 (Modello di costo: confronto tra caratteri)
 \begin{flalign*}
-	& T(n,m) =
-	\begin{cases}
+	& T(n,m) = \begin{cases}
 		0 & \text{se } n = 0 \text{ o } m = 0 \\
 		T(n-1,m) + T(n,m-1) + 1 & \text{se } n,m > 0 
 	\end{cases} &
@@ -50,9 +49,10 @@ $$\binom{m}{2}^n = 2^n$$
 La scrittura della ricorrenza sui costi è il secondo passo per costruire un algoritmo di programmazione dinamica.
 \bigskip
 
-\noindent Denoto con $l(i,j) = \abs{LCS(X_i,Y_j)}$
+\noindent Definisco
 \begin{flalign*}
-	l(i,j) =
+	& l(i,j) = \abs{LCS(X_i,Y_j)} & \\
+	& l(i,j) =
 	\renewcommand{\arraystretch}{1.2}
 	\left\{\begin{array}{lll}
 	0 & \text{se } i = 0 \text{ o } j = 0 & \text{(caso \ref{lcs:0})} \\
@@ -60,8 +60,8 @@ La scrittura della ricorrenza sui costi è il secondo passo per costruire un alg
 	\max\{l(i,j-1),l(i-1,j)\} & \text{se } i,j > 0 \text{ e } x_i \neq x_j & \text{(caso \ref{lcs:2})}
 	\end{array}\right. &
 \end{flalign*}
-Alla fine ci interessa calcolare $l(m,n)$. \\
-Per calcolare $(i,j)$ mi possono servire $(i-1,j-1), \ (i-1,j), \ (i,j-1)$.
+Alla fine ci interessa calcolare $l(m,n)$. \par
+Per calcolare $l(i,j)$ mi possono servire tre valori:
 \begin{gather*}
 	L = 
 	\setlength{\arraycolsep}{0pt}
@@ -73,13 +73,12 @@ Per calcolare $(i,j)$ mi possono servire $(i-1,j-1), \ (i-1,j), \ (i,j-1)$.
 	& & & &
 	\end{array}\right]
 \end{gather*}
-Scansione ''row-major'': riempio la tabella per righe da sinistra a destra.
+Scansione ''row-major'': riempio la tabella per righe, da sinistra a destra.
 \bigskip
 
 Informazione addizionale per costruire la sequenza (vera e propria):
 \begin{flalign*}
-	& b(i,j) =
-	\begin{cases}
+	& b(i,j) = \begin{cases}
 		\textnormal{\textquotesingle}\nwarrow\textnormal{\textquotesingle} & \text{se } x_i = y_j \\
 		\textnormal{\textquotesingle}\leftarrow\textnormal{\textquotesingle} & \text{se } x_i \neq x_j \text{ e } max = LCS(i,j-1) \\
 		\textnormal{\textquotesingle}\uparrow\textnormal{\textquotesingle} & \text{se } x_i \neq y_j \text{ e } max = LCS(i-1,j)
@@ -90,10 +89,9 @@ Informazione addizionale per costruire la sequenza (vera e propria):
 \input{pseudocodes/dp/lcs/lcs}
 \paragraph{Complessità}
 \begin{flalign*}
-	& \ T(m,n) = \Theta(m \cdot n) & \\
-	\text{Caso } m = n \Rightarrow & \ T(m,n) = \Theta(n^2) &
+	& T(m,n) = \Theta(m \cdot n) & \\
+	& \text{Caso } m = n \Rightarrow T(m,n) = \Theta(n^2) &
 \end{flalign*}
-\bigskip
 
 Procedura per stampare la LCS:
 \input{pseudocodes/dp/lcs/print-lcs}

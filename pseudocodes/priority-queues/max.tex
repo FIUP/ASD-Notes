@@ -1,9 +1,9 @@
 \begin{codebox}
-\Procname{\proc{Max}$(A)$}
+\Procname{$\proc{Max}(A)$}
 \li \If $\attrib{A}{heapsize} = 0$
-\li     \Then
-            \kw{error}
-\li     \Else
-            \Return $A[1]$
-        \End
+\li \Then
+		\Error
+\li \Else
+        \Return $A[1]$
+    \End
 \end{codebox}

@@ -1,5 +1,5 @@
-\subsection{Quick Sort}
-Il \href{https://en.wikipedia.org/wiki/Quicksort}{Quick Sort} è probabilmente l'algoritmo di ordinamento
+\subsection{Quicksort}
+Il \href{https://en.wikipedia.org/wiki/Quicksort}{Quicksort} è probabilmente l'algoritmo di ordinamento
 più utilizzato e nella pratica efficiente, nonostante abbia un caso pessimo di $O(n^2)$.
 \begin{itemize}
 	\item Caso pessimo $O(n^2)$;
@@ -19,11 +19,11 @@ Si basa sul paradigma del \textit{divide et impera}:
 	(Non fa nulla).
 \end{itemize}
 
-\paragraph{Pseudocodice} Segue lo pseudocodice del \texttt{QuickSort}.
-\input{pseudocodes/sorting/quick-sort/quick-sort}
-\input{pseudocodes/sorting/quick-sort/partition}
+\paragraph{Pseudocodice} Segue lo pseudocodice del \texttt{Quicksort}.
+\input{pseudocodes/sorting/quicksort/quicksort}
+\input{pseudocodes/sorting/quicksort/partition}
 
-\subsubsection{Correttezza di Quick Sort}
+\subsubsection{Correttezza di Quicksort}
 \begin{description}
 	\item[Caso base] array già ordinato, 0 o 1 elemento.
 	\item[Induzione] Abbiamo, dopo \texttt{Partition}
@@ -34,13 +34,13 @@ Si basa sul paradigma del \textit{divide et impera}:
 			\hline 
 		\end{tabular}
 	\end{center}
-	\texttt{QuickSort(A, p, q)} 
+	\texttt{Quicksort(A, p, q)} 
 	\begin{tabular}{|l|l|l|}
 		\hline
 		$\leq$ \texttt{A[q]}, ord & \texttt{A[q]} & $>$ \texttt{A[q]} \\
 		\hline
 	\end{tabular} \par
-	\texttt{QuickSort(A, q+1, r)} 
+	\texttt{Quicksort(A, q+1, r)} 
 	\begin{tabular}{|l|l|l|}
 		\hline
 		$\leq$ \texttt{A[q]}, ord & \texttt{A[q]} & $>$ \texttt{A[q]}, ord \\
@@ -128,7 +128,7 @@ I primi due ($i+1$) elementi sono ordinati:
 	\end{tabular}
 \end{center}
 
-Chiamo ricorsivamente \texttt{QuickSort} con $q = i + 1$.
+Chiamo ricorsivamente \texttt{Quicksort} con $q = i + 1$.
 
 \begin{center}
 	\begin{tabular}{|l|l|l|l|}
@@ -202,7 +202,7 @@ I primi due ($i+1$) elementi sono ordinati:
 	\end{tabular}
 \end{center}
 
-Chiamo ricorsivamente \texttt{QuickSort} con $q = i + 1$.
+Chiamo ricorsivamente \texttt{QuicsSort} con $q = i + 1$.
 
 \begin{center}
 	\begin{tabular}{|l|l|}
@@ -246,7 +246,7 @@ Guardando l'array completo ottengo il risultato atteso:
 	\end{tabular}
 \end{center}
 
-\subsubsection{Complessità di Quick Sort}
+\subsubsection{Complessità di Quicksort}
 
 \texttt{Partition} costa $\Theta (n)$
 \begin{align*}
@@ -300,4 +300,4 @@ $$T(n) = T \left( \frac{n}{10} \right) + T \left( \frac{9n}{10} \right) + \Theta
 Solo il caso in cui una delle due partizioni è costante, si ricade nel caso pessimo. Per ovviare al
 problema, si può utilizzare una versione di \texttt{Partition} che rende impossibile il partizionamento costante.
 
-\input{pseudocodes/sorting/quick-sort/randomized-partition}
+\input{pseudocodes/sorting/quicksort/randomized-partition}

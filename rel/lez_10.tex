@@ -1,9 +1,9 @@
-\subsection{Quick Sort a Tre Partizioni}
-\texttt{QuickSort} con \texttt{RandomizedPartition} funziona bene ed 
+\subsection{Quicksort a Tre Partizioni}
+\texttt{Quicksort} con \texttt{RandomizedPartition} funziona bene ed 
 evita, quasi in ogni circostanza, di imbattersi nel caso pessimo, ad 
 eccezione di un caso particolare: se in \emph{input} viene dato un 
 array con tutti gli elementi uguali, si ottiene il temuto caso pessimo $O(n^2)$.\par
-Per ovviare al problema, è sufficiente partizionare \texttt{QuickSort} in tre
+Per ovviare al problema, è sufficiente partizionare \texttt{Quicksort} in tre
 partizioni invece di due. Dato un \emph{pivot} $x$, partizioniamo $A$ nel
 seguente modo:
 
@@ -26,9 +26,9 @@ Durante l'algoritmo, la disposizione sarà questa:
 \end{center}
 (La cella vuota è la regione ancora da esplorare).
 
-\input{pseudocodes/sorting/quick-sort-3p/tripartition} 
+\input{pseudocodes/sorting/quicksort-3p/tripartition} 
 
-\input{pseudocodes/sorting/quick-sort-3p/quick-sort}
+\input{pseudocodes/sorting/quicksort-3p/quicksort}
 
 \subsection{Limite Inferiore}
 
@@ -91,7 +91,7 @@ $$ \text{\# foglie} \geq \text{\# permutazioni} = n! \qquad ( \text{\# foglie} \
 Inoltre,
 \begin{itemize}
 	\item $ \text{\# operazioni} \geq h = \Omega (n \log n)$
-	\item $ \texttt{HeapSort, MergeSort } O(n \log n))$ 
+	\item $ \texttt{Heapsort, MergeSort } O(n \log n))$ 
 \end{itemize}
 $\Rightarrow \text{ordinamento (bastato su confronti) } \Theta (n \log n)$
 
@@ -151,6 +151,6 @@ Algoritmi stabili:
 Algoritmi non stabili:
 \begin{itemize}
 	\item \texttt{CountingSort}
-	\item \texttt{QuickSort}
-	\item \texttt{HeapSort}
+	\item \texttt{Quicksort}
+	\item \texttt{Heapsort}
 \end{itemize}

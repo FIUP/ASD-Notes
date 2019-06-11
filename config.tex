@@ -74,9 +74,15 @@
 \renewcommand{\exists}{\existstemp~}
 \renewcommand{\forall}{\foralltemp~}
 
+\newcommand{\angleset}[1]{\langle #1 \rangle} % faster string representation as a set of characters
+
+
 % algorithms pseudocode
 \usepackage{clrscode3e}
 \renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{else if} }
+\renewcommand{\Downto}{\ifmmode\ \textrm{\textbf{down to}}\ \else\textbf{down to}\ \fi}
+\renewcommand{\And}{\ifmmode\ \textrm{\textbf{and}}\ \else\textbf{and}\ \fi}
+\newcommand{\Or}{\ifmmode\ \textrm{\textbf{or}}\ \else\textbf{or}\ \fi}
 
 \RequirePackage{graphics} % needed for \scalebox command
 
@@ -123,15 +129,6 @@
 	},
 	double circle/.default={4pt}{black}
 }
-
-\newcommand{\angleset}[1]{\langle #1 \rangle} % faster string representation as a set of characters
-
-% prevent page break
-\newenvironment{preventpagebreak}
-{\par\nobreak\vfil\penalty0\vfilneg
-	\vtop\bgroup}
-{\par\xdef\tpd{\the\prevdepth}\egroup
-	\prevdepth=\tpd}
 
 \usepackage{fancyhdr} % header and footer
 

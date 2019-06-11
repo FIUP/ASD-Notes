@@ -2,15 +2,19 @@
 \Procname{$\proc{LCS}(X,Y)$}
 \li $m \gets \attrib{X}[length]$
 \li $n \gets \attrib{Y}{length}$
-\li \For $i \gets 0 \To m$
-\li \Do $L[i,0] \gets 0$
+\li \For $i \gets 0$ \To $m$
+\li \Do
+		$L[i,0] \gets 0$
 	\End
-\li \For $j \gets 0 \To n$
-\li \Do $L[0,j] \gets 0$
+\li \For $j \gets 0$ \To $n$
+\li \Do
+		$L[0,j] \gets 0$
 	\End
-\li \For $i \gets 1 \To m$
-\li \Do	\For $j = 1 \To n$
-\li 	\Do	\If $x_i = y_j$
+\li \For $i \gets 1$ \To $m$
+\li \Do
+		\For $j = 1$ \To $n$
+\li 	\Do
+			\If $x_i = y_j$
 \li 		\Then
 				$L[i,j] \gets L[i-1,j-1] + 1$
 \li				$B[i,j] \gets \textnormal{\textquotesingle}\nwarrow\textnormal{\textquotesingle}$

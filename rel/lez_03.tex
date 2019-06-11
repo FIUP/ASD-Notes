@@ -17,7 +17,7 @@ Per dimostrare che $P(n)$ vale per ogni $n$
 
 \subsubsection{Complessità di Merge Sort}
 
-$n = \#$elementi da ordinare\footnote{Il simbolo \# verrà usato per indicare la cardinalità di un insieme.}
+$n =$ \verb|#| elementi da ordinare\footnote{Il simbolo \# verrà usato per indicare la cardinalità di un insieme.}
 
 \paragraph{Merge(A, p, q, r)}
 \begin{itemize}
@@ -64,26 +64,48 @@ T^{MS}(\floor{\frac{n}{2}})+T^{MS}(\ceil{\frac{n}{2}})+an+b  & \quad \text{altri
 \end{cases}
 \]
 
-\begin{preventpagebreak}
-\begin{align*}
-	T^{MS}(n) \\
-	an+b
-\end{align*}
-\begin{align*}
-	T^{MS}(n_1) && T^{MS}(n_2) \\
-	an_1+b && an_2+b
-\end{align*}
-\begin{align*}
-T^{MS}(n_{11}) && T^{MS}(n_{12}) && T^{MS}(n_{21}) && T^{MS}(n_{22}) \\
-an_{11}+b && an_{12}+b && an_{21}+b && an_{22}+b
-\end{align*}
 \begin{center}
-	\dots
+	\begin{tikzpicture}[rec,level/.style={level distance=25mm, sibling distance=55mm/#1}]
+		\node (a) {$T^{MS}(n)$\\$an+b$}
+		child {node (b) {$T^{MS}(n_1)$\\$an_1+b$}
+			child {node (d) {$T^{MS}(n_{11})$\\$an_{11}+b$}
+				child {node (d1) {$\vdots$}[no edge from this parent]
+					child {node (d11) {$c_0$}}
+				}
+				child {node (d2) {$\vdots$}[no edge from this parent]
+					child {node (d12) {$c_0$}}
+				}
+			}
+			child {node (e) {$T^{MS}(n_{12})$\\$an_{12}+b$}
+				child {node (e1) {$\vdots$}[no edge from this parent]
+					child {node (e11) {$c_0$}}
+				}
+				child {node (e2) {$\vdots$}[no edge from this parent]
+					child {node (e12) {$c_0$}}
+				}
+			}
+		}
+		child {node (c) {$T^{MS}(n_2)$\\$an_2+b$}
+			child {node (f) {$T^{MS}(n_{21})$\\$an_{21}+b$}
+				child {node (f1) {$\vdots$}[no edge from this parent]
+					child {node (f11) {$c_0$}}
+				}
+				child {node (f2) {$\vdots$}[no edge from this parent]
+					child {node (f12) {$c_0$}}
+				}
+			}
+			child {node (g) {$T^{MS}(n_{22})$\\$an_{22}+b$}
+				child {node (g1) {$\vdots$}[no edge from this parent]
+					child {node (g11) {$c_0$}}
+				}
+				child {node (g2) {$\vdots$}[no edge from this parent]
+					child {node (g12) {$c_0$}
+					}
+				}
+			}
+		};
+	\end{tikzpicture}
 \end{center}
-\begin{align*}
-	c_0 && c_0 && \dots && \dots && \dots && c_0 && c_0 \\
-\end{align*}
-\end{preventpagebreak}
 
 Otteniamo $c_0$ ripetuto $n$ volte all'ultimo livello dell'albero. L'altezza dell'albero è circa 
 $\log_2 n$. Vediamo nel dettaglio la complessità nelle varie iterazioni.

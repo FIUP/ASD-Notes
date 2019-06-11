@@ -60,15 +60,15 @@ riduce $\# inv(A)$ al massimo di 1.
 Abbiamo visto per \texttt{MergeSort} la complessità nel modo seguente:
 
 \begin{codebox}
-	\Procname{$\proc{MergeSort}(A,p,r)$}
+	\Procname{$\proc{Merge-Sort}(A,p,r)$}
 	\li \If $p < r$
-	\li     \Then
-	$q \gets \floor{\frac{(p + r)}{2}}$ 
-	\li         $\proc{MergeSort}(A,p,q)$
-	\li         $\proc{MergeSort}(A,q+1,r)$
-	\li         $\proc{Merge}(A,p,q,r)$
-	\Comment complessità $an + b$
-	\End
+	\li \Then
+			$q \gets \floor{\frac{(p + r)}{2}}$ 
+	\li     $\proc{Merge-Sort}(A,p,q)$
+	\li     $\proc{Merge-Sort}(A,q+1,r)$
+	\li     $\proc{Merge}(A,p,q,r)$
+				\Comment complessità $an + b$
+		\End
 \end{codebox}
 
 \[ T^{MS}(n) =
@@ -158,7 +158,10 @@ Costruendo l'albero delle ricorrenze si intuisce già la soluzione:
 	child {node (ln2) {$6n$}[no edge from this parent]
 		child {node (ln3) {$6n$}[no edge from this parent]
 			child {node (ln4) {}[no edge from this parent]
-				child {node (ln5) {$4n$}}}}};
+				child {node (ln5) {$4n$}}
+			}
+		}
+	};
 	
 	\coordinate (h) at ($(g12)+(1,0)$);
 	

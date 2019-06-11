@@ -1,11 +1,11 @@
 \begin{codebox}
-\Procname{\proc{ChangeKey}$(A,i,\delta)$}
+\Procname{$\proc{Change-Key}(A,i,\delta)$}
 \li $A[i] \gets A[i] + \delta$
 \li \If $\delta > 0$
-\li     \Then
-            $\proc{MaxHeapifyUp}(A,i)$
-\li     \Else
-        \Comment $\delta \leq 0$
-\li         $\proc{MaxHeapify}(A,i)$
-        \End
+\li \Then
+        $\proc{Max-Heapify-Up}(A,i)$
+\li \Else
+    	\Comment $\delta \leq 0$
+\li    	$\proc{Max-Heapify}(A,i)$
+    \End
 \end{codebox}

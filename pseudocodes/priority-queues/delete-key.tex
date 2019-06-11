@@ -1,12 +1,11 @@
 \begin{codebox}
-\Procname{\proc{DeleteKey}$(A,i)$}
+\Procname{$\proc{Delete-Key}(A,i)$}
 \li $\id{old} \gets A[i]$
 \li $A[i] \gets A[\attrib{A}{heapsize}]$
 \li $\attrib{A}{heapsize} \gets \attrib{A}{heapsize} - 1$
 \li \If $\id{old} \leq A[i]$
-\li     \Then
-            $\proc{MaxHeapifyUp}(A,i)$
-\li     \Else
-\li         $\proc{MaxHeapify}(A,i)$
-        \End
+\li \Then $\proc{Max-Heapify-Up}(A,i)$
+\li \Else
+\li		$\proc{Max-Heapify}(A,i)$
+    \End
 \end{codebox}

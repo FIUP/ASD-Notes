@@ -77,7 +77,10 @@ Tre possibili casi:
 	child {node (ln2) {$a f(\dfrac{n}{b})$}[no edge from this parent]
 		child {node (ln3) {$a^2 f(\dfrac{n}{b^2})$}[no edge from this parent]
 			child {node (ln4) {}[no edge from this parent]
-				child {node (ln5) {$c \cdot a^{\log_b n}$}}}}};
+				child {node (ln5) {$c \cdot a^{\log_b n}$}}
+			}
+		}
+	};
 	
 	\path (b.north east) -- (c.north west) node [midway] {$a$};
 	\path (b.east) -- (c.west) node [midway] {$\cdots$};

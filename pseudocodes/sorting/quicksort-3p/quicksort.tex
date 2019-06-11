@@ -1,0 +1,9 @@
+\begin{codebox}
+\Procname{$\proc{Quicksort}(A,p,r)$}
+\li \If $p < r$
+\li	\Then
+		$\id{q_1},\id{q_2} \gets \proc{Tripartition}(A,p,r)$
+\li		$\proc{Quicksort}(A,p,\id{q_1}-1)$
+\li		$\proc{Quicksort}(A,\id{q_2}+1,r)$
+	\End
+\end{codebox} 

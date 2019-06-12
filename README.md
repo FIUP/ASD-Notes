@@ -1,19 +1,11 @@
 # ASD-Notes
 
 Appunti di Algoritmi e Strutture Dati in LaTeX.
-<!--
-#### Prerequisiti
 
-* git
-* texlive-full
+## Versione
 
-### Clonazione del repository e compilazione
+Versione revisionata e aggiornata di https://github.com/Vashy/ASD-Notes all'anno accademico 2018/2019.
 
+### Nota
 
-* Clonare il repository dando il comando
-`git clone https://github.com/Vashy/ASD-Notes`
-
-* Per compilare, dalla cartella principale
-`pdflatex main.tex`
-
-In ogni caso, è fornito un .pdf nel repository. -->
+Non sono stati riportati esercizi "extra" svolti a lezione in quanto sono già reperibili nel moodle tra gli esercizi settimanali, o nella dispensa del professore, con le rispettive soluzioni.

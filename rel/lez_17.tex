@@ -1,10 +1,10 @@
 \section{Programmazione Dinamica}
-\subsection{Critica al D\&C}
+\subsection{Critica al Divide \& Conquer (D\&C)}
 \begin{center}
 	\begin{tikzpicture}
 	\draw (0,0) node (a) [anchor=north]{}
-	-- (4,0) node (b) [anchor=north]{}
-	-- (2,4) node (c) [anchor=south]{}
+	-- (3,0) node (b) [anchor=north]{}
+	-- (1.5,3) node (c) [anchor=south]{}
 	-- cycle;
 	\coordinate (r1) at ($(b)+(1,0)$);
 	\coordinate (r2) at ($(c)+(1,0)$);
@@ -12,13 +12,13 @@
 	\coordinate (l2) at ($(c)-(1,0)$);
 	\draw[-{>[length=3mm,width=2mm]},semithick] (r1) -- (r2) node [align=left,midway,right=.5cm,fill=white]{(C) bottom-up\\elaborazione soluzioni sottoistanze};
 	\draw[{<[length=3mm,width=2mm]}-,semithick] (l1) -- (l2) node [align=right,midway,left=.5cm,fill=white]{(D) top-down\\generazione istanze};
-	\node at (2,0) [align=center,below=.2cm,fill=white]{albero delle chiamate ricorsive};
+	\node at (1.5,0) [align=center,below=.2cm,fill=white]{albero delle chiamate\\ricorsive};
 	\end{tikzpicture}
 \end{center}
 Il processo di soluzione non ha memoria, quindi le soluzioni di sottoistanze vanno ricalcolate.
 
 \paragraph{Esempio}
-Vediamo uno "spreco usando D\&C: la sequenza di Fibonacci.
+Vediamo uno ''spreco'' usando D\&C: la sequenza di Fibonacci.
 \begin{flalign*}
 	& F(n) =
 	\begin{cases}

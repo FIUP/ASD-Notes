@@ -1,0 +1,16 @@
+\begin{codebox}
+\Procname{$\proc{Greedy-Sel}(S,f)$}
+\li $n \gets \attrib{S}{length}$
+\li	$A \gets \{a_1\}$
+\li	$\id{last} \gets 1$
+		\Comment indice dell'ultima attività selezionata
+\li	\For $m \gets 2$ \To $n$
+\li	\Do
+		\If $s_m \geq f_{last}$
+\li		\Then
+			$A \gets A \cup \{a_m\}$
+\li			$\id{last} \gets m$
+		\End
+	\End
+\li	\Return $A$
+\end{codebox}

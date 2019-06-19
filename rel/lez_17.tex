@@ -93,7 +93,7 @@ $$T(n) = \Theta \left(\left(\frac{1+\sqrt{5}}{2}\right)^n \right)$$
 \par La programmazione dinamica salta la fase top-down.
 
 \subsection{Memoizzazione}
-È un ibrido tra il D\&C e la programmazione dinamica che vuole mantenere la fase top-down pur cercando di ricordare le soluzioni ai sottoproblemi
+È un ibrido tra il D\&C e la programmazione dinamica che vuole mantenere la fase top-down pur cercando di ricordare le soluzioni ai sottoproblemi.
 
 \paragraph{Def} Un algoritmo \emph{memoizzato} è costituito da due subroutine distinte:
 \begin{enumerate}[label={\arabic*)}]
@@ -108,7 +108,7 @@ $$T(n) = \Theta \left(\left(\frac{1+\sqrt{5}}{2}\right)^n \right)$$
 
 \input{pseudocodes/dp/fib/rec-fib-mem}
 
-Ad esempio, con $n = 5$
+Riprendiamo l'esempio di prima, con $n = 5$
 \begin{center}
 	\begin{tikzpicture}[tree]
 	\Tree
@@ -127,4 +127,5 @@ Ad esempio, con $n = 5$
 	]
 	\end{tikzpicture}
 \end{center}
-Questa volta, $F(3)$ e $F(2)$ non vengono ricalcolate. Abbiamo $n$ foglie e $n-1$ nodi interni ($n$ parte da $0$).
+Questa volta, $F(3)$ e $F(2)$ non vengono ricalcolate. \\
+Abbiamo $n$ foglie e $n-1$ nodi interni ($n$ parte da $0$).

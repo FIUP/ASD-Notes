@@ -67,8 +67,10 @@
 
 % add spacing after exists and forall
 \let\existstemp\exists
+\let\nexiststemp\nexists
 \let\foralltemp\forall
 \renewcommand{\exists}{\existstemp~}
+\renewcommand{\nexists}{\nexiststemp~}
 \renewcommand{\forall}{\foralltemp~}
 
 \newcommand{\angleset}[1]{\langle #1 \rangle} % faster string representation as a set of characters

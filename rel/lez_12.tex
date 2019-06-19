@@ -65,7 +65,7 @@ $$E[n_j] = \displaystyle\sum_{i = 1}^{n} \frac{1}{m} \cdot 1 = \frac{n}{m} = \al
 	\item $h \colon U \to \{ 0,1,\dots,m-1 \} \Rightarrow h(x) = 0$
 \end{itemize}
 
-\subsubsection{Funzioni Hash} Una \emph{funzione hash} deve soddisfare la proprietà di
+\subsubsection{Funzioni di Hash} Una \emph{funzione di hash} deve soddisfare la proprietà di
 \emph{hashing uniforme}, ossia 
 \begin{quote}
 	``Ogni chiave ha la stesso probabilità $\frac{1}{m}$ di essere mandata in una
@@ -82,7 +82,7 @@ L'ipotesi di hash uniforme semplice dipende dalle probabilità con cui vengono e
 inserire; probabilità che in genere non sono note.
 Le funzioni hash che descriveremo assumono che le chiavi siano degli interi non negativi.
 
-\paragraph{Metodo della divisione} 
+\paragraph{Metodo della Divisione} 
 \begin{gather*}
 	U = \{ 0, 1, \dots, \abs{\cup} - 1 \} \\
 	h(k) \in \{0, 1, \dots, m - 1 \} \\
@@ -96,7 +96,7 @@ Le funzioni hash che descriveremo assumono che le chiavi siano degli interi non 
 La soluzione migliore è quella di scegliere chiavi lontane dalle potenze di 2, meglio
 ancora se numeri primi.
 
-\paragraph{Metodo della moltiplicazione}
+\paragraph{Metodo della Moltiplicazione}
 $$k \in U$$
 $$0 < A < 1 \text{ fissato}$$
 $$h(k) = m(k A \bmod 1) \qquad \text{Miglior } A : \frac{\sqrt{5}-1}{2}$$

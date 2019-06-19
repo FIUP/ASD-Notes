@@ -175,12 +175,12 @@ $S$ insieme dinamico di oggetti. \par
 $x$ è l'indice, $\attrib{x}{key}$ è il corrispondente valore relativo a quell'indice.
 Voglio poter eseguire le seguenti operazioni:
 \begin{itemize}[noitemsep]
-	\item \texttt{Insert(S, x)}
+	\item \texttt{Insert(S,x)}
 	\item \texttt{Max(S)}
 	\item \texttt{ExtractMax(S)}
-	\item \texttt{IncreaseKey(S, x, $\delta$)}
-	\item \texttt{ChangeKey(S, x, $\delta$)}
-	\item \texttt{Delete(S, x)}
+	\item \texttt{IncreaseKey(S,x,$\delta$)}
+	\item \texttt{ChangeKey(S,x,$\delta$)}
+	\item \texttt{Delete(S,x)}
 \end{itemize}
 \paragraph{Idea} Uso un \emph{Max Heap} (A).
 
@@ -233,5 +233,5 @@ corretto per la seguente proprietà:
 	\Rightarrow \text{dopo \texttt{MaxHeapify} ho un \emph{MaxHeap}}
 \end{gather*}
 
-\input{pseudocodes/priority-queues/delete-key}
-\texttt{DeleteKey} ha complessità $O(\log n)$.
+\input{pseudocodes/priority-queues/delete}
+\texttt{Delete} ha complessità $O(\log n)$.

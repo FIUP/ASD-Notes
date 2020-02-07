@@ -1,0 +1,18 @@
+\begin{codebox}
+\Procname{$\proc{Print-LCS}(B,X,i,j)$}
+\li \If $i = 0$ \Or $j = 0$
+\li \Then
+		\Return $\varepsilon$
+	\End
+\li \If $B[i,j] = \textnormal{\textquotesingle}\nwarrow\textnormal{\textquotesingle}$
+\li	\Then
+		$\proc{Print-LCS}(B,X,i-1,j-1)$
+\li     $\proc{Print}(x_i)$
+\li \ElseIf $B[i,j] = \textnormal{\textquotesingle}\leftarrow\textnormal{\textquotesingle}$
+\li \Then
+		$\proc{Print-LCS}(B,X,i,j-1)$
+\li \ElseNoIf
+		\Comment $B[i,j] = \textnormal{\textquotesingle}\uparrow\textnormal{\textquotesingle}$
+\li 	$\proc{Print-LCS}(B,X,i-1,j)$
+	\End
+\end{codebox}

@@ -1,0 +1,16 @@
+\begin{codebox}
+\Procname{$\proc{R-LCS}(X,Y,i,j)$}
+\li \If $L[i,j] = -1$
+\li \Then
+		\If $x_i = y_j$
+\li 	\Then
+			$L[i,j] \gets \proc{R-LCS}(X,Y,i-1,j-1)$
+\li		\ElseIf $\proc{R-LCS}(X,Y,i-1,j) \geq \proc{R-LCS}(X,Y,i,j-1)$
+\li		\Then
+			$L[i,j] \gets L[i-1,j]$
+\li		\ElseNoIf
+\li			$L[i,j] \gets L[i,j-1]$
+		\End
+	\End
+\li \Return $L[i,j]$
+\end{codebox}

@@ -1,0 +1,125 @@
+\subsection{Longest Increasing Subsequence (LIS)}
+\paragraph{Def}
+Dato un alfabeto $\Sigma$ totalmente ordinato $(\forall a,b \in \Sigma \quad a < b \text{ o } a = b \text{ o } a > b)$ e dato $X = \angleset{x_1,x_2,\dots,x_n}$, si dice che $Z = \angleset{z_1,z_2,\dots,z_k}$ è \emph{sottosequenza crescente} di $X$ $(Z = IS(X))$.
+
+\subsubsection{Problema di Ottimizzazione}
+Determinare la \emph{più lunga sottosequenza crescente} di $X$ $(Z = LIS(X))$
+
+\paragraph{Esempio}
+\begin{flalign*}
+	& X = \angleset{5,2,4,3,7,8} & \\
+	& Z = LIS(X) = \angleset{2,3,7,8} & \\
+	& Z' = LIS(X) = \angleset{2,4,7,8} &
+\end{flalign*}
+
+\paragraph{Tentativo}
+Data $X$, calcolo $LIS(X_i) \ \forall 0 \leq i \leq n$ \par
+$Z = \angleset{z_1,z_2,\dots,z_k} = LIS(X_i)$
+\begin{itemize}
+	\item caso fortunato: $z_k < X_{i+1}$
+	\item caso sfortunato: $z_k \geq X_{i+1}$
+\end{itemize}
+
+\paragraph{Def} $Z = \overline{LIS}(X_i)$ è la più lunga tra le $IS(X_i)$ con $Z = \angleset{z_1,z_2,\dots,z_k} = \angleset{x_{i_1},x_{i_2},\dots,x_{i_k}}$ con $i_k = i$.
+
+
+
+\paragraph{Esempio}
+\begin{flalign*}
+	& X = \angleset{8,2,5,1,3} & \\
+	& LIS(X_4) = \angleset{2,5} & \\
+	& \overline{LIS}(X_4) = \angleset{1} &
+\end{flalign*}
+In generale, $LIS$ e $\overline{LIS}$ sono problemi molto diversi.
+
+\paragraph{Osservazione}
+$\abs{LIS(X)} = \displaystyle\max_{1 \leq i \leq n}\{\abs{\overline{LIS}(X_i)}\}$
+
+\paragraph{Dimostrazione}
+\begin{itemize}
+	\item $\abs{LIS(X)} \leq \displaystyle\max_{1 \leq i \leq n}\{\abs{\overline{LIS}(X_i)}\}$
+	\begin{flalign*}
+		& Z = LIS(X) = \angleset{x_{i_1},x_{i_2},\dots,x_{i_k}} & \\
+		& Z = \overline{LIS}(X_{i_k}) & \\
+		& \Rightarrow \abs Z \leq \displaystyle\max_{1 \leq i \leq n}\{\abs{\overline{LIS}(X_i)}\} &
+	\end{flalign*}
+	\item $\abs{LIS(X)} \geq \displaystyle\max_{1 \leq i \leq n}\{\abs{\overline{LIS}(X_i)}\}$ \\
+	Si dimostra analogamente al punto precedente.
+\end{itemize}
+
+\subsubsection{Proprietà di Sottostruttura Ottima}
+\begin{enumerate}
+	\item \label{lis:1} caso base: $\overline{LIS}(X_1) = \angleset{x_1} \ (= LIS(X_1))$
+	\item \label{lis:2} $i > 1$
+	\begin{enumerate}
+		\item \label{lis:2.a} $\forall j : 1 \leq j \leq i \quad x_j \geq x_i$
+		\begin{flalign*}
+			& \overline{LIS}(X_i) = \angleset{x_i} \ (= LIS(X_i)) &
+		\end{flalign*}
+		\item \label{lis:2.b} $\exists \overline{j} : 1 \leq n \overline{j} \leq i, \quad  x_{\overline{j}} < x_i$
+		\begin{flalign*}
+			& \abs{\overline{LIS}(X_i)} \geq 2 & \\
+			& \overline{LIS}(X_i) = \angleset{z_1,z_2,\dots,z_k} = \angleset{Z_{k-1},x_i} \text{ con } Z_{k-1} : \abs{Z_{k-1}} = \displaystyle\max_{1 \leq j < i}\{\overline{LIS}(X_j) : x_j < x_i\} &
+		\end{flalign*}
+	\end{enumerate}
+\end{enumerate}
+
+\paragraph{Dimostrazione}
+\begin{enumerate}
+	\item[\ref{lis:1}.] banale
+	\item[\ref{lis:2}.] $i > 1$
+	\begin{enumerate}
+		\item[{\hyperref[lis:2.a]{(a)}}] $\forall j < i \quad x_j < x_i$
+		\begin{flalign*}
+			& \angleset{x_i} = IS(X_i) \text{ e chiaramente non può essere } \abs Z > 1 &
+		\end{flalign*}
+		Suppongo per assurdo che
+		\begin{flalign*}
+			& \abs Z = \abs{\overline{LIS}(X_i)} > 1 & \\
+			& \Rightarrow Z = \angleset{z_1,z_2,\dots,z_k}, \quad k > 1 & \\
+			& Z = \angleset{x_{i_1},x_{i_2},\dots,x_{i_k}} & \\
+			& i_k = i & \\
+			& \Rightarrow i_{k-1} < i_k = i &
+		\end{flalign*}
+		Assurdo perchè allora avrei
+		\begin{flalign*}
+			& x_{i_{k-1}} \geq x_{i_k} &
+		\end{flalign*}
+		che contraddice l'ipotesi che $Z$ è una sequenza crescente!
+		\item[{\hyperref[lis:2.b]{(b)}}] Si dimostra analogamente al sottocaso precedente.
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Ricorrenza sui Costi}
+Definisco
+\begin{flalign*}
+	& l(i) = \abs{\overline{LIS}(X_i)} & \\
+	& l(i) = \begin{cases}
+	1 & \text{se } i = 1 \\
+	1 + \displaystyle\max_{1 \leq j < i}\{l(j) : x_j < x_i\} & \text{se } i > 1
+	\end{cases} &
+\end{flalign*}
+Per costruire la sottosequenza
+\begin{flalign*}
+	& \overline{LIS}(X_i) = \begin{cases}
+	\angleset{x_i} & (1) \\
+	\angleset{\overline{LIS}(X_{\overline{j}}),x_i} \quad \text{ con } 1 \leq \overline{j} < i & (2)
+	\end{cases} &
+\end{flalign*}
+l'informazione addizionale è:
+\begin{itemize}
+	\item $prev(i) = \begin{cases}
+	0 & \text{nel caso (1)}  \\
+	\overline{j} & \text{nel caso (2)}
+	\end{cases}$
+	\item $len = \displaystyle\max_{1 \leq i \leq n}\{l(i)\}$
+	\item $end = i \quad \text{se } \overline{LIS}(X_i) = LIS(X)$ \\ (mantiene l'indice dell'ultimo carattere della LIS)
+\end{itemize}
+
+\paragraph{Pseudocodice bottom-up}
+\input{pseudocodes/dp/lis/lis}
+
+Procedura per stampare la LIS:
+\input{pseudocodes/dp/lis/print-lis}
+\paragraph{Complessità}
+$\displaystyle\sum_{i=2}^{n}\sum_{j=1}^{i-1} 1 = \sum_{i=2}^{n} (i-1) = \frac{n(n-1)}{2} = \Theta(n^2)$

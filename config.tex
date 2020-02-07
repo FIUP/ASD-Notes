@@ -10,8 +10,8 @@
     pdfmenubar=true,        % show Acrobat’s menu?
     % pdffitwindow=false,     % window fit to page when opened
     pdfstartview={FitH},    % fits the width of the page to the window
-    pdftitle={Note di Algoritmi},    % title
-    pdfauthor={Timoty Granziero},     % author
+    pdftitle={Appunti di Algoritmi e Strutture Dati},    % title
+    pdfauthor={Timoty Granziero, Marco Siragna},     % author
     % pdfsubject={},   % subject of the document 
     % pdfcreator={Creator},   % creator of the document
     % pdfproducer={Producer}, % producer of the document
@@ -21,41 +21,39 @@
     linkcolor=black,          % color of internal links (change box color with linkbordercolor)
     % citecolor=green,        % color of links to bibliography
     % filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+    urlcolor=red!50!black           % color of external links
 }
 
-\usepackage{graphicx} %img/media
-\usepackage{xcolor} %colors
+\usepackage{graphicx} % img/media
 
-\usepackage{enumitem} %lists
-\usepackage[perpage]{footmisc} %footnote, starting at 1 every page
+% lists
+\usepackage{enumitem}
+\renewcommand{\labelitemi}{$\circ$}
+\renewcommand{\labelitemii}{$\cdot$}
+\renewcommand{\labelitemiii}{$\diamond$}
+\renewcommand{\labelitemiv}{$\ast$}
 
-\usepackage{mathtools,stmaryrd} %math package
+\usepackage[perpage]{footmisc} % footnote, starting at 1 every page
+
+\usepackage{mathtools,stmaryrd} % math package
 \usepackage{amssymb} % N, R ... symbols
+\usepackage{blkarray} % block arrays
+\usepackage{cancel} % diagonal lines to cancel terms in math
 
-\usepackage{totpages} % Per totale pagine
+\usepackage{textcomp} % quotes
 
-% per frecce in tutte le direzioni, comando \arrow{0}, \arrow{1}, etc.. 
-\makeatletter
-\newcommand{\fixed@sra}{$\vrule height 2\fontdimen22\textfont2 width 0pt\rightarrow$}
-\newcommand{\arrow}[1]{%
-  \mathrel{\text{\rotatebox[origin=c]{\numexpr#1*45}{\fixed@sra}}}
-}
-\makeatother
-
-\usepackage{cancel}
-\usepackage{appendix}
+\usepackage{totpages}
 
 \let\emph\relax % there's no \RedeclareTextFontCommand
 \DeclareTextFontCommand{\emph}{\bfseries} %emph to textbf
 
-%floor and ceil
+% floor and ceil
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-%abs and norm
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
-\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+% abs and norm
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
 
 % Swap the definition of \abs* and \norm*, so that \abs
 % and \norm resizes the size of the brackets, and the 
@@ -63,46 +61,82 @@
 \makeatletter
 \let\oldabs\abs
 \def\abs{\@ifstar{\oldabs}{\oldabs*}}
-%
 \let\oldnorm\norm
 \def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
 \makeatother
 
-\usepackage{clrscode3e} % algorithms pseudocode
+% add spacing after exists and forall
+\let\existstemp\exists
+\let\nexiststemp\nexists
+\let\foralltemp\forall
+\renewcommand{\exists}{\existstemp~}
+\renewcommand{\nexists}{\nexiststemp~}
+\renewcommand{\forall}{\foralltemp~}
+
+\newcommand{\angleset}[1]{\langle #1 \rangle} % faster string representation as a set of characters
+
+
+% algorithms pseudocode
+\usepackage{clrscode3e}
+\renewcommand{\ElseIf}{\kill\addtocounter{indent}{-1}\liprint\textbf{else if} }
+\renewcommand{\Downto}{\ifmmode\ \textrm{\textbf{down to}}\ \else\textbf{down to}\ \fi}
+\renewcommand{\And}{\ifmmode\ \textrm{\textbf{and}}\ \else\textbf{and}\ \fi}
+\newcommand{\Or}{\ifmmode\ \textrm{\textbf{or}}\ \else\textbf{or}\ \fi}
+
 \RequirePackage{graphics} % needed for \scalebox command
 
-\usepackage{tikz-qtree} %trees
+% drawing and trees
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{calc,positioning,arrows.meta}
+\tikzset{
+	rec/.style={
+		every node/.style={align=center},
+		edge from parent/.style={draw},
+		no edge from this parent/.style={every child/.append style={edge from parent/.style={draw=none}}},
+		level 3/.style={level distance=20mm},
+		level 4/.style={level distance=5mm},
+		level/.style={level distance=25mm, sibling distance=40mm/##1}
+	},
+	tree/.style={
+		every tree node/.style={minimum size=10mm,black},
+		edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
+		sibling distance=8mm,
+		level distance=18mm
+	},
+	red/.style={draw=none},
+	black/.style={draw,circle},
+	unknown/.style={dashed},
+	unknown2/.style={dotted},
+	blank/.style={draw=none},
+	% double circle macro
+	old inner xsep/.estore in=\oldinnerxsep,
+	old inner ysep/.estore in=\oldinnerysep,
+	double circle/.style 2 args={
+		circle,
+		old inner xsep=\pgfkeysvalueof{/pgf/inner xsep},
+		old inner ysep=\pgfkeysvalueof{/pgf/inner ysep},
+		/pgf/inner xsep=\oldinnerxsep+#1,
+		/pgf/inner ysep=\oldinnerysep+#1,
+		alias=sourcenode,
+		append after command={
+			let \p1=(sourcenode.center),
+			\p2=(sourcenode.east),
+			\n1={\x2-\x1-#1-0.5*\pgflinewidth}
+			in node[inner sep=0pt,draw,circle,minimum width=2*\n1,at=(\p1),#2]{}
+		}
+	},
+	double circle/.default={4pt}{black}
+}
 
-\newcommand{\authorName}{Timoty Granziero}
+\usepackage{fancyhdr} % header and footer
 
-%prevent page break
-\newenvironment{preventpagebreak}
-{\par\nobreak\vfil\penalty0\vfilneg
-	\vtop\bgroup}
-{\par\xdef\tpd{\the\prevdepth}\egroup
-	\prevdepth=\tpd}
-
-%liste
-\renewcommand{\labelitemi}{$\circ$}
-\renewcommand{\labelitemii}{$\cdot$}
-\renewcommand{\labelitemiii}{$\diamond$}
-\renewcommand{\labelitemiv}{$\ast$}
-
-\author{\authorName}
-\date{\today}
-\title{Appunti di Algoritmi}
-
-
-\usepackage{fancyhdr} %header e footer
-
-%header/footer setup
+% header/footer setup
 \fancyhf{}
 \fancyhead[R]{\small\scshape\nouppercase{\leftmark}}
 \fancyhead[L]{\small\scshape\nouppercase{\rightmark}}
-%\fancyhead[L,R]{\small\thepage}
 \lhead{\nouppercase{\rightmark}}
 \rhead{\nouppercase{\leftmark}}
 \cfoot{\thepage}
-%\lfoot{\authorName}
 
 \pagestyle{fancy}

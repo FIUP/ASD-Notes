@@ -1,0 +1,350 @@
+\subsection{Compressione dei Dati: Codici di Huffman}
+La compressione può essere di due tipi:
+\begin{itemize}[noitemsep]
+	\item lossy, cioè con perdita di informazione (e.g. immagine, video);
+	\item lossless, cioè senza perdita di informazione (e.g. testo).
+\end{itemize}
+
+\paragraph{Esempio}
+File di caratteri con frequenze associate:
+\medskip
+
+\begin{tabular}{c|cccccc}
+	               & a  & b  & c  & d  & e & f \\ \hline
+	frequenza (\%) & 45 & 13 & 12 & 16 & 9 & 5
+\end{tabular}
+\bigskip
+
+La codifica ASCII usa 8 bit per carattere. \\
+File con 100K caratteri $\rightarrow$ 800 Kbit
+\bigskip
+
+Definisco una codifica che usa 3 bit per carattere:
+\medskip
+
+\begin{tabular}{c|cccccc}
+	         & a   & b   & c   & d   & e   & f \\ \hline
+	codeword & 000 & 001 & 010 & 011 & 100 & 101
+\end{tabular}
+\begin{flalign*}
+	& \begin{array}{ll}
+	\text{File con 100K caratteri} \rightarrow & \text{300 Kbit (risparmio più del 50\%)} \\
+	& + \text{ spazio per una tabella di conversione/decodifica}
+	\end{array} &
+\end{flalign*}
+
+\begin{tabular}{c|c|}
+	\cline{2-2}	
+	0 & \textquotesingle a\textquotesingle \\ \cline{2-2}
+	1 & \textquotesingle b\textquotesingle \\ \cline{2-2}
+	2 & \textquotesingle c\textquotesingle \\ \cline{2-2}
+	3 & \textquotesingle d\textquotesingle \\ \cline{2-2}
+	4 & \textquotesingle e\textquotesingle \\ \cline{2-2}
+	5 & \textquotesingle f\textquotesingle \\ \cline{2-2}	
+\end{tabular}
+\bigskip
+
+Nella posizione $i$ si trova il carattere la cui codifica è $i$ stesso (in binario).
+
+\paragraph{Def}
+\begin{flalign*}
+	& C = \text{alfabeto dei simboli presenti nel file} & \\
+	& \text{funzione di encoding } e \colon C \to {0,1}^* &
+\end{flalign*}
+Proprietà che deve avere $e$:
+\begin{itemize}
+	\item invertibile $\rightarrow$ iniettiva: se $a,b \in C, a \neq b \Rightarrow e(a) \neq e(b)$;
+	\item ammettere algoritmi efficienti: $e,e^{-1}$.
+\end{itemize}
+Una funzione di encoding che associa ad ogni carattere di $C$ una stringa di 0 e 1 della stessa lunghezza si chiama \emph{fixed length encoding}.
+\bigskip
+
+Finora ho ignorato la frequenza dei caratteri.
+\paragraph{Idea} Associare a caratteri più frequenti codeword più corte e, di conseguenza, a caratteri meno frequenti codeword più lunghe.
+\medskip
+
+\begin{tabular}{c|cccccc}
+				   & a  & b  & c  & d  & e   & f   \\ \hline
+	frequenza (\%) & 45 & 13 & 12 & 16 & 9   & 5   \\
+	codeword       & 0  & 00 & 01 & 1  & 100 & 101
+\end{tabular}
+
+\paragraph{Problema} $e(aa) = e(b)$ \\
+Non sono come decodificare in modo univoco perchè esistono delle codeword che sono prefissi di altre codeword.
+\bigskip
+
+La codifica che sto cercando deve:
+\begin{itemize}
+	\item avere lunghezza variabile della codeword;
+	\item affinchè si possa avere l'invertibilità, il codice deve essere \underline{libero da prefissi} (\emph{codice prefisso}\footnote{Attenzione: con il termine ''codice prefisso'' si intende un codice senza prefissi.}), cioè $\nexists a,b \in C : e(a) $ è un prefisso di $e(b)$.
+\end{itemize}
+
+\paragraph{Soluzione}\mbox{}\\
+\begin{tabular}{c|cccccc}
+				   & a  & b   & c   & d    & e    & f   \\ \hline
+	frequenza (\%) & 45 & 13  & 12  & 16   & 9    & 5   \\
+	codeword       & 0  & 101 & 100 & 111  & 1101 & 1100
+\end{tabular}
+\bigskip
+
+Questo è un codice a lunghezza variabile libero da prefissi ed è ottimo tra tutti i codici che associano una codeword ad ogni singolo carattere.
+\bigskip
+
+Spazio occupato da questo encoding:
+\begin{flalign*}
+	& 100\text{K} \left(\frac{45}{100} \cdot 1 + \frac{13}{100} \cdot 3 + \frac{12}{100} \cdot 3 + \frac{16}{100} \cdot 3 + \frac{9}{100} \cdot 4 + \frac{5}{100} \cdot 4 \right) = 224 \text{ Kbit} &
+\end{flalign*}
+300 Kbit $\rightarrow$ risparmio $\approx$ 25\%
+\medskip
+
+Serve memorizzare dell'informazione aggiuntiva per la decodifica:
+\begin{center}
+	\begin{tikzpicture}[tree] 
+	\Tree
+	[.{}
+		\edge node[midway,left]{0};
+		[.a ]
+		\edge node[midway,right]{1};
+		[.{}
+			\edge node[midway,left]{0};
+			[.{}
+				\edge node[midway,left]{0};
+				[.c ]
+				\edge node[midway,right]{1};
+				[.b ]
+			]
+			\edge node[midway,right]{1};
+			[.{}
+				\edge node[midway,left]{0};
+				[.{}
+					\edge node[midway,left]{0};
+					[.f ]
+					\edge node[midway,right]{1};
+					[.e ]	
+				]
+				\edge node[midway,right]{1};
+				[.d ]
+			]
+		]
+	]
+	\end{tikzpicture}
+\end{center}
+Stringa codificata: 110001001101 \\
+Stringa decodificata: face
+\bigskip
+
+Un qualsiasi codice binario può essere rappresentato in modo compatto con un albero binario. \par
+Un codice prefisso è associato a un \emph{albero di codifica} T in cui i caratteri da codificare appaiono tutti alle foglie.
+\medskip
+
+$\forall c \in C$ ho $f(c)$ frequenza
+\smallskip
+
+Definisco
+$$d_T(c) = \text{profondità di c in T}$$
+\begin{flalign*}
+	& d_T(\textnormal{\textquotesingle}\text{a}\textnormal{\textquotesingle}) = 1 & \\
+	& d_T(\textnormal{\textquotesingle}\text{b}\textnormal{\textquotesingle}) = d_T(\textnormal{\textquotesingle}\text{c}\textnormal{\textquotesingle}) = d_T(\textnormal{\textquotesingle}\text{d}\textnormal{\textquotesingle}) = 3 & \\
+	& d_T(\textnormal{\textquotesingle}\text{e}\textnormal{\textquotesingle}) = d_T(\textnormal{\textquotesingle}\text{f}\textnormal{\textquotesingle}) = 4
+\end{flalign*}
+La profondità corrisponde alla lunghezza della codeword associata.
+\medskip
+
+Funzione di costo:
+$$B(T) = \displaystyle\sum_{c \in C} f(c) \cdot d_T(c)$$
+La dimensione del file compresso è
+$$\abs{F_c} = \frac{B(T) \cdot \abs F}{100}$$
+dove
+$$\abs F = \text{taglia del file compresso (in \# di caratteri)}$$
+$B(T)$, a meno di una costante, è il fattore di compressione $\min B(T)$.
+\paragraph{Proprietà}
+Un albero ottimo è sempre \underline{pieno} (cioè i nodi interni hanno due figli).
+\bigskip
+
+Spazio di problemi: spazio di alberi pieni con $n$ foglie $(n = \abs C)$
+\paragraph{Idea}
+Prendo due nodi con frequenza minore, gli unisco in un nodo che avrà come frequenza la somma delle due, ripeto $n-1$ volte. \\
+In questo modo, i nodi con la frequenza maggiore verranno aggiunti per ultimi alla cima dell'albero, quindi avranno una profondità bassa, ovvero la lunghezza dalla codeword corta, proprio come volevo.
+\medskip
+
+$Q$: coda di priorità (Heap) di nodi con chiave $f(z)$
+\smallskip
+
+Attributi di un nodo:
+\begin{itemize}[nosep,noitemsep]
+	\item $z.left$
+	\item $z.right$
+	\item $z.f$
+\end{itemize}
+
+\paragraph{Pseudocodice}
+\input{pseudocodes/greedy/huffman}
+\paragraph{Complessità}
+$\Theta\left(\displaystyle\sum_{i=1}^{n-1} \log (n-i)\right) = \Theta(n \log n)$
+
+\paragraph{Esempio}
+Riprendiamo l'esempio iniziale e applichiamo l'algoritmo.
+\begin{center}
+	\begin{tikzpicture}[tree]
+	\Tree
+	[.100
+		\edge node[midway,left]{0};
+		[.45/a ]
+		\edge node[midway,right]{1};
+		[.55
+			\edge node[midway,left]{0};
+			[.25
+				\edge node[midway,left]{0};
+				[.c/12 ]
+				\edge node[midway,right]{1};
+				[.b/13 ]
+			]
+			\edge node[midway,right]{1};
+			[.30
+				\edge node[midway,left]{0};
+				[.14
+					\edge node[midway,left]{0};
+					[.f/5 ]
+					\edge node[midway,right]{1};
+					[.e/9 ]	
+				]
+			\edge node[midway,right]{1};
+			[.d/16 ]
+			]
+		]
+	]
+	\end{tikzpicture}
+\end{center}
+\begin{tabular}{c|cccccc}
+	         & a  & b   & c   & d    & e    & f   \\ \hline
+	codeword & 0  & 101 & 100 & 111  & 1101 & 1100
+\end{tabular}
+\bigskip
+
+\noindent $B(T) = \displaystyle\left(\frac{45}{100} \cdot 1 + \frac{13}{100} \cdot 3 + \frac{12}{100} \cdot 3 + \frac{16}{100} \cdot 3 + \frac{9}{100} \cdot 4 + \frac{5}{100} \cdot 4 \right) = 224$
+
+\subsubsection{Proprietà di Scelta Greedy}
+Sia $C$ un alfabeto e siano $x$ e $y$ i caratteri in $C$ di frequenza minore. \\
+Allora esiste un codice prefisso ottimo $T$ in cui $x$ e $y$ sono foglie attaccate alo stesso padre (sorelle).
+
+\paragraph{Dimostrazione}\mbox{}\\
+Sia $T^*$ una soluzione ottima arbitraria $\Rightarrow B(T^*)$ è minima.
+\smallskip
+
+\noindent Non so dove siano $x$ e $y$ in $T^*$
+\smallskip
+
+\noindent Siano $b$ e $c$ le foglie sorelle di profondità massima in $T^*$
+\begin{enumerate}
+	\item \label{huffman:1} $d_{T^*}(b) = d_{T^*}(c) \geq d_{T^*}(x),d_{T^*}(y)$
+	\item $f(x) \leq f(b), \quad f(y) \leq f(c)$
+	\begin{center}
+		\begin{tikzpicture}
+		[edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}}]
+		\node (a) {$T^*$}
+		child {node (b) [draw,circle]{x}}
+		child {edge from parent[draw=none] node{\vdots}
+			child {edge from parent[draw=none] node{\vdots}
+				child {edge from parent[draw=none] node[draw,circle]{}
+					child {node (d) [draw,circle]{b}}
+					child {node (e) [draw,circle]{c}}
+				}
+			}
+		}
+		child {node (c) [draw,circle]{y}};
+		\node (a1) [right=4cm of a]{$T'$}
+		child {node (b1) [draw,circle]{b}}
+		child {edge from parent[draw=none] node{\vdots}
+			child {edge from parent[draw=none] node{\vdots}
+				child {edge from parent[draw=none] node[draw,circle]{}
+					child {node (d1) [draw,circle]{x}}
+					child {node (e1) [draw,circle]{c}}
+				}
+			}
+		}
+		child {node (c1) [draw,circle]{y}};
+		\node (a2) [right=4cm of a1]{$T''$}
+		child {node (b2) [draw,circle]{b}}
+		child {edge from parent[draw=none] node{\vdots}
+			child {edge from parent[draw=none] node{\vdots}
+				child {edge from parent[draw=none] node[draw,circle]{}
+					child {node (d2) [draw,circle]{x}}
+					child {node (e2) [draw,circle]{y}}
+				}
+			}
+		}
+		child {node (c2) [draw,circle]{c}};
+		\draw[->] ($(a) + (1.5,0)$) -- ($(a1) - (1.5,0)$) node[midway,above]{\scriptsize scambio $x$ e $b$};
+		\draw[->] ($(a1) + (1.5,0)$) -- ($(a2) - (1.5,0)$) node[midway,above]{\scriptsize scambio $y$ e $c$};
+		\end{tikzpicture}
+	\end{center}
+	\begin{flalign*}
+		& T^* \rightarrow T' & \\
+		& B(T^*) \geq B(T') & \\
+		& B(T^*) - B(T') \geq 0 & \\
+	\end{flalign*}
+	\begin{align*}
+		B(T^*) - B(T') & = \sum_{c \in C} f(c)\, d_{T^*}(c) - \sum_{c \in C} f(c)\, d_{T'}(c)  \\
+		& = f(b)\, d_{T^*}(b) + f(x)\, d_{T^*}(x) - f(b)\, \underbrace{d_{T'}(b)}_{d_{T^*}(b)} - f(x)\, \underbrace{d_{T'}(x)}_{d_{T^*}(x)} \\
+		& = f(b)\, d_{T^*}(b) + f(x)\, d_{T^*}(x) - f(b)\, d_{T^*}(b) - f(x)\, d_{T^*}(x) \\
+		& = f(b) \big(d_{T^*}(b) - d_{T^*}(x)\big) - f(x) \big(d_{T^*}(b) - d_{T^*}(x)\big) \\
+		& = \big(\underbrace{f(b) - f(x)}_{\geq 0 \text{ perchè } f(x) \leq f(b)}\big) \big (\underbrace{d_{T^*}(b) - d_{T^*}(x)}_{\geq 0 \text{ per il punto }  \ref{huffman:1}}\big) \geq 0
+	\end{align*}
+	$T' \rightarrow T'' \quad $ si dimostra analogamente.
+\end{enumerate}
+
+\subsubsection{Proprietà di Sottostruttura Ottima}
+Sia $T$ un codice prefisso ottimo che contiene la scelta greedy (sui caratteri $x$ e $y$). \\
+Sia $z$ un nuovo carattere (cioè $\notin C$) con $f(z) = f(x) + f(y)$. \\
+Allora il codice prefisso $T' = T \setminus \{x,y\}$ è ottimo per $C \setminus \{x,y\} \cup \{z\}$
+
+\begin{center}
+	\begin{tikzpicture}
+	[edge from parent/.style={draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}}]
+	\node (a) [draw,circle]{}
+	child { node (b) [draw,circle]{$x$}}
+	child { node (c) [draw,circle]{$y$}};
+	\node [below=1mm of b]{$f(x)$};
+	\node [below=1mm of c]{$f(y)$};
+	\coordinate (d) at ($ (a) + (-1.5,0)$);
+	\coordinate (e) at ($ (a) + (0,2.3)$);
+	\coordinate (f) at ($ (a) + (1.5,0)$);
+	\draw (a) -- (d) -- (e) -- (f) -- (a);
+	\node [above=1mm of e]{$T$};
+	\node (a1) [right=6cm of a,draw,circle]{$z$};
+	\node [below=1mm of a1]{$f(z)$};
+	\coordinate (d1) at ($ (a1) + (-1.5,0)$);
+	\coordinate (e1) at ($ (a1) + (0,2.3)$);
+	\coordinate (f1) at ($ (a1) + (1.5,0)$);
+	\draw (a1) -- (d1) -- (e1) -- (f1) -- (a1);
+	\node [above=1mm of e1]{$T'$};
+	\draw[->] ($(a) + (2,1)$) -- ($(a1) + (-2,1)$);
+	\end{tikzpicture}
+\end{center}
+$T$ ha $n$ foglie. \\
+$T'$ ha $n-1$ foglie.
+\smallskip
+
+\noindent Cerco una relazione tra  $B(T)$ e $B(T')$.
+
+\paragraph{Osservazione}
+\begin{enumerate}
+	\item $\forall c \in C \setminus \{x,y\}, \ c \neq z : d_{T'}(c) = d_T(c)$
+	\item $d_{T'}(z) = d_T(x) - 1$
+\end{enumerate}
+
+\paragraph{Dimostrazione}
+\begin{align*}
+	B(T) & = \sum_{c \in C} f(c)\, d_T(c) & \big(d_T(x) = d_T(y)\big)\\
+	& = \sum_{c \in C \setminus \{x,y\}} f(c)\, d_T(c) + \big(f(x) + f(y)\big) d_T(x) \\
+	& = \sum_{c \in C \setminus \{x,y\}} f(c)\, d_T(c) + \big(\underbrace{f(x) + f(y)}_{f(z)}\big) \big(\underbrace{d_T(x)-1}_{d_{T'}(z)}\big) + \big(f(x)+f(y)\big) \\
+	& = \sum_{c \in C \setminus \{x,y\} \cup \{z\}} f(c)\, d_{T'}(c) + f(x) + f(y) \\
+	& = B(T') + f(x) + f(y)
+\end{align*}
+Suppongo per assurdo che $T$ non sia il codice prefisso ottimo per il sottoproblema $C \setminus \{x,y\} \cup \{z\}$. \\
+Allora $\exists T''$ di costo strettamente inferiore.
+\begin{flalign*}
+	& B(T) = \underbrace{B(T'')}_{< B(T')} + f(x) + f(y) &
+\end{flalign*}
+Assurdo!
+

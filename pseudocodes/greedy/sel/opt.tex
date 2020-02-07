@@ -1,0 +1,10 @@
+\begin{codebox}
+\Procname{$\proc{OPT}(S_{i\, n+1})$}
+\li \If $S_{i\, n+1} \neq \emptyset$
+\li \Then
+		$a_m \gets f_m \gets \min\{f_k : a_k \in S_{i\, n+1}\}$
+			\Comment molto grande
+\li		\Return $\{a_m\} \cup \proc{OPT}(S_{m\, n+1})$
+	\Else
+\li	\Return $\emptyset$
+\end{codebox}

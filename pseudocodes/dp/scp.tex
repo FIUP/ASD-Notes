@@ -1,0 +1,30 @@
+\begin{codebox}
+\Procname{$\proc{SPC}(X)$}
+\li $n \gets \attrib{X}{length}$
+\li \For $i \gets 1$ \To $n-1$
+\li \Do
+		$L[i,j] \gets 1$
+\li		\If $x_i = x_{i+1}$
+\li		\Then
+			$L[i,i+1] \gets 2$
+\li		\Else
+\li			$L[i,i+1] \gets 3$
+		\End
+	\End
+\li	$L[n,n] \gets 1$
+\li \For $l \gets 3$ \To $n$
+		\Comment scansione diagonale con $l$ indice della diagionale
+\li	\Do
+		\For $i \gets 1$ \To $n-l+1$
+\li		\Do
+			$j \gets i+l-1$
+\li			\If $x_i = x_j$
+\li			\Then
+				$L[i,j] \gets 2 + L[i+1,j-1]$
+\li			\Else
+\li				$L[i,j] \gets 2 + \min\{L[i+1,j],L[i,j-1]\}$
+			\End
+		\End
+	\End
+\li \Return $L[1,n]$
+\end{codebox}

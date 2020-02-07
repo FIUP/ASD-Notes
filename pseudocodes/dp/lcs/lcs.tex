@@ -1,0 +1,32 @@
+\begin{codebox}
+\Procname{$\proc{LCS}(X,Y)$}
+\li $m \gets \attrib{X}[length]$
+\li $n \gets \attrib{Y}{length}$
+\li \For $i \gets 0$ \To $m$
+\li \Do
+		$L[i,0] \gets 0$
+	\End
+\li \For $j \gets 0$ \To $n$
+\li \Do
+		$L[0,j] \gets 0$
+	\End
+\li \For $i \gets 1$ \To $m$
+\li \Do
+		\For $j = 1$ \To $n$
+\li 	\Do
+			\If $x_i = y_j$
+\li 		\Then
+				$L[i,j] \gets L[i-1,j-1] + 1$
+\li				$B[i,j] \gets \textnormal{\textquotesingle}\nwarrow\textnormal{\textquotesingle}$
+\li			\ElseIf $L[i-1,j] \geq L[i,j-1]$
+\li			\Then
+				$L[i,j] \gets L[i-1,j]$
+\li				$B[i,j] \gets \textnormal{\textquotesingle}\uparrow\textnormal{\textquotesingle}$
+\li			\ElseNoIf
+\li				$L[i,j] = L[i,j-1]$
+\li				$B[i,j] = \textnormal{\textquotesingle}\leftarrow\textnormal{\textquotesingle}$
+			\End
+		\End
+	\End
+\li \Return $(L[m,n],B)$
+\end{codebox}

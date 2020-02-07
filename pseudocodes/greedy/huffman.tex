@@ -1,0 +1,26 @@
+\begin{codebox}
+\Procname{$\proc{Huffman}(C,f)$}
+\li	$n \gets \abs C$
+\li	$Q \gets \emptyset$
+\li	\For \kw{each} $c \in C$
+		\Comment inizializzazione
+\li	\Do
+		$z \gets \proc{New-Node}()$
+			\Comment crea un nuovo nodo
+\li		$\attrib{z}{f} \gets f(c)$
+\li		$\attrib{z}{left} \gets \const{nil}$
+\li		$\attrib{z}{right} \gets \const{nil}$
+\li		$\proc{Insert}(Q,z)$
+			\Comment $\Theta(\log n)$
+	\End
+\li	\For $i \gets 1$ \To $n-1$
+\li	\Do
+		$x \gets \proc{Extract-Min}(Q)$
+\li		$y \gets \proc{Extract-Min}(Q)$
+\li		$z \gets \proc{New-Node}()$
+\li		$\attrib{z}{left} \gets x$
+\li		$\attrib{z}{right} \gets y$
+\li		$\attrib{z}{f} \gets \attrib{x}{f} + \attrib{y}{f}$
+\li		$\proc{Insert}(Q,z)$
+	\End
+\end{codebox}

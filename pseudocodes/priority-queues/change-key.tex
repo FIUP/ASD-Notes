@@ -1,0 +1,11 @@
+\begin{codebox}
+\Procname{$\proc{Change-Key}(A,i,\delta)$}
+\li $A[i] \gets A[i] + \delta$
+\li \If $\delta > 0$
+\li \Then
+        $\proc{Max-Heapify-Up}(A,i)$
+\li \Else
+    	\Comment $\delta \leq 0$
+\li    	$\proc{Max-Heapify}(A,i)$
+    \End
+\end{codebox}

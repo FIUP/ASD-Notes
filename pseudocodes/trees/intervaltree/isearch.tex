@@ -1,0 +1,12 @@
+\begin{codebox}
+\Procname{$\proc{ISearch}(x,i)$}
+\li \If $(x = \attrib{T}{nil})$ \Or $(\attrib{x}{int} \cap i \neq \varnothing)$
+\li \Then 
+        \Return $x$
+\li \ElseIf $(\attrib{x}{left} \neq \attrib{T}{nil})$ \And $(\attrib{\attrib{x}{left}}{max} \geq \attrib{i}{low})$
+\li  \Then
+		\Return $\proc{ISearch}(\attrib{x}{left},i)$
+\li \ElseNoIf 
+\li	     \Return $\proc{ISearch}(\attrib{x}{right},i)$
+    \End
+\end{codebox}
